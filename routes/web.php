@@ -36,7 +36,7 @@ Route::get('/promo-load-more/{offset?}', [\App\Http\Controllers\FrontEnd\PromoCo
 Route::get('/outlet', [\App\Http\Controllers\FrontEnd\OutletController::class,'index'])->name('outlet');
 Route::get('/outlet-data', [\App\Http\Controllers\FrontEnd\OutletController::class,'indexData'])->name('outlet.data');
 
-Route::get('/view-bill', [\App\Http\Controllers\FrontEnd\OutletController::class,'indexData'])->name('view-bill');
+Route::get('/view-bill', [\App\Http\Controllers\FrontEnd\BillController::class,'index'])->name('view-bill');
 
 Route::get('/career', [\App\Http\Controllers\FrontEnd\CareerController::class,'index'])->name('career');
 Route::get('/career-load-more', [\App\Http\Controllers\FrontEnd\CareerController::class,'loadMore'])->name('career.get');

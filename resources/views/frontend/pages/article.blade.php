@@ -1,27 +1,7 @@
 @extends('frontend.layouts.template')
 
-@section('pageTitle','Article')
+{{-- @section('pageTitle','Article') --}}
 
-@push('customCss')
-    <style>
-        .carousel-control-next, .carousel-control-prev {
-            width: 10%
-        }
-        .carousel-indicators [data-bs-target] {
-            background-color: #4D73CB;
-        }
-        .btn-circle {
-            width: 40px;
-            height: 40px;
-            padding: 12px 0px;
-            border-radius: 35px;
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.42857;
-            background-color: #111831;
-        }
-    </style>
-@endpush
 
 @section('content')
 
