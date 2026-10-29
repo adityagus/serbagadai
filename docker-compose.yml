@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+    image: gadaimulia-app
+    container_name: gadaimulia-app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - gadaimulia-network
+
+  web:
+    image: nginx:alpine
+    container_name: gadaimulia-web
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - gadaimulia-network
+    depends_on:
+      - app
+
+networks:
+  gadaimulia-network:
+    driver: bridge
