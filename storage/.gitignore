@@ -1,2 +1,11 @@
 *
 !.gitignore
+vendor/*
+/vendor
+/node_modules
+/assets
+/.vscode
+.env
+.DS_Store
+.DS_Store
+Thumbs.db
