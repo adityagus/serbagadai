@@ -16,7 +16,7 @@ class OutletController extends FrontEndController
     }
 
     public function index(Request $request){
-        $data['outlets'] = Outlet::active()->get();
+        $data['outlets'] = Outlet::with('province')->active()->get();
         $data['provinces'] = Province::where('outlet_count','>','0')->orderBy('outlet_count','desc')->get();
         return view('frontend.pages.outlet',$data);
     }

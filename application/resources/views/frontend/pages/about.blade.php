@@ -1,214 +1,177 @@
 @extends('frontend.layouts.template')
 
-@section('pageTitle','Tentang Kami')
-
-@push('customCss')
-    <style>
-        .carousel-control-next, .carousel-control-prev {
-            width: 10%
-        }
-        .carousel-indicators [data-bs-target] {
-            background-color: #4D73CB;
-        }
-        .btn-circle {
-            width: 40px;
-            height: 40px;
-            padding: 12px 0px;
-            border-radius: 35px;
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.42857;
-            background-color: #111831;
-        }
-        #img-location:hover{
-            opacity: 0.6;
-            background: red;
-        }
-        .activity-menu{
-            border: 1px solid #dee2e6 !important;
-        }
-        @media (max-width: 576px){
-            .value-box-content{
-                min-height: auto !important;
-            }
-        }
-    </style>
-@endpush
+@section('pageTitle', 'Tentang Kami')
 
 @section('content')
+<!-- Subpage Hero Section -->
+<section class="subhero-section">
+    <div class="container">
+        <span class="section-badge">SIAPA KAMI</span>
+        <h1 class="subhero-title">{{ !empty($page->general_title) ? $page->general_title : 'Tentang Gadai Mulia' }}</h1>
+        <p class="subhero-subtitle">{{ !empty($page->general_sub_header) ? $page->general_sub_header : 'Perusahaan pergadaian swasta resmi yang terdaftar, berizin, dan diawasi langsung oleh Otoritas Jasa Keuangan (OJK).' }}</p>
+    </div>
+</section>
 
-    <main id="main">
-        <img src="{{ url('storage/'.$page->header_image) }}" class="img-fluid" width="100%" />
-
-        <section id="about" class="section about pt-md-5">
-            <div class="container" data-aos="fade-up">
-                <p class="heading-48 weight-bold">{{ $page->general_title }}</p>
-                <p class="subheading-24 weight-bold">{{ $page->general_sub_header }}</p>
-                {!! $page->general_content !!}
-            </div>
-        </section>
-
-        <!-- ======= About Section ======= -->
-        <section>
-            <div class="row g-0 about-us-container" data-aos="fade-up" style="height: 720px;">
-                <div class="col-lg-6 d-none d-lg-flex">
-                    <img src="{{ url('storage/'.$page->vision_image) }}" class="object-fit-cover img-fluid" width="100%" height="720" alt="image about us">
-                </div>
-                <div class="col-lg-6 bg-grayscale-50 about-us">
-                    <p class="heading-36 weight-bold mb-5">Visi & Misi</p>
-                    <div class="mb-5">
-                        <p class="subheading-24 weight-bold mb-2">Visi</p>
-                        {!! $page->vision_content !!}
+<!-- Content Section -->
+<section class="page-content-section">
+    <div class="container">
+        <div class="about-detail-grid">
+            <div>
+                <h2 class="section-title-dark">Sejarah & Profil Singkat</h2>
+                @if(!empty($page->general_content))
+                    <div class="cms-rich-content text-justify">
+                        {!! $page->general_content !!}
                     </div>
-                    <div class="mb-5">
-                        <p class="subheading-24 weight-bold mb-2">Misi</p>
-                        {!! $page->mission_content !!}
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ======= End About Section ======= -->
+                @else
+                    <p class="section-text text-justify">Gadai Mulia didirikan pada bulan Agustus 2018 dengan komitmen menjadi solusi dana cepat bagi masyarakat dengan jaminan emas perhiasan, logam mulia, dan barang elektronik. Dalam perjalanannya, Gadai Mulia senantiasa mematuhi regulasi keuangan yang ketat demi menjaga kenyamanan dan kepercayaan para nasabah.</p>
+                @endif
 
-        <!-- ======= Product & Service Section ======= -->
-        <section id="about" class="section about">
-            <div class="container" data-aos="fade-up">
-
-                <div class="section-title mb-5 mt-5 mt-md-0">
-                    <p class="heading-36 weight-bold text-black mb-0">Corporate Values</p>
-                </div>
-
-                <div class="row content gx-4 gy-4">
-                    @foreach($page->values as $value)
-                    <div class="col-lg col-md-4 col-sm-6 col-xs-12">
-                        <div class="bg-primary-50 border-radius-24 px-4 py-4 value-box-content text-center" style="min-height: 400px;">
-                            <img src="{{ url('storage/'.$value->image) }}" width="72" height="72" />
-                            <p class="subheading-24 weight-bold mb-5 highlight-first-letter">{{ $value->title }}</p>
-                            <p class="body-16 grayscale-950">{{ $value->description }}</p>
+                <div class="license-list">
+                    <div class="license-item">
+                        <span class="license-bullet">🛡️</span>
+                        <div>
+                            <strong>Wilayah DKI Jakarta</strong>
+                            <p class="license-desc-text">Surat Keputusan OJK KEP-10/NB.1/2022 tertanggal 11 Februari 2022.</p>
                         </div>
                     </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-        <!-- End Product & Service Section -->
-
-        <!-- Why Section -->
-        <section id="about" class="section about">
-            <div class="container" data-aos="fade-up">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="ms-md-5">
-                            <p class="heading-36 weight-bold text-black text-sm-start text-center">{{ $page->area_title }}</p>
-                            <p class="body-18 grayscale-800 text-sm-start text-center">{{ $page->area_content }}</p>
-                            <div class="d-flex justify-content-sm-start justify-content-center">
-                                <!-- <a target="_blank" href="{{ route('outlet') }}" class="btn btn-outline-secondary">
-                                    Lihat Seluruh Outlet Kami
-                                </a> -->
-                            </div>
+                    <div class="license-item">
+                        <span class="license-bullet">🛡️</span>
+                        <div>
+                            <strong>Wilayah Jawa Barat</strong>
+                            <p class="license-desc-text">Surat Keputusan OJK KEP-337/PL.02/2025 tertanggal 18 November 2025.</p>
                         </div>
                     </div>
-                    <div class="col-lg-7 d-none d-sm-grid mt-sm-5">
-                        <div class="row">
-                            @if(!empty($outlets[0]))
-                            <div class="col-lg-8 d-sm-flex justify-content-sm-center">
-                                <div id="img-location" class="border-radius-24" style="
-                                        position: relative;
-                                        width: 466px;
-                                        height: 584px;
-                                        background-size: cover;
-                                        background-image: linear-gradient(to bottom, rgba(239, 191, 3, 0),rgba(239, 191, 3, 1)),
-                                        url('{{ url('storage/'.$outlets[0]->image) }}');">
-                                    <div style="position: absolute; bottom: 30px; left: 30px;">
-                                        <p class="heading-36 grayscale-950 weight-bold">{{ $CONF->title }}</p>
-                                        <p class="heading-60 text-black weight-bold mb-0">{{ $outlets[0]->province_name }}</p>
-                                        <div id="overlay-location">
-                                            <!-- <a role="button" class="btn btn-outline-secondary mt-3" href="{{ route('outlet') }}">
-                                                Selengkapnya
-                                                <i class="bi bi-arrow-right push-right ms-2"></i>
-                                            </a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
+                    <div class="license-item">
+                        <span class="license-bullet">🛡️</span>
+                        <div>
+                            <strong>Wilayah Kepulauan Riau</strong>
+                            <p class="license-desc-text">Surat Keputusan OJK KEP-158/NB.1/2020 tertanggal 24 November 2020.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- End Why Section -->
-
-        <!-- Testimony Section -->
-        <section class="section">
-            <div class="container" data-aos="fade-up">
-                <div style="max-width: 613.67px;" class="mx-auto">
-                    <p class="heading-36 weight-bold text-center">{{ $page->activity_header }}</p>
-                    <p class="body-18 grayscale-800 text-center">{{ $page->activity_sub_header }} </p>
-                </div>
-
-                <ul id="tab-custom" class="nav nav-tabs mx-auto mt-5" style="max-width: 637px;">
-                    <li class="nav-item" role="presentation" style="margin:5px 5px;">
-                        <a class="nav-link active weight-bold activity-menu" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Kegiatan Marketing</a>
-                    </li>
-                    <li class="nav-item" role="presentation" style="margin:5px 5px;">
-                        <a class="nav-link activity-menu" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Kegiatan Internal</a>
-                    </li>
-                    <li class="nav-item" role="presentation" style="margin:5px 5px;">
-                        <a class="nav-link activity-menu" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Corporate Social Responsibility</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="container mt-5">
-                            <div class="row g-4">
-                                @foreach($page->activities as $activity)
-                                    @if($activity->category == 'MARKETING')
-                                        <div class="col-md-3">
-                                            <div class="p-3 bg-grayscale-50 border-radius-24 d-flex align-items-center justify-content-center" style="height: 288px; background-image: url('{{ url('storage/'.$activity->image) }}') !important;">
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
+            
+            <div class="visual-card-wrapper">
+                <div class="premium-about-card">
+                    <h3>Visi Kami</h3>
+                    <div class="card-quote cms-rich-content">
+                        @if(!empty($page->vision_content))
+                            {!! $page->vision_content !!}
+                        @else
+                            "Menjadi pergadaian swasta pilihan utama masyarakat Indonesia yang memberikan pelayanan keuangan tercepat, teraman, dan memiliki integritas terbaik."
+                        @endif
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="container mt-5">
-                            <div class="row g-4">
-                                @foreach($page->activities as $activity)
-                                    @if($activity->category == 'INTERNAL')
-                                        <div class="col-md-3">
-                                            <div class="p-3 bg-grayscale-50 border-radius-24 d-flex align-items-center justify-content-center" style="height: 288px; background-image: url('{{ url('storage/'.$activity->image) }}') !important">
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                        <div class="container mt-5">
-                            <div class="row g-4">
-                                @foreach($page->activities as $activity)
-                                    @if($activity->category == 'CSR')
-                                        <div class="col-md-3">
-                                            <div class="p-3 bg-grayscale-50 border-radius-24 d-flex align-items-center justify-content-center" style="height: 288px; background-image: url('{{ url('storage/'.$activity->image) }}') !important">
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
+                    
+                    <div class="divider-line"></div>
+                    
+                    <h3>Misi Kami</h3>
+                    <div class="cms-rich-content">
+                        @if(!empty($page->mission_content))
+                            {!! $page->mission_content !!}
+                        @else
+                            <ul class="about-misi-list">
+                                <li>Menghadirkan pelayanan pergadaian yang mudah, cepat, dan transparan bagi semua kalangan.</li>
+                                <li>Menjamin keamanan barang jaminan nasabah dengan sistem proteksi asuransi terpercaya.</li>
+                                <li>Mendukung kemajuan UMKM lokal melalui penyediaan akses permodalan yang adil dan sewa modal rendah.</li>
+                            </ul>
+                        @endif
                     </div>
                 </div>
-        </section>
-        <!-- End Testimony Section -->
+            </div>
+        </div>
 
-    </main>
-    <!-- End #main -->
+        <!-- Corporate Values -->
+        @if(!empty($page->values) && count($page->values) > 0)
+        <div style="margin-top: 90px;">
+            <div class="section-header-center">
+                <span class="section-badge center">NILAI PERUSAHAAN</span>
+                <h2 class="section-title-dark text-center">Corporate Values</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px;">
+                @foreach($page->values as $value)
+                    <div class="stat-card" style="text-align: center; padding: 32px 24px;">
+                        @if(!empty($value->image))
+                            <img src="{{ url('storage/'.$value->image) }}" alt="{{ $value->title }}" style="width: 64px; height: 64px; object-fit: contain; margin: 0 auto 16px auto; display: block;" onerror="this.style.display='none'">
+                        @endif
+                        <h3 class="product-title" style="color: var(--primary); margin-bottom: 10px;">{{ $value->title }}</h3>
+                        <p class="section-text" style="margin-bottom: 0; font-size: 14px;">{{ $value->description }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
 
+        <!-- Area / Wilayah Operasional -->
+        <div class="about-detail-grid" style="margin-top: 90px; align-items: center;">
+            <div>
+                <span class="section-badge">JARINGAN OUTLET</span>
+                <h2 class="section-title-dark">{{ !empty($page->area_title) ? $page->area_title : 'Jangkauan Wilayah Operasional Kami' }}</h2>
+                <p class="section-text">{{ !empty($page->area_content) ? $page->area_content : 'Kami hadir melayani masyarakat di berbagai wilayah strategis dengan standar pelayanan terbaik.' }}</p>
+                <a href="{{ route('outlet') }}" class="btn btn-primary">Lihat Seluruh Outlet Kami →</a>
+            </div>
+            <div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    @if(!empty($outlets) && count($outlets) > 0)
+                        @foreach($outlets as $outlet)
+                            <div class="o-card" style="padding: 24px; text-align: center;">
+                                <span class="region-badge-small active" style="background: rgba(245, 158, 11, 0.12); color: var(--primary);">WILAYAH</span>
+                                <h3 style="font-size: 22px; margin-bottom: 12px;">{{ $outlet->province_name }}</h3>
+                                <a href="{{ route('outlet') }}" class="btn btn-outline btn-sm">Cek Cabang</a>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- Activities Gallery -->
+        @if(!empty($page->activities) && count($page->activities) > 0)
+        <div style="margin-top: 90px;">
+            <div class="section-header-center">
+                <span class="section-badge center">DOKUMENTASI</span>
+                <h2 class="section-title-dark text-center">{{ !empty($page->activity_header) ? $page->activity_header : 'Kegiatan Kami' }}</h2>
+                <p class="section-desc-center text-center">{{ !empty($page->activity_sub_header) }}</p>
+            </div>
+
+            <div class="outlet-filters">
+                <button class="o-filter-btn active" onclick="filterActivity('MARKETING', this)">Kegiatan Marketing</button>
+                <button class="o-filter-btn" onclick="filterActivity('INTERNAL', this)">Kegiatan Internal</button>
+                <button class="o-filter-btn" onclick="filterActivity('CSR', this)">Corporate Social Responsibility</button>
+            </div>
+
+            <div class="article-grid" id="activity-grid">
+                @foreach($page->activities as $activity)
+                    <div class="art-card activity-item" data-category="{{ $activity->category }}" style="{{ $activity->category == 'MARKETING' ? '' : 'display: none;' }}">
+                        <div class="art-img-wrapper" style="height: 240px;">
+                            <img src="{{ url('storage/'.$activity->image) }}" alt="{{ $activity->title ?? 'Kegiatan' }}" class="art-img" onerror="this.src='{{ url('serbamulia/assets/emas.jpg') }}'">
+                        </div>
+                        @if(!empty($activity->title))
+                        <div class="art-content" style="padding: 16px 20px;">
+                            <h4 class="art-title" style="margin-bottom: 0;">{{ $activity->title }}</h4>
+                        </div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+    </div>
+</section>
 @endsection
 
 @push('customJs')
+<script>
+    function filterActivity(category, btnEl) {
+        document.querySelectorAll('.outlet-filters .o-filter-btn').forEach(btn => btn.classList.remove('active'));
+        btnEl.classList.add('active');
 
+        document.querySelectorAll('.activity-item').forEach(item => {
+            if (item.getAttribute('data-category') === category) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+</script>
 @endpush

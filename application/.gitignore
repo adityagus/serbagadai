@@ -17,3 +17,15 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+.DS_Store
+Thumbs.db
+
+# Dynamic user uploads
+/storage/about/
+/storage/article/
+/storage/career/
+/storage/config/
+/storage/home/
+/storage/product/
+/storage/promo/
+/storage/province/

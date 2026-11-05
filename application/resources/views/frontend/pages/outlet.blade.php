@@ -1,167 +1,99 @@
 @extends('frontend.layouts.template')
 
-@section('pageTitle','Jaringan Kami')
-
-@push('customCss')
-	<style>
-		.help-block-error{
-			color: #ff7f7f;
-		}
-
-		.dataTables_paginate li{
-			padding:0px 10px;
-			border: 0.5px solid #dee2e6 !important;
-			border-collapse: separate !important;
-			border-spacing: 0 !important;
-			margin: 0px 3px;
-			border-radius: 5px;
-		}
-	</style>
-	<link href="{{url('backend/assets/global/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-@endpush
+@section('pageTitle', 'Cabang & Outlet')
 
 @section('content')
+@php
+    $waNumber = preg_replace('/[^0-9]/', '', @$CONF->whatsapp ?: '6281181126771');
+    $badgeColors = ['red', 'blue', 'green'];
+@endphp
 
-	<main id="main">
-		<!-- Promo Section -->
-		<section class="section">
-			<div class="container" data-aos="fade-up">
-				<p class="heading-36 weight-bold mb-5">Kunjungi kami di Outlet terdekat lokasi anda</p>
-				<div id="maps" style="max-width:1224px;height: 496px;" class="mb-5"></div>
-				<div class="d-flex justify-content-between">
-					<select class="form-select" name="s_province" onclick="filter()" aria-label="Default select example" style="max-width: 200px; height: 56px; border-radius: 30px;">
-						<option value="">Pilih Provinsi</option>
-						@foreach($provinces as $province)
-						<option value="{{ $province->id }}">{{ $province->name }}</option>
-						@endforeach
-					</select>
-					<div class="input-group" style="max-width: 446px; height: 56px;">
-						<input type="text" class="form-control" name="s_search" onchange="filter()" id="autoSizingInputGroup" placeholder="Cari Lokasi" style="border-right: 0px; border-top-left-radius: 30px !important; border-bottom-left-radius: 30px !important;">
-						<div class="input-group-text bg-white" style="border-top-right-radius: 30px !important; border-bottom-right-radius: 30px !important;">
-							<i class="bi bi-search"></i>
-						</div>
-					</div>
-				</div>
-				<table id="pricing-table" class="table table-bordered mt-5 my-table">
-					<thead>
-					<tr>
-						<th class="bg-primary-100 caption-14 weight-bold p-4 text-center">Nama Cabang</th>
-						<th class="bg-primary-100 caption-14 weight-bold p-4 text-center">Wilayah</th>
-						<th class="bg-primary-100 caption-14 weight-bold p-4 text-center">Alamat</th>
-					</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-		</section>
-		<!-- End Promo Section -->
+<!-- Subpage Hero Section -->
+<section class="subhero-section">
+    <div class="container">
+        <span class="section-badge">OUTLET KAMI</span>
+        <h1 class="subhero-title">Lokasi <span class="gold-text">Cabang Terdekat</span></h1>
+        <p class="subhero-subtitle">Kami hadir lebih dekat dengan Anda. Kunjungi outlet resmi {{ @$CONF->title ?? 'Gadai Mulia' }} terdekat di lokasi Anda.</p>
+    </div>
+</section>
 
-	</main>
-	<!-- End #main -->
+<!-- Outlets Map & List Section -->
+<section class="page-content-section">
+    <div class="container">
+        <!-- Interactive Branch Locator (Sidebar + Leaflet Map + Nearest Geolocation) -->
+        <div style="margin-bottom: 56px;">
+            @include('frontend.pages.part.branch-locator')
+        </div>
 
+        <div class="section-header-center" style="margin-bottom: 32px;">
+            <span class="section-badge center">DIREKTORI LENGKAP</span>
+            <h2 class="section-title-dark text-center">Daftar Seluruh Cabang</h2>
+        </div>
+
+        <!-- Filters & Search -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 36px;">
+            <div class="outlet-filters" style="margin-bottom: 0; flex-wrap: wrap; justify-content: flex-start;">
+                <button class="o-filter-btn active" onclick="filterOutlets('all', this)">Semua Wilayah</button>
+                @foreach($provinces as $province)
+                    <button class="o-filter-btn" onclick="filterOutlets('{{ $province->id }}', this)">{{ $province->name }}</button>
+                @endforeach
+            </div>
+
+            <div style="min-width: 280px; flex: 0 1 340px;">
+                <input type="text" id="outlet-search" class="input-select" placeholder="🔍 Cari nama cabang atau alamat..." oninput="applyOutletFilters()">
+            </div>
+        </div>
+
+        <!-- Outlets Cards Grid -->
+        <div class="outlets-grid" id="outlets-grid">
+            @foreach($outlets as $idx => $outlet)
+                @php
+                    $colorClass = $badgeColors[$idx % count($badgeColors)];
+                    $provName = @$outlet->province->name ?? 'CABANG RESMI';
+                    $mapQuery = !empty($outlet->lat_lng) ? $outlet->lat_lng : urlencode($outlet->name . ' ' . $outlet->address);
+                @endphp
+                <div class="o-card outlet-card-item" data-province="{{ $outlet->province_id }}" data-search="{{ strtolower($outlet->name . ' ' . $outlet->address . ' ' . $provName) }}">
+                    <div class="o-header">
+                        <span class="region-badge-small {{ $colorClass }}">{{ strtoupper($provName) }}</span>
+                        <h3>{{ $outlet->name }}</h3>
+                    </div>
+                    <div class="o-body">
+                        <p class="o-address">📍 {{ $outlet->address }}</p>
+                        <p class="o-hours">⏰ Senin - Jumat (08:30 - 17:00) | Sabtu (08:30 - 14:00)</p>
+                        <p class="o-phone">📞 {{ @$CONF->phone ?? '0811-8112-6771' }}</p>
+                        
+                        <div class="o-actions">
+                            <a href="https://maps.google.com/?q={{ $mapQuery }}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Petunjuk Arah</a>
+                            <a href="https://api.whatsapp.com/send?phone={{ $waNumber }}&text=Halo%20Gadai%20Mulia%20Cabang%20{{ urlencode($outlet->name) }},%20saya%20ingin%20tanya..." target="_blank" rel="noopener" class="btn btn-primary btn-sm">WhatsApp Cabang</a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
 @endsection
 
 @push('customJs')
+<script>
+    let activeProvince = 'all';
 
-	<script src="{{url('backend/assets/global/datatable.js')}}"
-			type="text/javascript"></script>
-	<script
-			src="{{url('backend/assets/global/datatables/datatables.min.js')}}"
-			type="text/javascript"></script>
-	<script
-			src="{{url('backend/assets/global/datatables/plugins/bootstrap/datatables.bootstrap.js')}}"
-			type="text/javascript"></script>
-	<script
-			src="{{url('backend/assets/global/table-datatables-responsive.min.js')}}"
-			type="text/javascript"></script>
+    function filterOutlets(provinceId, btnEl) {
+        activeProvince = String(provinceId);
+        document.querySelectorAll('.outlet-filters .o-filter-btn').forEach(btn => btn.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+        applyOutletFilters();
+    }
 
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt32jcY7LXJauBie0Hx6dEuJpvBqjMGKQ"></script>
-
-	<script type="text/javascript">
-
-		var table = $('.my-table').DataTable({
-			'processing'  : true,
-			'serverSide'  : true,
-			'ajax'        : {
-				url: "{{ route('outlet.data') }}",
-				data: function (d) {
-					d['search'] = $('[name=s_search]').val();
-					d['outlets.province_id']= $('[name=s_province]').val();
-				}
-			},
-			'dataType'    : 'json',
-			'searching'   : false,
-			'paging'      : true,
-			'lengthChange': false,
-			'columns'     : [
-				{data:'name', name: 'name'},
-				{data:'province_id', name: 'province_id'},
-				{data:'address', name: 'address'},
-			],
-			'info'        : false,
-			'order'       : ['1','asc'],
-			'autoWidth'   : false
-		});
-
-		function filter() {
-			table.draw();
-		}
-
-		const properties = [];
-
-		@foreach($outlets as $outlet)
-			properties.push({
-				address: `{{ $outlet->address }}`,
-				description: `{{ $outlet->name }}`,
-				size: 300,
-				location: `{{ $outlet->lat_lng }}`,
-				position: {
-					lat: {{ (float) explode(',',$outlet->lat_lng)[0]  }},
-					lng: {{ (float) explode(',',$outlet->lat_lng)[1]  }},
-				}
-			})
-		@endforeach
-
-		function toggleHighlight(markerView) {
-			if (markerView.content.classList.contains("highlight")) {
-				markerView.content.classList.remove("highlight");
-				markerView.zIndex = null;
-			} else {
-				markerView.content.classList.add("highlight");
-				markerView.zIndex = 1;
-			}
-		}
-
-		function buildContent(property) {
-			const content = document.createElement("div");
-			return content;
-		}
-
-		function myMap() {
-			var mapProp= {
-				zoom: 5,
-				center:new google.maps.LatLng(-0.789275, 113.921327),
-			};
-			var map = new google.maps.Map(document.getElementById("maps"),mapProp);
-
-			for (const property of properties) {
-
-				var marker = new google.maps.Marker({
-					content: buildContent(property),
-					position: property.position,
-					title: property.description,
-					icon:'{{ url('frontend/assets/img/map-point.png') }}'
-				});
-
-				marker.addListener("click", () => {
-					window.open('http://maps.google.com?q='+property.location);
-					toggleHighlight(marker, property);
-				});
-
-				marker.setMap(map);
-			}
-		}
-		myMap();
-	</script>
+    function applyOutletFilters() {
+        const query = (document.getElementById('outlet-search')?.value || '').toLowerCase().trim();
+        document.querySelectorAll('.outlet-card-item').forEach(card => {
+            const cardProv = card.getAttribute('data-province');
+            const cardSearch = card.getAttribute('data-search') || '';
+            const matchProv = (activeProvince === 'all' || cardProv === activeProvince);
+            const matchSearch = (!query || cardSearch.includes(query));
+            card.style.display = (matchProv && matchSearch) ? 'block' : 'none';
+        });
+    }
+</script>
 @endpush

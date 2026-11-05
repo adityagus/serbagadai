@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadai Mulia - Solusi Keuangan Premium & Terpercaya</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar-container">
+        <div class="container navbar">
+            <a href="index.html" class="logo-area">
+                <div class="logo-shield-crop">
+                    <img src="assets/logo.png" alt="Gadai Mulia Shield" class="logo-img-source">
+                </div>
+                <div class="logo-text-crop">
+                    <img src="assets/logo.png" alt="Gadai Mulia Text" class="logo-img-source">
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Beranda</a>
+                <a href="about.html" class="nav-link">Tentang</a>
+                <a href="services.html" class="nav-link">Produk & Layanan</a>
+                <a href="promo.html" class="nav-link">Promo</a>
+                <a href="outlet.html" class="nav-link">Cabang</a>
+                <a href="career.html" class="nav-link">Karir</a>
+                <a href="article.html" class="nav-link">Artikel</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="contact.html" class="btn btn-primary btn-nav">
+                    Hubungi
+                </a>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+                    <svg id="theme-toggle-dark-icon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <button id="menu-toggle" class="menu-toggle-btn" aria-label="Toggle Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-bg" style="background-image: url('assets/hero_bg.jpg');"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-text-side">
+                <div class="badge-ojk">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L3 7V12C3 16.5 6.8 20.7 12 22C17.2 20.7 21 16.5 21 12V7L12 2Z" fill="#F59E0B" />
+                        <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Berizin & Diawasi oleh OJK</span>
+                </div>
+                <h1 class="hero-title">Solusi Keuangan Cepat, <br><span class="gradient-text">Aman & Transparan</span></h1>
+                <p class="hero-subtitle">Gadaikan Emas, Logam Mulia, atau Barang Elektronik Anda dengan nilai pencairan tinggi hingga 100%, sewa modal rendah, dan tanpa proses berbelit-belit.</p>
+                <div class="hero-features">
+                    <div class="hero-feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Syarat Cukup KTP</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Asuransi Jiwa & Barang</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Sewa Modal Mulai 1.15%</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#kalkulator" class="btn btn-primary">Simulasi Gadai</a>
+                    <a href="#layanan" class="btn btn-secondary">Pelajari Layanan</a>
+                </div>
+            </div>
+
+            <!-- Interactive Calculator Widget inside Hero -->
+            <div class="calculator-card-wrapper" id="kalkulator">
+                <div class="calculator-card">
+                    <h3 class="calc-title">Simulasi Nilai Taksiran</h3>
+                    <p class="calc-desc">Hitung estimasi pencairan dana Anda secara instan</p>
+                    
+                    <div class="calc-tabs">
+                        <button class="calc-tab active" id="tab-emas" onclick="switchTab('emas')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="tab-icon">
+                                <rect x="2" y="7" width="20" height="10" rx="2" fill="currentColor"/>
+                                <path d="M6 12H18" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                            Emas / LM
+                        </button>
+                        <button class="calc-tab" id="tab-elektronik" onclick="switchTab('elektronik')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="tab-icon">
+                                <rect x="5" y="2" width="14" height="20" rx="3" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="18" r="1.5" fill="currentColor"/>
+                            </svg>
+                            Elektronik
+                        </button>
+                    </div>
+
+                    <!-- Emas Form -->
+                    <div class="calc-form" id="form-emas">
+                        <div class="input-group">
+                            <label class="input-label">Jenis Emas / Purity</label>
+                            <select class="input-select" id="emas-karat" onchange="calculateGold()">
+                                <option value="24">Logam Mulia / Emas 24 Karat (99.9%)</option>
+                                <option value="22">Emas Perhiasan 22 Karat (91.6%)</option>
+                                <option value="18">Emas Perhiasan 18 Karat (75.0%)</option>
+                                <option value="16">Emas Perhiasan 16 Karat (70.0%)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label class="input-label">Berat Emas</label>
+                                <span class="range-val"><span id="gold-weight-txt">10</span> gram</span>
+                            </div>
+                            <input type="range" class="input-range" id="emas-berat" min="1" max="100" value="10" step="1" oninput="updateRangeText('gold-weight-txt', this.value); calculateGold();">
+                        </div>
+                    </div>
+
+                    <!-- Elektronik Form (Hidden by default) -->
+                    <div class="calc-form hidden" id="form-elektronik">
+                        <div class="input-group">
+                            <label class="input-label">Jenis Barang Elektronik</label>
+                            <select class="input-select" id="elektronik-jenis" onchange="calculateElectronics()">
+                                <option value="smartphone">Smartphone Flagship (iPhone/Samsung S)</option>
+                                <option value="laptop">Laptop / MacBook</option>
+                                <option value="camera">Kamera DSLR / Mirrorless</option>
+                                <option value="tv">TV LED / Game Console</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Kondisi Fisik & Fungsi</label>
+                            <select class="input-select" id="elektronik-kondisi" onchange="calculateElectronics()">
+                                <option value="1.0">Mulus & Lengkap (Like New, Dus ada)</option>
+                                <option value="0.8">Fungsi Normal (Fisik standard pemakaian)</option>
+                                <option value="0.6">Batangan / Tanpa Box (Hanya Charger)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label class="input-label">Estimasi Harga Beli Awal</label>
+                                <span class="range-val">Rp <span id="price-txt">10.000.000</span></span>
+                            </div>
+                            <input type="range" class="input-range" id="elektronik-harga" min="1000000" max="30000000" value="10000000" step="500000" oninput="updatePriceText(this.value); calculateElectronics();">
+                        </div>
+                    </div>
+
+                    <!-- Calculation Output -->
+                    <div class="calc-results">
+                        <div class="result-row highlight">
+                            <span class="result-label">Taksiran Pinjaman</span>
+                            <span class="result-value" id="taksiran-pinjaman">Rp 10.450.000</span>
+                        </div>
+                        <div class="result-divider"></div>
+                        <div class="result-row">
+                            <span class="result-label-sub">Sewa Modal (15 hari)</span>
+                            <span class="result-value-sub" id="sewa-modal">Rp 120.175</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label-sub">Biaya Administrasi</span>
+                            <span class="result-value-sub" id="biaya-admin">Rp 35.000</span>
+                        </div>
+                    </div>
+
+                    <a href="#" id="wa-submit-btn" target="_blank" class="btn btn-primary btn-block calc-btn">
+                        <span>Hubungi Kami Via WhatsApp</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.59 14.59L13.59 17.59C13.2 17.98 12.57 17.98 12.18 17.59L9.18 14.59C8.79 14.2 8.79 13.57 9.18 13.18L10.59 11.77L8.7 9.88C8.31 9.49 8.31 8.86 8.7 8.47L10.12 7.05C10.51 6.66 11.14 6.66 11.53 7.05L12.95 8.47C13.34 8.86 13.34 9.49 12.95 9.88L12 10.83C12.35 11.45 12.9 12 13.52 12.35L14.47 11.4C14.86 11.01 15.49 11.01 15.88 11.4L17.3 12.82C17.69 13.21 17.69 13.84 17.3 14.23L16.59 14.59Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OJK and Trust Banner -->
+    <section class="trust-banner">
+        <div class="container trust-container">
+            <span class="trust-label">DISETUJUI & DIAWASI OLEH</span>
+            <div class="trust-logos">
+                <span class="ojk-logo-text">OJK</span>
+                <span class="logo-divider">|</span>
+                <span class="insurance-badge">Barang Jaminan 100% Aman & Diasuransikan</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="tentang">
+        <div class="container about-grid">
+            <div class="about-image-side">
+                <img src="assets/emas.jpg" alt="Pawning Gold" class="about-img">
+                <div class="glowing-border-decoration"></div>
+            </div>
+            <div class="about-text-side">
+                <span class="section-badge">SIAPA KAMI</span>
+                <h2 class="section-title-dark">Mitra Terpercaya Solusi Finansial Anda</h2>
+                <p class="section-desc">Gadai Mulia berdiri sejak Agustus 2018 sebagai Perusahaan Pergadaian Swasta resmi berizin OJK. Kami melayani wilayah DKI Jakarta, Jawa Barat, dan Kepulauan Riau.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4 class="stat-number">2018</h4>
+                        <p class="stat-label">Tahun Berdiri</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4 class="stat-number">10k+</h4>
+                        <p class="stat-label">Nasabah Puas</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4 class="stat-number">100%</h4>
+                        <p class="stat-label">Barang Diasuransikan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products & Services -->
+    <section class="products-section" id="layanan">
+        <div class="container">
+            <div class="section-header-center">
+                <span class="section-badge center">LAYANAN KAMI</span>
+                <h2 class="section-title-dark text-center">Pilihan Produk Gadai yang Sesuai Kebutuhan Anda</h2>
+                <p class="section-desc-center text-center">Kami menawarkan berbagai pilihan produk gadai fleksibel dengan penaksiran yang adil dan transparan.</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Card 1 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="assets/emas.jpg" alt="Gadai Emas" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gadai Emas / Logam Mulia</h3>
+                        <p class="product-desc">Pinjaman dana cepat dengan jaminan emas perhiasan atau logam mulia. Penaksiran nilai emas tinggi sesuai harga pasar harian resmi.</p>
+                        <ul class="product-features">
+                            <li>LTV hingga 100% nilai emas</li>
+                            <li>Bunga flat & kompetitif</li>
+                            <li>Penyimpanan aman di deposit box</li>
+                        </ul>
+                        <a href="https://api.whatsapp.com/send?phone=6281181126771&text=Halo%20Gadai%20Mulia%20saya%20tertarik%20dengan%20Gadai%20Emas" class="btn btn-outline btn-sm">Hubungi Kami</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="assets/elektronik.jpg" alt="Gadai Elektronik" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gadai Elektronik</h3>
+                        <p class="product-desc">Butuh dana mendadak? Jaminkan HP, Laptop, Kamera DSLR/Mirrorless, TV LED, atau Game Console Anda secara cepat dan mudah.</p>
+                        <ul class="product-features">
+                            <li>Proses cair dalam 10 menit</li>
+                            <li>Taksiran harga elektronik tinggi</li>
+                            <li>Garansi barang aman tidak digunakan</li>
+                        </ul>
+                        <a href="https://api.whatsapp.com/send?phone=6281181126771&text=Halo%20Gadai%20Mulia%20saya%20tertarik%20dengan%20Gadai%20Elektronik" class="btn btn-outline btn-sm">Hubungi Kami</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <div class="gradient-fallback-img">
+                            <span class="fallback-icon">🪙</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gadai Cicilan Emas</h3>
+                        <p class="product-desc">Layanan kepemilikan emas / logam mulia dengan sistem cicilan yang ringan, aman, dan berizin resmi OJK.</p>
+                        <ul class="product-features">
+                            <li>Angsuran bulanan tetap & ringan</li>
+                            <li>Emas aman disimpan hingga lunas</li>
+                            <li>Tanpa denda keterlambatan tinggi</li>
+                        </ul>
+                        <a href="https://api.whatsapp.com/send?phone=6281181126771&text=Halo%20Gadai%20Mulia%20saya%20tertarik%20dengan%20Gadai%20Cicilan" class="btn btn-outline btn-sm">Hubungi Kami</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="why-section" id="mengapa">
+        <div class="container">
+            <div class="why-grid">
+                <div class="why-text-side">
+                    <span class="section-badge">KEUNGGULAN KAMI</span>
+                    <h2 class="section-title-light">Mengapa Ribuan Nasabah Memilih Gadai Mulia?</h2>
+                    <p class="section-desc-light">Kami berkomitmen memberikan pelayanan terbaik dengan integritas tinggi dan transparansi penuh untuk seluruh nasabah kami.</p>
+                    
+                    <div class="features-list">
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="#F59E0B"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="feature-title">Pencairan Tinggi, Biaya Murah</h4>
+                                <p class="feature-desc-text">Nilai taksiran barang berharga Anda dinilai seadil mungkin untuk mendapatkan pinjaman maksimal.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="#F59E0B"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="feature-title">Keamanan Jaminan 100%</h4>
+                                <p class="feature-desc-text">Barang jaminan disimpan di lemari besi khusus berstandar keamanan tinggi dan sepenuhnya diasuransikan.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.2 16.2L11 13V7H12.5V12.2L17 14.9L16.2 16.2Z" fill="#F59E0B"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="feature-title">Syarat Mudah & Instan</h4>
+                                <p class="feature-desc-text">Hanya butuh KTP dan barang jaminan. Proses cepat, uang langsung cair di tempat dalam hitungan menit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature visual showcase -->
+                <div class="why-image-side">
+                    <div class="neon-card-glow"></div>
+                    <div class="info-showcase-card">
+                        <div class="showcase-header">
+                            <div class="avatar-group">
+                                <div class="avatar">👨‍💼</div>
+                                <div class="avatar">👩‍💼</div>
+                                <div class="avatar">🙋</div>
+                            </div>
+                            <div class="showcase-header-text">
+                                <span class="primary-text">10.000+ Nasabah</span>
+                                <span class="secondary-text">Telah terbantu keuangan mendesaknya</span>
+                            </div>
+                        </div>
+                        <div class="showcase-body">
+                            <div class="showcase-row">
+                                <span>Rata-rata Waktu Proses</span>
+                                <span class="highlight-green">8 Menit Cair</span>
+                            </div>
+                            <div class="showcase-row">
+                                <span>Rating Kepuasan</span>
+                                <span class="highlight-gold">★★★★★ 4.9/5</span>
+                            </div>
+                            <div class="showcase-row">
+                                <span>Izin Operasional</span>
+                                <span class="highlight-blue">Resmi OJK</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testi-section" id="testimoni">
+        <div class="container">
+            <div class="section-header-center">
+                <span class="section-badge center">TESTIMONI</span>
+                <h2 class="section-title-dark text-center">Apa Kata Mereka Tentang Kami?</h2>
+                <p class="section-desc-center text-center">Dengarkan pengalaman nyata nasabah kami yang telah merasakan kemudahan dan keamanan bertransaksi bersama Gadai Mulia.</p>
+            </div>
+
+            <div class="testi-slider-wrapper">
+                <div class="testi-slider" id="testi-container">
+                    <!-- Slide 1 -->
+                    <div class="testi-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testi-text">"Terima kasih Gadai Mulia, sudah membantu keuangan saya saat darurat modal usaha. Pelayanannya sangat profesional, cepat, dan saya dapat hadiah magic com juga. Sukses selalu!"</p>
+                        <div class="testi-author">
+                            <div class="author-avatar">👩</div>
+                            <div>
+                                <h4 class="author-name">Dini Gianti</h4>
+                                <p class="author-role">Ibu Rumah Tangga / Wiraswasta</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="testi-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testi-text">"Bunganya sangat kecil dibandingkan tempat gadai swasta lainnya, proses penaksiran transparan, dan karyawannya ramah sekali. Recommended untuk solusi dana mendesak."</p>
+                        <div class="testi-author">
+                            <div class="author-avatar">👨</div>
+                            <div>
+                                <h4 class="author-name">Reza</h4>
+                                <p class="author-role">Wiraswasta Kuliner</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="testi-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testi-text">"Saya sudah 2 tahun jadi nasabah setia Gadai Mulia. Sangat membantu jika ada kebutuhan operasional bisnis laundry saya. Barang jaminan aman dan terawat."</p>
+                        <div class="testi-author">
+                            <div class="author-avatar">👩</div>
+                            <div>
+                                <h4 class="author-name">Lega Yanti</h4>
+                                <p class="author-role">Pemilik Laundry</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Controls -->
+                <div class="slider-controls">
+                    <button class="control-btn prev" onclick="slideTesti('prev')">←</button>
+                    <button class="control-btn next" onclick="slideTesti('next')">→</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo-brand">
+                    <div class="logo-shield-crop">
+                        <img src="assets/logo.png" alt="Gadai Mulia Shield" class="logo-img-source">
+                    </div>
+                    <div class="logo-text-crop">
+                        <img src="assets/logo.png" alt="Gadai Mulia Text" class="logo-img-source">
+                    </div>
+                </div>
+                <p class="brand-desc">Gadai Mulia memberikan solusi finansial cepat, aman, dan terpercaya dengan jaminan emas, logam mulia, dan barang elektronik resmi di bawah pengawasan OJK.</p>
+                <div class="ojk-logo-footer">
+                    <div class="ojk-seal">TERDAFTAR & DIAWASI OJK</div>
+                </div>
+            </div>
+            
+            <div class="footer-links-group">
+                <h4 class="footer-title">Tautan Pintar</h4>
+                <div class="footer-links">
+                    <a href="#hero">Beranda</a>
+                    <a href="#tentang">Tentang Kami</a>
+                    <a href="#layanan">Layanan</a>
+                    <a href="#mengapa">Keunggulan</a>
+                    <a href="#kalkulator">Kalkulator Simulasi</a>
+                </div>
+            </div>
+
+            <div class="footer-links-group">
+                <h4 class="footer-title">Kantor Pusat</h4>
+                <p class="footer-text">Kirana Three Office Tower, Lt. 15. Kelapa Gading, Jakarta Utara, DKI Jakarta 14240</p>
+                <p class="footer-text">Hubungi: 0811-8112-6771 (WhatsApp)</p>
+                <p class="footer-text">Email: cs@gadaimulia.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container bottom-row">
+                <p>© 2026 Gadai Mulia. Hak Cipta Dilindungi. Berizin & Diawasi oleh Otoritas Jasa Keuangan (OJK).</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100072802813002" target="_blank">Facebook</a>
+                    <a href="https://www.instagram.com/gadaimulia/" target="_blank">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

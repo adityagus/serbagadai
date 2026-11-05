@@ -1,77 +1,60 @@
 @extends('frontend.layouts.template')
 
-@section('pageTitle','Article Detail')
-
-@push('customCss')
-    <style>
-        .carousel-control-next, .carousel-control-prev {
-            width: 10%
-        }
-        .carousel-indicators [data-bs-target] {
-            background-color: #4D73CB;
-        }
-        .btn-circle {
-            width: 40px;
-            height: 40px;
-            padding: 12px 0px;
-            border-radius: 35px;
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.42857;
-            background-color: #111831;
-        }
-    </style>
-@endpush
+@section('pageTitle', $article->title)
 
 @section('content')
+<!-- Subpage Hero Section -->
+<section class="subhero-section">
+    <div class="container">
+        <span class="section-badge">ARTIKEL & EDUKASI</span>
+        <h1 class="subhero-title" style="max-width: 900px; margin-left: auto; margin-right: auto;">{{ $article->title }}</h1>
+        <p class="subhero-subtitle">Dipublikasikan pada {{ \Carbon\Carbon::parse($article->created_at)->format('d F Y') }}</p>
+    </div>
+</section>
 
-    <main id="main">
+<!-- Article Content Section -->
+<section class="page-content-section">
+    <div class="container">
+        <div class="service-detail-card" style="max-width: 920px; margin: 0 auto 72px auto; padding: 40px;">
+            @if(!empty($article->banner_image) || !empty($article->featured_image))
+                <div style="margin-bottom: 32px; border-radius: var(--radius-md); overflow: hidden; max-height: 440px;">
+                    <img src="{{ url('storage/'.($article->banner_image ?: $article->featured_image)) }}" alt="{{ $article->title }}" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.src='{{ url('serbamulia/assets/emas.jpg') }}'">
+                </div>
+            @endif
 
-        <section class="section">
-            <div class="container" data-aos="fade-up">
-                <p class="heading-36 weight-bold">{{ $article->title }}</p>
-                <p class="body-18 grayscale-800">{{ \Carbon\Carbon::parse($article->created_at)->format('d F Y') }}</p>
-                <img src="{{ url('storage/'.$article->banner_image) }}" class="border-radius-top-24 img-fluid mb-5" alt="image news" width="100%">
+            <div class="cms-rich-content text-justify">
                 {!! $article->content !!}
             </div>
-        </section>
+        </div>
 
-        <!-- Promo Section -->
-        <section class="section">
-            <div class="container" data-aos="fade-up">
-                <p class="subheading-24 weight-bold mb-5">Related Post</p>
-                <div class="container">
-                    <div class="row g-4">
-                        @foreach($random_article as $random)
-                            <div class="col-md-4">
-                                <div class="card card-item border-radius-24 p-4">
-                                    <img src="{{ url('storage/'.$random->featured_image) }}" class="border-radius-top-24" alt="image news">
-                                    <div class="d-grid mt-4">
-                                        <p class="subheading-24 weight-bold">{{ $random->title }}</p>
-                                        <p class="body-16 grayscale-700 mb-0">{{ \Carbon\Carbon::parse($random->created_at)->format('d F Y') }}</p>
-                                    </div>
-                                    <div class="overlay border-radius-24 bg-primary-400">
-                                        <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                                            <a role="button" class="btn btn-outline-secondary-small" href="{{ route('article.detail',['slug'=>$random->slug]) }}">
-                                                Lihat Selengkapnya
-                                                <i class="bi bi-arrow-right push-right ms-2"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+        <!-- Related Articles -->
+        @if(!empty($random_article) && count($random_article) > 0)
+        <div>
+            <div class="section-header-center" style="margin-bottom: 36px;">
+                <span class="section-badge center">BACA JUGA</span>
+                <h2 class="section-title-dark text-center">Artikel Terkait Lainnya</h2>
             </div>
-        </section>
-        <!-- End Promo Section -->
 
-    </main>
-    <!-- End #main -->
-
+            <div class="article-grid">
+                @foreach($random_article as $random)
+                    <article class="art-card">
+                        <div class="art-img-wrapper">
+                            <img src="{{ url('storage/'.$random->featured_image) }}" alt="{{ $random->title }}" class="art-img" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/emas.jpg') }}';">
+                        </div>
+                        <div class="art-content">
+                            <div class="art-meta">
+                                <span class="art-tag">ARTIKEL</span>
+                                <span class="art-date">{{ \Carbon\Carbon::parse($random->created_at)->format('d F Y') }}</span>
+                            </div>
+                            <h3 class="art-title">{{ $random->title }}</h3>
+                            <p class="art-excerpt">{{ \Illuminate\Support\Str::limit(strip_tags($random->content), 120) }}</p>
+                            <a href="{{ route('article.detail', ['slug' => $random->slug]) }}" class="btn-readmore">Baca Selengkapnya →</a>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+        @endif
+    </div>
+</section>
 @endsection
-
-@push('customJs')
-
-@endpush

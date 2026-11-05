@@ -25,7 +25,9 @@ Auth::routes();
 
 // PAGES //
 Route::get('/', [PageController::class,'home'])->name('home');
+Route::get('/simulasi', [PageController::class,'simulasi'])->name('simulasi');
 Route::get('/about', [PageController::class,'about'])->name('about');
+Route::get('/services', [\App\Http\Controllers\FrontEnd\ProductController::class,'services'])->name('services');
 Route::get('/product/{slug?}', [\App\Http\Controllers\FrontEnd\ProductController::class,'index'])->name('product.detail');
 Route::get('/promo', [\App\Http\Controllers\FrontEnd\PromoController::class,'index'])->name('promo');
 Route::get('/promo-load-more/{offset?}', [\App\Http\Controllers\FrontEnd\PromoController::class,'loadMore'])->name('promo.get');

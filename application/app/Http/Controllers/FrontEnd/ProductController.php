@@ -12,11 +12,20 @@ class ProductController extends FrontEndController
         parent::__construct();
     }
 
-    public function index($slug){
-        $data['product'] = Product::where('slug',$slug)->first();
-        return view('frontend.pages.product',$data);
+    public function services()
+    {
+        return view('frontend.pages.services');
+    }
+
+    public function index($slug = null)
+    {
+        if (empty($slug)) {
+            return view('frontend.pages.services');
+        }
+        $data['product'] = Product::where('slug', $slug)->first();
+        if (empty($data['product'])) {
+            return redirect()->route('services');
+        }
+        return view('frontend.pages.product', $data);
     }
 }
-
-
-

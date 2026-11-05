@@ -1,0 +1,98 @@
+# ==========================================
+# Dependencies (Composer & Node)
+# ==========================================
+/vendor/
+/application/vendor/
+vendor/
+!frontend/vendor/
+!frontend/assets/vendor/
+
+/node_modules/
+/application/node_modules/
+node_modules/
+
+# ==========================================
+# Environment & Sensitive Files
+# ==========================================
+.env
+.env.backup
+.env.production
+.env.*.local
+.env.*
+!.env.example
+application/.env
+application/.env.backup
+application/.env.production
+application/.env.*.local
+application/.env.*
+!application/.env.example
+
+# ==========================================
+# Root runtime & Symlinks
+# ==========================================
+/artisan
+/bootstrap/
+bootstrap/cache/*.php
+
+# ==========================================
+# Storage, Uploads & Media
+# ==========================================
+/storage/*
+!/storage/.gitignore
+
+/application/storage/about/
+/application/storage/article/
+/application/storage/career/
+/application/storage/config/
+/application/storage/home/
+/application/storage/product/
+/application/storage/promo/
+/application/storage/province/
+/application/storage/*.key
+/application/public/storage
+
+# ==========================================
+# Logs & Debugging
+# ==========================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================================
+# Testing & Cache
+# ==========================================
+/.phpunit.cache
+/application/.phpunit.cache
+.phpunit.result.cache
+application/.phpunit.result.cache
+
+# ==========================================
+# Database & Temporary Files
+# ==========================================
+*.sql
+*.sqlite
+*.sqlite3
+*.dump
+!gadai.dump
+*.tmp
+*.temp
+*.bak
+
+# ==========================================
+# IDE & Operating System
+# ==========================================
+.vscode/
+.idea/
+.fleet/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+.DS_Store?
+._*
+[Tt]humbs.db
+ehthumbs.db
+[Dd]esktop.ini

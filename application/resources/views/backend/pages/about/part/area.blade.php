@@ -6,7 +6,7 @@
             <div class="col-md-6">
                 <div class="form-group" id="area_title">
                     <label class="control-label">Title</label>
-                    <input type="text" name="area_title" class="form-control" value="{{@$content->area_title}}" placeholder="Masukan title text">
+                    <input type="text" name="area_title" class="form-control" value="{{@$content->area_title}} asdasda" placeholder="Masukan title text">
                     <div class="help-block"></div>
                     <div id="area_title_error" class="help-block help-block-error"> </div>
                 </div>

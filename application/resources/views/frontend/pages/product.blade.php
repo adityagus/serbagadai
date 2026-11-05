@@ -1,134 +1,91 @@
 @extends('frontend.layouts.template')
 
-@section('pageTitle',$product->title)
-
-@push('customCss')
-    <style>
-        .carousel-control-next, .carousel-control-prev {
-            width: 10%
-        }
-        .carousel-indicators [data-bs-target] {
-            background-color: #4D73CB;
-        }
-        .btn-circle {
-            width: 40px;
-            height: 40px;
-            padding: 12px 0px;
-            border-radius: 35px;
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.42857;
-            background-color: #111831;
-        }
-    </style>
-@endpush
+@section('pageTitle', $product->title)
 
 @section('content')
+@php
+    $waNumber = preg_replace('/[^0-9]/', '', @$CONF->whatsapp ?: '6281181126771');
+    $prodImg = !empty($product->image) ? url('storage/'.$product->image) : url('serbamulia/assets/emas.jpg');
+    $advantages = !empty($product->advantages) ? json_decode($product->advantages) : [];
+@endphp
 
-    <main id="main">
-        <section id="about" class="section about">
-            <div class="container" data-aos="fade-up">
-                <div class="row g-0">
-                    <div class="col-md-8">
-                        <p class="heading-36 weight-bold mb-4">{{ $product->title }}</p>
+<!-- Subpage Hero Section -->
+<section class="subhero-section">
+    <div class="container">
+        <span class="section-badge">PRODUK & LAYANAN</span>
+        <h1 class="subhero-title">{{ $product->title }}</h1>
+        <p class="subhero-subtitle">{{ $product->short_description }}</p>
+    </div>
+</section>
+
+<!-- Product Overview & Advantages -->
+<section class="page-content-section">
+    <div class="container">
+        <div class="service-detail-card">
+            <div class="service-detail-grid-row">
+                <div class="service-text-box">
+                    <span class="gold-text-badge">DESKRIPSI LAYANAN</span>
+                    <h2>{{ $product->title }}</h2>
+                    <div class="cms-rich-content text-justify">
                         {!! $product->description !!}
                     </div>
-                    <div class="col-md-4 d-flex justify-content-md-end">
-                        <img src="{{ url('storage/'.$product->image) }}" style="width: 288px; height: 288px;" class="border-radius-24" />
+                    <div style="margin-top: 28px;">
+                        <a href="{{ !empty($product->call_action) ? $product->call_action : 'https://api.whatsapp.com/send?phone='.$waNumber.'&text=Halo%20Admin,%20saya%20tertarik%20mengajukan%20'.urlencode($product->title) }}" target="_blank" class="btn btn-primary">Ajukan {{ $product->title }} Sekarang</a>
                     </div>
                 </div>
+                <div class="service-image-box">
+                    <img src="{{ $prodImg }}" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/emas.jpg') }}';" alt="{{ $product->title }}" class="service-image">
+                </div>
             </div>
-        </section>
+        </div>
 
-        <!-- ======= About Section ======= -->
-        <section class="section bg-primary-400">
-            <div class="container" data-aos="fade-up">
-                <p class="heading-36 weight-bold mb-5">Keunggulan</p>
-                <div class="row g-4">
-                    @foreach(json_decode($product->advantages) as $advantage)
-                    <div class="col-md-4">
-                        <div class="d-flex gap-3">
-                            <img src="{{ url('frontend/assets/img/checklist.png') }}" width="35" height="35" />
-                            <p class="body-18 mb-0">{{ $advantage->text }}</p>
+        <!-- Keunggulan -->
+        @if(!empty($advantages) && is_array($advantages))
+        <div style="margin-bottom: 64px;">
+            <div class="section-header-center" style="margin-bottom: 36px;">
+                <span class="section-badge center">KEUNGGULAN</span>
+                <h2 class="section-title-dark text-center">Keunggulan {{ $product->title }}</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                @foreach($advantages as $advantage)
+                    @if(!empty($advantage->text))
+                    <div class="o-card" style="display: flex; align-items: flex-start; gap: 16px; padding: 24px;">
+                        <div class="feature-icon-wrapper" style="width: 40px; height: 40px;">
+                            <span style="color: var(--primary); font-weight: 800;">✓</span>
                         </div>
+                        <p style="color: var(--text-main); font-size: 15px; margin: 0;">{{ $advantage->text }}</p>
                     </div>
-                    @endforeach
+                    @endif
+                @endforeach
+            </div>
+        </div>
+        @endif
+
+        <!-- Persyaratan & Pricing -->
+        <div class="about-detail-grid" style="grid-template-columns: 0.9fr 1.1fr;">
+            <div class="premium-about-card">
+                <h3>Persyaratan Pengajuan</h3>
+                <div class="cms-rich-content">
+                    {!! $product->terms !!}
                 </div>
             </div>
-        </section>
-        <!-- ======= End About Section ======= -->
-
-        <!-- ======= Product & Service Section ======= -->
-        <section id="about" class="section about">
-            <div class="container" data-aos="fade-up">
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <p class="heading-36 weight-bold mb-4">Persyaratan</p>
-                        {!! $product->terms !!}
-                    </div>
-                    <div class="col-md-8 pricing">
-                        <p class="heading-36 weight-bold mb-4">Pricing Produk</p>
-                        <div class="horizontal-scroll">
-                            {{--<table id="pricing-table" class="table table-bordered mb-0">
-                                <thead>
-                                <tr>
-                                    <th class="bg-primary-100 caption-14 weight-bold p-4 text-center" style=" min-width: 125px">Nama Produk</th>
-                                    <th class="bg-primary-100 caption-14 weight-bold p-4 text-center">Tenor</th>
-                                    <th class="bg-primary-100 caption-14 weight-bold p-4 text-center">Up</th>
-                                    <th class="bg-primary-100 caption-14 weight-bold p-4 text-center">Admin</th>
-                                    <th class="bg-primary-100 caption-14 weight-bold p-4 text-center" style=" min-width: 125px">Sewa Modal</th>
-                                    <th class="bg-primary-100 caption-14 weight-bold p-4 text-center" style=" min-width: 100px">Masa Jual</th>
-                                    <th class="bg-primary-100 caption-14 weight-bold p-4 text-center">Denda</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="caption-14 grayscale-700 p-4">Gadai Aksesoris Reguler</td>
-                                    <td class="caption-14 grayscale-700 p-4" rowspan="2">30 Hari</td>
-                                    <td class="caption-14 grayscale-700 p-4" rowspan="2">Minimal Rp500.000</td>
-                                    <td class="caption-14 grayscale-700 p-4" rowspan="2">Mulai dari Rp200.000 (sesuai tearing pinjaman)</td>
-                                    <td class="caption-14 grayscale-700 p-4" rowspan="2">6% per 30 hari dibayar didepan</td>
-                                    <td class="caption-14 grayscale-700 p-4" rowspan="2">Hari ke 20 setelah jatuh tempo</td>
-                                    <td class="caption-14 grayscale-700 p-4" rowspan="2">0.3% perhari atau 9% per bulan terhitung dari hari pertama setelah tanggal jatuh tempo</td>
-                                </tr>
-                                <tr>
-                                    <td class="caption-14 grayscale-700 p-4">Gadai Aksesoris Prioritas</td>
-                                </tr>
-                                </tbody>
-                            </table>--}}
-
-                            {!! $product->pricing !!}
-                        </div>
-                    </div>
+            <div>
+                <h3 class="section-title-dark" style="font-size: 28px; margin-bottom: 20px;">Pricing & Skema Produk</h3>
+                <div class="cms-table-wrapper pricing">
+                    {!! $product->pricing !!}
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="about" class="section about">
-            <div class="container" data-aos="fade-up">
-                <div class="card text-bg-dark">
-                    <img src="{{ url('frontend/assets/img/call-to-action.png') }}" />
-                    <div class="card-img-overlay d-flex align-items-center justify-content-md-between justify-content-end">
-                        <p class="subheading-30 text-white weight-bold d-none d-sm-flex" style="max-width: 458px; margin-left: 20%;">Dapatkan Dana Cepat! Ajukan Gadai di Gadai Mulia Sekarang!</p>
-                        <a href="{{ $product->call_action }}" target="_blank" class="btn btn-primary" style="margin-right: 5%;">
-                            Ajukan Sekarang
-                        </a>
-                    </div>
-                </div>
+        <!-- Call to Action Banner -->
+        <div class="service-detail-card" style="margin-top: 64px; margin-bottom: 0; background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, var(--bg-secondary) 100%); border-color: rgba(245, 158, 11, 0.3); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+            <div>
+                <span class="gold-text-badge">BUTUH DANA CEPAT?</span>
+                <h3 style="font-family: var(--font-heading); font-size: 28px; font-weight: 800; margin-bottom: 8px;">Dapatkan Dana Tunai Sekarang di {{ @$CONF->title ?? 'Gadai Mulia' }}!</h3>
+                <p style="color: var(--text-muted); font-size: 15px;">Proses transparan, aman, dan diawasi langsung oleh Otoritas Jasa Keuangan (OJK).</p>
             </div>
-        </section>
-
-    </main>
-    <!-- End #main -->
-
+            <a href="{{ !empty($product->call_action) ? $product->call_action : 'https://api.whatsapp.com/send?phone='.$waNumber.'&text=Halo%20Admin,%20saya%20ingin%20mengajukan%20'.urlencode($product->title) }}" target="_blank" class="btn btn-primary">Ajukan Sekarang →</a>
+        </div>
+    </div>
+</section>
 @endsection
-
-@push('customJs')
-    <script type="text/javascript">
-        $('.pricing table').prop('id','pricing-table');
-        $('.pricing table').addClass('table table-bordered mb-0');
-        $('.pricing table th').addClass('bg-primary-100 caption-14 weight-bold p-4 text-center');
-        $('.pricing table td').addClass('caption-14 grayscale-700 p-4')
-
-    </script>
-@endpush

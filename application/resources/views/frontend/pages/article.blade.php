@@ -1,136 +1,109 @@
 @extends('frontend.layouts.template')
 
-@section('pageTitle','Article')
-
-@push('customCss')
-    <style>
-        .carousel-control-next, .carousel-control-prev {
-            width: 10%
-        }
-        .carousel-indicators [data-bs-target] {
-            background-color: #4D73CB;
-        }
-        .btn-circle {
-            width: 40px;
-            height: 40px;
-            padding: 12px 0px;
-            border-radius: 35px;
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.42857;
-            background-color: #111831;
-        }
-    </style>
-@endpush
+@section('pageTitle', 'Artikel & Edukasi Finansial')
 
 @section('content')
+<!-- Subpage Hero Section -->
+<section class="subhero-section">
+    <div class="container">
+        <span class="section-badge">ARTIKEL</span>
+        <h1 class="subhero-title">Edukasi & <span class="gold-text">Tips Keuangan</span></h1>
+        <p class="subhero-subtitle">Dapatkan tips keuangan praktis, panduan cerdas investasi emas, serta berita edukatif seputar pergadaian di Indonesia.</p>
+    </div>
+</section>
 
-    <!-- Article Section -->
-    <main id="main">
-        <section class="section">
-            <div class="container" data-aos="fade-up">
-                <p class="heading-36 weight-bold mb-5">Artikel</p>
-                <div class="container">
-                    <div class="row g-4 article_list">
-                        <div class="col-md-4 article-sample">
-                            <div class="card card-item border-radius-24 p-4">
-                                <img src="#" class="border-radius-top-24 image_article" alt="image news">
-                                <div class="d-grid mt-4">
-                                    <p class="subheading-24 weight-bold article_title">#</p>
-                                    <p class="body-16 grayscale-700 mb-0 article_date">#</p>
-                                </div>
-                                <div class="overlay border-radius-24 bg-primary-400">
-                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                                        <a role="button" class="btn btn-outline-secondary-small article_link" href="#">
-                                            Lihat Selengkapnya
-                                            <i class="bi bi-arrow-right push-right ms-2"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @foreach($articles as $article)
-                            <div class="col-md-4">
-                                <div class="card card-item border-radius-24 p-4">
-                                    <img src="{{ url('storage/'.$article->featured_image ) }}" class="border-radius-top-24" alt="image news">
-                                    <div class="d-grid mt-4">
-                                        <p class="subheading-24 weight-bold">{{ $article->title }}</p>
-                                        <p class="body-16 grayscale-700 mb-0">{{ \Carbon\Carbon::parse($article->created_at)->format('d F Y') }}</p>
-                                    </div>
-                                    <div class="overlay border-radius-24 bg-primary-400">
-                                        <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                                            <a role="button" class="btn btn-outline-secondary-small" href="{{ route('article.detail',['slug'=>$article->slug]) }}">
-                                                Lihat Selengkapnya
-                                                <i class="bi bi-arrow-right push-right ms-2"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center mt-5">
-                    <button onclick="loadMore()" role="button" class="btn btn-outline-secondary btn-load">
-                        Load More
-                    </button>
-                </div>
+<!-- Article Index Section -->
+<section class="page-content-section">
+    <div class="container">
+        <!-- Sample Article Card for JS Load More -->
+        <article class="art-card article-sample" style="display: none;">
+            <div class="art-img-wrapper">
+                <img src="#" alt="Artikel" class="art-img image_article" onerror="this.src='{{ url('serbamulia/assets/emas.jpg') }}'">
             </div>
-        </section>
-    </main>
-    <!-- End Article Section -->
+            <div class="art-content">
+                <div class="art-meta">
+                    <span class="art-tag">ARTIKEL</span>
+                    <span class="art-date article_date"></span>
+                </div>
+                <h3 class="art-title article_title"></h3>
+                <p class="art-excerpt article_excerpt"></p>
+                <a href="#" class="btn-readmore article_link">Baca Selengkapnya →</a>
+            </div>
+        </article>
 
+        <div class="article-grid article_list">
+            @foreach($articles as $article)
+                <article class="art-card">
+                    <div class="art-img-wrapper">
+                        <img src="{{ url('storage/'.$article->featured_image) }}" alt="{{ $article->title }}" class="art-img" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/emas.jpg') }}';">
+                    </div>
+                    <div class="art-content">
+                        <div class="art-meta">
+                            <span class="art-tag">ARTIKEL</span>
+                            <span class="art-date">{{ \Carbon\Carbon::parse($article->created_at)->format('d F Y') }}</span>
+                        </div>
+                        <h3 class="art-title">{{ $article->title }}</h3>
+                        <p class="art-excerpt">{{ \Illuminate\Support\Str::limit(strip_tags($article->content), 140) }}</p>
+                        <a href="{{ route('article.detail', ['slug' => $article->slug]) }}" class="btn-readmore">Baca Selengkapnya →</a>
+                    </div>
+                </article>
+            @endforeach
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 48px;">
+            <button onclick="loadMore()" type="button" class="btn btn-outline btn-load">
+                Muat Artikel Lainnya
+            </button>
+        </div>
+    </div>
+</section>
 @endsection
 
 @push('customJs')
-    <script type="text/javascript">
+<script type="text/javascript">
+    const count_article = {{ $count_article ?? 0 }};
+    let current_article = {{ count($articles ?? []) }};
 
-        const count_article = {{ $count_article }};
-        let current_article = {{ count($articles) }};
+    function checkArticle() {
+        if (count_article > current_article) {
+            $('.btn-load').show();
+        } else {
+            $('.btn-load').hide();
+        }
+    }
 
-        function checkArticle() {
-            if(count_article > current_article){
-                $('.btn-load').show();
-            }else{
-                $('.btn-load').hide();
+    checkArticle();
+
+    function loadMore() {
+        $.ajax({
+            url: "{{ route('article.get', ['offset' => '']) }}" + "/" + (current_article + 1),
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                response.map(data => {
+                    const article_card = $('.article-sample').clone();
+                    article_card.removeAttr('style');
+                    article_card.removeClass('article-sample');
+                    article_card.find('.image_article').attr('src', '{{ url('storage/') }}/' + data.featured_image);
+                    article_card.find('.article_title').html(data.title);
+                    article_card.find('.article_date').html(data.date);
+                    article_card.find('.article_excerpt').html(data.excerpt || '');
+                    article_card.find('.article_link').attr('href', '{{ route('article.detail', ['slug' => '']) }}/' + data.slug);
+
+                    $('.article_list').append(article_card);
+                    current_article++;
+                });
+                checkArticle();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal({
+                    title: 'System Error',
+                    text: errorThrown,
+                    icon: 'error',
+                    timer: '3000'
+                });
             }
-        }
-
-        checkArticle();
-
-        $('.article-sample').hide();
-
-        function loadMore(){
-            $.ajax({
-                url: "{{ route('article.get',['offset'=>'']) }}"+"/"+(current_article+1),
-                type: "GET",
-                dataType: "JSON",
-                success: function(response) {
-                    response.map(data=>{
-                        const article_card = $('.article-sample').clone();
-                        article_card.show();
-                        article_card.removeClass('article-sample');
-                        article_card.find('.image_article').attr('src','{{ url('storage/') }}/'+data.featured_image);
-                        article_card.find('.article_title').html(data.title);
-                        article_card.find('.article_date').html(data.date);
-                        article_card.find('.article_link').attr('href','{{ route('article.detail',['slug'=>'']) }}/'+data.slug);
-
-                        $('.article_list').append(article_card);
-                        current_article++;
-                    });
-                    checkArticle();
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    swal({
-                        title: 'System Error',
-                        text: errorThrown,
-                        icon: 'error',
-                        timer: '3000'
-                    });
-                }
-            });
-        }
-
-
-    </script>
+        });
+    }
+</script>
 @endpush

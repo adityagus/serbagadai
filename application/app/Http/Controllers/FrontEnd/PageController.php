@@ -19,7 +19,12 @@ class PageController extends FrontEndController
     public function home(){
         $data['page'] = json_decode(Pages::where('types',Constant::PAGES_TYPES_HOME)->first()->content);
         $data['promos'] = Promo::active()->orderBy('valid_date','desc')->limit(6)->get();
+        $data['outlets'] = Outlet::with('province')->active()->get();
         return view('frontend.pages.home',$data);
+    }
+
+    public function simulasi(){
+        return view('frontend.pages.simulasi');
     }
 
     public function about(){

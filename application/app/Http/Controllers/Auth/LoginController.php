@@ -37,6 +37,7 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
+        // return 'admin';
         if ( Auth::user()->role != Constant::USER_ROLE_USER) {
             return 'admin';
         }

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabang & Outlet - Gadai Mulia</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar-container">
+        <div class="container navbar">
+            <a href="index.html" class="logo-area">
+                <div class="logo-shield-crop">
+                    <img src="assets/logo.png" alt="Gadai Mulia Shield" class="logo-img-source">
+                </div>
+                <div class="logo-text-crop">
+                    <img src="assets/logo.png" alt="Gadai Mulia Text" class="logo-img-source">
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Beranda</a>
+                <a href="about.html" class="nav-link">Tentang</a>
+                <a href="services.html" class="nav-link">Produk & Layanan</a>
+                <a href="promo.html" class="nav-link">Promo</a>
+                <a href="outlet.html" class="nav-link active">Cabang</a>
+                <a href="career.html" class="nav-link">Karir</a>
+                <a href="article.html" class="nav-link">Artikel</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="contact.html" class="btn btn-primary btn-nav">
+                    Hubungi
+                </a>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+                    <svg id="theme-toggle-dark-icon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <button id="menu-toggle" class="menu-toggle-btn" aria-label="Toggle Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Subpage Hero Section -->
+    <section class="subhero-section">
+        <div class="container">
+            <span class="section-badge">OUTLET KAMI</span>
+            <h1 class="subhero-title">Lokasi <span class="gold-text">Cabang Terdekat</span></h1>
+            <p class="subhero-subtitle">Kami hadir lebih dekat dengan Anda. Kunjungi outlet resmi Gadai Mulia di wilayah Jabodetabek, Jawa Barat, dan Kepulauan Riau.</p>
+        </div>
+    </section>
+
+    <!-- Outlets List Section -->
+    <section class="page-content-section">
+        <div class="container">
+            <div class="outlet-filters">
+                <button class="o-filter-btn active" onclick="filterOutlets('all')">Semua Wilayah</button>
+                <button class="o-filter-btn" onclick="filterOutlets('dki')">DKI Jakarta</button>
+                <button class="o-filter-btn" onclick="filterOutlets('jabar')">Jawa Barat</button>
+                <button class="o-filter-btn" onclick="filterOutlets('kepri')">Kepulauan Riau</button>
+            </div>
+
+            <div class="outlets-grid">
+                <!-- Outlet 1 -->
+                <div class="o-card" data-region="dki">
+                    <div class="o-header">
+                        <span class="region-badge-small red">DKI JAKARTA</span>
+                        <h3>Kantor Pusat Kelapa Gading</h3>
+                    </div>
+                    <div class="o-body">
+                        <p class="o-address">📍 Kirana Three Office Tower, Lt. 15, Jl. Boulevard Raya No.1, Kelapa Gading, Jakarta Utara 14240</p>
+                        <p class="o-hours">⏰ Senin - Jumat (08:30 - 17:00) | Sabtu (08:30 - 14:00)</p>
+                        <p class="o-phone">📞 0811-8112-6771</p>
+                        
+                        <div class="o-actions">
+                            <a href="https://maps.google.com/?q=Kirana+Three+Office+Tower+Kelapa+Gading" target="_blank" class="btn btn-secondary btn-sm">Petunjuk Arah</a>
+                            <a href="https://api.whatsapp.com/send?phone=6281181126771&text=Halo%20Gadai%20Mulia%20Cabang%20Kelapa%20Gading,%20saya%20ingin%20tanya..." target="_blank" class="btn btn-primary btn-sm">WhatsApp Cabang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outlet 2 -->
+                <div class="o-card" data-region="jabar">
+                    <div class="o-header">
+                        <span class="region-badge-small blue">JAWA BARAT</span>
+                        <h3>Cabang Bandung Dago</h3>
+                    </div>
+                    <div class="o-body">
+                        <p class="o-address">📍 Jl. Ir. H. Juanda No.102, Dago, Kecamatan Coblong, Kota Bandung, Jawa Barat 40132</p>
+                        <p class="o-hours">⏰ Senin - Jumat (08:30 - 17:00) | Sabtu (08:30 - 14:00)</p>
+                        <p class="o-phone">📞 0811-8112-6772</p>
+                        
+                        <div class="o-actions">
+                            <a href="https://maps.google.com/?q=Jl+Ir+H+Juanda+Dago+Bandung" target="_blank" class="btn btn-secondary btn-sm">Petunjuk Arah</a>
+                            <a href="https://api.whatsapp.com/send?phone=6281181126771&text=Halo%20Gadai%20Mulia%20Cabang%20Dago,%20saya%20ingin%20tanya..." target="_blank" class="btn btn-primary btn-sm">WhatsApp Cabang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outlet 3 -->
+                <div class="o-card" data-region="kepri">
+                    <div class="o-header">
+                        <span class="region-badge-small green">KEP. RIAU</span>
+                        <h3>Cabang Batam Center</h3>
+                    </div>
+                    <div class="o-body">
+                        <p class="o-address">📍 Ruko Rafflesia Blok C No. 5, Jl. Engku Putri, Batam Center, Kota Batam, Kepulauan Riau 29461</p>
+                        <p class="o-hours">⏰ Senin - Jumat (08:30 - 17:00) | Sabtu (08:30 - 14:00)</p>
+                        <p class="o-phone">📞 0811-8112-6773</p>
+                        
+                        <div class="o-actions">
+                            <a href="https://maps.google.com/?q=Ruko+Rafflesia+Batam+Center" target="_blank" class="btn btn-secondary btn-sm">Petunjuk Arah</a>
+                            <a href="https://api.whatsapp.com/send?phone=6281181126771&text=Halo%20Gadai%20Mulia%20Cabang%20Batam,%20saya%20ingin%20tanya..." target="_blank" class="btn btn-primary btn-sm">WhatsApp Cabang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outlet 4 -->
+                <div class="o-card" data-region="jabar">
+                    <div class="o-header">
+                        <span class="region-badge-small blue">JAWA BARAT</span>
+                        <h3>Cabang Bekasi Cyber Park</h3>
+                    </div>
+                    <div class="o-body">
+                        <p class="o-address">📍 Ruko Bekasi Cyber Park Blok A3 No. 12, Jl. KH. Noer Ali, Kota Bekasi, Jawa Barat 17144</p>
+                        <p class="o-hours">⏰ Senin - Jumat (08:30 - 17:00) | Sabtu (08:30 - 14:00)</p>
+                        <p class="o-phone">📞 0811-8112-6774</p>
+                        
+                        <div class="o-actions">
+                            <a href="https://maps.google.com/?q=Bekasi+Cyber+Park" target="_blank" class="btn btn-secondary btn-sm">Petunjuk Arah</a>
+                            <a href="https://api.whatsapp.com/send?phone=6281181126771&text=Halo%20Gadai%20Mulia%20Cabang%20Bekasi,%20saya%20ingin%20tanya..." target="_blank" class="btn btn-primary btn-sm">WhatsApp Cabang</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo-brand">
+                    <div class="logo-shield-crop">
+                        <img src="assets/logo.png" alt="Gadai Mulia Shield" class="logo-img-source">
+                    </div>
+                    <div class="logo-text-crop">
+                        <img src="assets/logo.png" alt="Gadai Mulia Text" class="logo-img-source">
+                    </div>
+                </div>
+                <p class="brand-desc">Gadai Mulia memberikan solusi finansial cepat, aman, dan terpercaya dengan jaminan emas, logam mulia, dan barang elektronik resmi di bawah pengawasan OJK.</p>
+                <div class="ojk-logo-footer">
+                    <div class="ojk-seal">TERDAFTAR & DIAWASI OJK</div>
+                </div>
+            </div>
+            
+            <div class="footer-links-group">
+                <h4 class="footer-title">Tautan Pintar</h4>
+                <div class="footer-links">
+                    <a href="index.html">Beranda</a>
+                    <a href="about.html">Tentang Kami</a>
+                    <a href="services.html">Layanan</a>
+                    <a href="promo.html">Promo</a>
+                    <a href="outlet.html">Cabang</a>
+                </div>
+            </div>
+
+            <div class="footer-links-group">
+                <h4 class="footer-title">Kantor Pusat</h4>
+                <p class="footer-text">Kirana Three Office Tower, Lt. 15. Kelapa Gading, Jakarta Utara, DKI Jakarta 14240</p>
+                <p class="footer-text">Hubungi: 0811-8112-6771 (WhatsApp)</p>
+                <p class="footer-text">Email: cs@gadaimulia.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container bottom-row">
+                <p>© 2026 Gadai Mulia. Hak Cipta Dilindungi. Berizin & Diawasi oleh Otoritas Jasa Keuangan (OJK).</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100072802813002" target="_blank">Facebook</a>
+                    <a href="https://www.instagram.com/gadaimulia/" target="_blank">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function filterOutlets(region) {
+            const cards = document.querySelectorAll('.o-card');
+            const buttons = document.querySelectorAll('.o-filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (region === 'all' || card.getAttribute('data-region') === region) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lokasi Cabang Resmi - Store Locator</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Custom Leaflet Marker styling */
+    .custom-branch-pin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .custom-branch-pin .pin-body {
+      background: #2563eb;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
+      border: 2px solid #ffffff;
+      transition: all 0.2s ease;
+    }
+    .custom-branch-pin .pin-body i {
+      transform: rotate(45deg);
+      font-size: 15px;
+    }
+    .custom-branch-pin.active .pin-body {
+      background: #dc2626;
+      width: 44px;
+      height: 44px;
+      box-shadow: 0 6px 18px rgba(220, 38, 38, 0.55);
+      border-color: #ffffff;
+    }
+    .custom-branch-pin.active .pin-body i {
+      font-size: 18px;
+    }
+
+    /* Custom popup styles */
+    .leaflet-popup-content-wrapper {
+      padding: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+    }
+    .leaflet-popup-content {
+      margin: 0 !important;
+      line-height: 1.4;
+    }
+    .leaflet-popup-tip {
+      background: white;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800 h-screen flex flex-col overflow-hidden">
+
+  <!-- Top Navigation Header -->
+  <header class="bg-white border-b border-slate-200 z-20 flex-shrink-0 px-4 sm:px-6 py-3.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-map-location-dot text-lg"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg text-slate-900 leading-tight">FindOurStore</h1>
+          <p class="text-xs text-slate-500 font-medium">Jaringan Cabang Resmi Indonesia</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions / Mobile Toggle -->
+      <div class="flex items-center space-x-2">
+        <!-- View Toggle for Mobile Screens -->
+        <div class="flex sm:hidden bg-slate-100 p-1 rounded-xl border border-slate-200">
+          <button id="mobileViewListBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-800 shadow-sm transition">
+            <i class="fa-solid fa-list mr-1"></i> List
+          </button>
+          <button id="mobileViewMapBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+            <i class="fa-solid fa-map mr-1"></i> Peta
+          </button>
+        </div>
+        
+        <button onclick="resetMapView()" class="hidden sm:inline-flex items-center text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl border border-slate-200 transition">
+          <i class="fa-solid fa-compress mr-1.5 text-slate-500"></i> Reset Pandangan Peta
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container: Sidebar + Map -->
+  <div class="flex-1 flex flex-col sm:flex-row relative overflow-hidden">
+
+    <!-- Sidebar: Search, Filters & Branch Cards -->
+    <aside id="sidebarPanel" class="w-full sm:w-[420px] md:w-[460px] bg-white border-r border-slate-200 flex flex-col flex-shrink-0 h-full z-10 shadow-lg sm:shadow-none transition-all duration-300">
+      
+      <!-- Search & Filters Container -->
+      <div class="p-4 border-b border-slate-100 bg-white">
+        <!-- Search Input -->
+        <div class="relative mb-3">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          </span>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Cari nama cabang, jalan, atau kota..."
+            class="w-full pl-10 pr-9 py-2.5 bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-sm text-slate-900 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition duration-150"
+          >
+          <button id="clearSearchBtn" class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <!-- City filter pill list -->
+        <div>
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Pilih Kota</div>
+          <div id="cityFilterContainer" class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+            <!-- Filter pills will be injected dynamically -->
+          </div>
+        </div>
+
+        <!-- Meta count & open status filter -->
+        <div class="flex items-center justify-between mt-3 pt-2.5 border-t border-slate-100 text-xs text-slate-500">
+          <div>
+            Menampilkan: <span id="branchCounter" class="font-bold text-slate-800">0</span> Cabang
+          </div>
+          <label class="inline-flex items-center cursor-pointer select-none">
+            <input type="checkbox" id="filterOpenOnly" class="sr-only peer">
+            <div class="relative w-8 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+            <span class="ms-2 font-medium text-slate-600">Hanya Buka</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Branch Cards List (Scrollable) -->
+      <div id="branchesList" class="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/60">
+        <!-- Branch Cards injected dynamically -->
+      </div>
+      
+    </aside>
+
+    <!-- Map Container -->
+    <main id="mapPanel" class="flex-1 h-full w-full relative">
+      <div id="map" class="w-full h-full z-0"></div>
+
+      <!-- Floating Map Helper Overlay -->
+      <div class="absolute bottom-5 right-5 z-[400] flex flex-col gap-2">
+        <button onclick="centerOnUserLocation()" title="Gunakan Lokasi Saya" class="bg-white hover:bg-slate-50 text-slate-700 w-11 h-11 rounded-2xl shadow-lg border border-slate-200 flex items-center justify-center transition active:scale-95">
+          <i class="fa-solid fa-location-crosshairs text-base text-blue-600"></i>
+        </button>
+        <button onclick="resetMapView()" title="Tampilkan Semua Cabang" class="bg-white hover:bg-slate-50 text-slate-700 w-11 h-11 rounded-2xl shadow-lg border border-slate-200 flex items-center justify-center transition active:scale-95">
+          <i class="fa-solid fa-expand text-base text-slate-600"></i>
+        </button>
+      </div>
+
+      <!-- Notification Toast -->
+      <div id="toastNotification" class="hidden absolute top-5 left-1/2 -translate-x-1/2 z-[500] bg-slate-900/90 backdrop-blur-md text-white text-xs px-4 py-2.5 rounded-xl shadow-xl flex items-center space-x-2 transition-opacity duration-300">
+        <i class="fa-solid fa-circle-info text-blue-400"></i>
+        <span id="toastMessage">Pesan</span>
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    // Data Cabang Representatif di Berbagai Kota Besar Indonesia
+    const branchData = [
+      {
+        id: 1,
+        name: "Cabang Grand Indonesia",
+        city: "Jakarta",
+        address: "Grand Indonesia Mall, East Mall Lt. 3, Jl. M.H. Thamrin No.1, Menteng, Jakarta Pusat 10310",
+        phone: "+62 812-3456-7801",
+        whatsapp: "6281234567801",
+        openHour: "10:00",
+        closeHour: "22:00",
+        days: "Setiap Hari (Senin - Minggu)",
+        lat: -6.1951,
+        lng: 106.8208,
+        tags: ["Flagship Store", "Service Center"]
+      },
+      {
+        id: 2,
+        name: "Cabang Senopati Experience",
+        city: "Jakarta",
+        address: "Jl. Senopati No. 45, Selong, Kebayoran Baru, Jakarta Selatan 12110",
+        phone: "+62 812-3456-7802",
+        whatsapp: "6281234567802",
+        openHour: "08:00",
+        closeHour: "21:00",
+        days: "Senin - Sabtu",
+        lat: -6.2307,
+        lng: 106.8093,
+        tags: ["Cafe & Lounge", "Drive-Thru Pick Up"]
+      },
+      {
+        id: 3,
+        name: "Cabang Dago Heritage",
+        city: "Bandung",
+        address: "Jl. Ir. H. Juanda (Dago) No. 112, Lebakgede, Coblong, Kota Bandung 40132",
+        phone: "+62 812-3456-7803",
+        whatsapp: "6281234567803",
+        openHour: "09:00",
+        closeHour: "21:00",
+        days: "Setiap Hari",
+        lat: -6.8856,
+        lng: 107.6136,
+        tags: ["Outdoor Seating", "Free Wi-Fi"]
+      },
+      {
+        id: 4,
+        name: "Cabang Tunjungan Plaza",
+        city: "Surabaya",
+        address: "Tunjungan Plaza 6 Lt. 2 No. 18, Jl. Embong Malang No.32-36, Kedungdoro, Surabaya 60261",
+        phone: "+62 812-3456-7804",
+        whatsapp: "6281234567804",
+        openHour: "10:00",
+        closeHour: "22:00",
+        days: "Setiap Hari",
+        lat: -7.2618,
+        lng: 112.7388,
+        tags: ["Official Retail", "Trade-in Hub"]
+      },
+      {
+        id: 5,
+        name: "Cabang Sunset Road Kuta",
+        city: "Bali",
+        address: "Jl. Sunset Road No. 88X, Seminyak, Kuta, Kabupaten Badung, Bali 80361",
+        phone: "+62 812-3456-7805",
+        whatsapp: "6281234567805",
+        openHour: "09:00",
+        closeHour: "22:00",
+        days: "Setiap Hari",
+        lat: -8.7001,
+        lng: 115.1785,
+        tags: ["Tourist Center", "Multi-Language"]
+      },
+      {
+        id: 6,
+        name: "Cabang Podomoro City Deli",
+        city: "Medan",
+        address: "DeliPark Mall Ground Floor, Jl. Guru Patimpus No. 1, Kesawan, Medan Barat 20111",
+        phone: "+62 812-3456-7806",
+        whatsapp: "6281234567806",
+        openHour: "10:00",
+        closeHour: "21:30",
+        days: "Setiap Hari",
+        lat: 3.5934,
+        lng: 98.6738,
+        tags: ["Service Desk", "Lounge"]
+      },
+      {
+        id: 7,
+        name: "Cabang Malioboro City",
+        city: "Yogyakarta",
+        address: "Jl. Malioboro No. 56, Suryatmajan, Danurejan, Kota Yogyakarta 55213",
+        phone: "+62 812-3456-7807",
+        whatsapp: "6281234567807",
+        openHour: "09:00",
+        closeHour: "21:00",
+        days: "Setiap Hari",
+        lat: -7.7928,
+        lng: 110.3658,
+        tags: ["Boutique Store", "Express Pickup"]
+      },
+      {
+        id: 8,
+        name: "Cabang Trans Studio Mall",
+        city: "Makassar",
+        address: "Trans Studio Mall Makassar Lt. 1, Jl. Metro Tanjung Bunga, Maccini Sombala, Makassar 90134",
+        phone: "+62 812-3456-7808",
+        whatsapp: "6281234567808",
+        openHour: "10:00",
+        closeHour: "21:00",
+        days: "Setiap Hari",
+        lat: -5.1585,
+        lng: 119.4074,
+        tags: ["Official Retail"]
+      }
+    ];
+
+    // State Variables
+    let map;
+    let markers = {};
+    let selectedBranchId = null;
+    let selectedCity = "Semua";
+    let searchQuery = "";
+    let openOnlyFilter = false;
+
+    // Check Open/Closed status helper
+    function getStoreStatus(openHourStr, closeHourStr) {
+      const now = new Date();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      const [openH, openM] = openHourStr.split(":").map(Number);
+      const [closeH, closeM] = closeHourStr.split(":").map(Number);
+
+      const openMinutes = openH * 60 + openM;
+      const closeMinutes = closeH * 60 + closeM;
+
+      const isOpen = currentMinutes >= openMinutes && currentMinutes < closeMinutes;
+      return {
+        isOpen,
+        badgeText: isOpen ? "Buka Sekarang" : "Tutup",
+        scheduleText: `${openHourStr} - ${closeHourStr} WIB`
+      };
+    }
+
+    // Initialize Application
+    document.addEventListener("DOMContentLoaded", () => {
+      initMap();
+      renderCityFilters();
+      renderBranches();
+      setupEventListeners();
+    });
+
+    // Initialize Leaflet Map
+    function initMap() {
+      // Center default on Indonesia
+      map = L.map("map", {
+        zoomControl: false,
+        attributionControl: true
+      }).setView([-2.5489, 118.0149], 5);
+
+      // Reposition zoom control to top-right
+      L.control.zoom({ position: "topright" }).addTo(map);
+
+      // OpenStreetMap Tile Layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+      }).addTo(map);
+
+      // Add markers
+      branchData.forEach(branch => {
+        const marker = createCustomMarker(branch);
+        marker.addTo(map);
+        markers[branch.id] = marker;
+      });
+
+      // Fit bounds to all markers on initial load
+      resetMapView();
+    }
+
+    // Create custom pin marker
+    function createCustomMarker(branch) {
+      const iconHtml = `
+        <div class="custom-branch-pin" id="pin-${branch.id}">
+          <div class="pin-body">
+            <i class="fa-solid fa-store"></i>
+          </div>
+        </div>
+      `;
+
+      const customIcon = L.divIcon({
+        className: 'custom-leaflet-div-icon',
+        html: iconHtml,
+        iconSize: [40, 40],
+        iconAnchor: [20, 36],
+        popupAnchor: [0, -32]
+      });
+
+      const marker = L.marker([branch.lat, branch.lng], { icon: customIcon });
+
+      const status = getStoreStatus(branch.openHour, branch.closeHour);
+      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${branch.lat},${branch.lng}`;
+
+      const popupContent = `
+        <div class="w-64 font-sans text-slate-800">
+          <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-3.5">
+            <div class="flex items-center justify-between text-[11px] mb-1">
+              <span class="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded-full font-medium">${branch.city}</span>
+              <span class="px-2 py-0.5 rounded-full font-bold ${status.isOpen ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">
+                ${status.badgeText}
+              </span>
+            </div>
+            <h4 class="font-bold text-sm text-white leading-snug">${branch.name}</h4>
+          </div>
+          <div class="p-3.5 space-y-2 text-xs">
+            <p class="text-slate-600 leading-relaxed"><i class="fa-solid fa-location-dot text-slate-400 mr-1.5"></i>${branch.address}</p>
+            <p class="text-slate-600"><i class="fa-regular fa-clock text-slate-400 mr-1.5"></i>${status.scheduleText}</p>
+            <div class="pt-2 flex gap-1.5">
+              <a href="${googleMapsUrl}" target="_blank" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center py-1.5 rounded-lg font-medium transition text-xs">
+                <i class="fa-solid fa-diamond-turn-right mr-1"></i> Rute
+              </a>
+              <a href="https://wa.me/${branch.whatsapp}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-lg transition text-xs flex items-center justify-center" title="Chat WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+
+      marker.bindPopup(popupContent);
+
+      marker.on("click", () => {
+        selectBranch(branch.id, false);
+      });
+
+      return marker;
+    }
+
+    // Render City Filter Buttons
+    function renderCityFilters() {
+      const cities = ["Semua", ...new Set(branchData.map(b => b.city))];
+      const container = document.getElementById("cityFilterContainer");
+      
+      container.innerHTML = cities.map(city => `
+        <button 
+          onclick="filterByCity('${city}')"
+          class="city-chip whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium transition-all ${
+            selectedCity === city 
+              ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/30' 
+              : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
+          }"
+          data-city="${city}"
+        >
+          ${city}
+        </button>
+      `).join("");
+    }
+
+    // Filter Branch Data
+    function getFilteredBranches() {
+      return branchData.filter(branch => {
+        const matchesCity = selectedCity === "Semua" || branch.city === selectedCity;
+        
+        const q = searchQuery.toLowerCase().trim();
+        const matchesSearch = !q || 
+          branch.name.toLowerCase().includes(q) ||
+          branch.address.toLowerCase().includes(q) ||
+          branch.city.toLowerCase().includes(q);
+
+        const status = getStoreStatus(branch.openHour, branch.closeHour);
+        const matchesOpen = !openOnlyFilter || status.isOpen;
+
+        return matchesCity && matchesSearch && matchesOpen;
+      });
+    }
+
+    // Render branch list items
+    function renderBranches() {
+      const branchesList = document.getElementById("branchesList");
+      const filtered = getFilteredBranches();
+      
+      document.getElementById("branchCounter").textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        branchesList.innerHTML = `
+          <div class="text-center py-12 px-4">
+            <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-3 text-slate-400">
+              <i class="fa-solid fa-store-slash text-xl"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-800">Tidak ada cabang ditemukan</h3>
+            <p class="text-xs text-slate-500 mt-1 max-w-xs mx-auto">Coba ubah kata kunci pencarian atau sesuaikan pilihan filter kota.</p>
+            <button onclick="resetFilters()" class="mt-4 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 px-3.5 py-1.5 rounded-lg border border-blue-200">
+              Reset Semua Filter
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      branchesList.innerHTML = filtered.map(branch => {
+        const isSelected = branch.id === selectedBranchId;
+        const status = getStoreStatus(branch.openHour, branch.closeHour);
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${branch.lat},${branch.lng}`;
+
+        return `
+          <div 
+            id="card-${branch.id}"
+            onclick="selectBranch(${branch.id}, true)"
+            class="branch-card bg-white rounded-2xl p-4 border transition-all duration-200 cursor-pointer ${
+              isSelected 
+                ? 'border-blue-500 ring-2 ring-blue-500/20 shadow-md' 
+                : 'border-slate-200 hover:border-slate-300 hover:shadow-sm'
+            }"
+          >
+            <!-- Card Header -->
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <div>
+                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wide uppercase bg-slate-100 text-slate-600 mb-1">
+                  ${branch.city}
+                </span>
+                <h3 class="font-bold text-sm text-slate-900 group-hover:text-blue-600 transition leading-snug">
+                  ${branch.name}
+                </h3>
+              </div>
+              <span class="flex-shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                status.isOpen 
+                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                  : 'bg-rose-50 text-rose-700 border border-rose-200'
+              }">
+                <i class="fa-solid fa-circle text-[6px] mr-1 ${status.isOpen ? 'text-emerald-500' : 'text-rose-500'}"></i>
+                ${status.badgeText}
+              </span>
+            </div>
+
+            <!-- Address -->
+            <p class="text-xs text-slate-600 leading-relaxed mb-3 line-clamp-2">
+              <i class="fa-solid fa-location-dot text-slate-400 mr-1.5 w-3.5 text-center"></i>${branch.address}
+            </p>
+
+            <!-- Operational & Contact info -->
+            <div class="space-y-1.5 text-xs text-slate-500 mb-3.5">
+              <div class="flex items-center">
+                <i class="fa-regular fa-clock text-slate-400 mr-2 w-3.5 text-center"></i>
+                <span>${status.scheduleText} <span class="text-slate-400">(${branch.days})</span></span>
+              </div>
+              <div class="flex items-center">
+                <i class="fa-solid fa-phone text-slate-400 mr-2 w-3.5 text-center"></i>
+                <span>${branch.phone}</span>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              ${branch.tags.map(t => `<span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded-md font-medium">${t}</span>`).join('')}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2 pt-2 border-t border-slate-100" onclick="event.stopPropagation()">
+              <button 
+                onclick="focusBranchOnMap(${branch.id})" 
+                class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold py-2 px-3 rounded-xl transition flex items-center justify-center gap-1.5"
+              >
+                <i class="fa-solid fa-map-pin text-blue-600"></i>
+                <span>Lihat di Peta</span>
+              </button>
+
+              <a 
+                href="${googleMapsUrl}" 
+                target="_blank" 
+                class="flex-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2 px-3 rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm"
+              >
+                <i class="fa-solid fa-diamond-turn-right text-blue-400"></i>
+                <span>Petunjuk Arah</span>
+              </a>
+
+              <a 
+                href="https://wa.me/${branch.whatsapp}" 
+                target="_blank" 
+                title="Hubungi WhatsApp"
+                class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-medium p-2 w-8 h-8 rounded-xl transition flex items-center justify-center flex-shrink-0"
+              >
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Select branch handler
+    function selectBranch(id, panToMap = true) {
+      selectedBranchId = id;
+      const branch = branchData.find(b => b.id === id);
+      if (!branch) return;
+
+      // Update active pin styling
+      document.querySelectorAll(".custom-branch-pin").forEach(el => el.classList.remove("active"));
+      const activePin = document.getElementById(`pin-${id}`);
+      if (activePin) {
+        activePin.classList.add("active");
+      }
+
+      // Re-render cards so active state applies
+      renderBranches();
+
+      // Scroll selected card into view in sidebar smoothly
+      const targetCard = document.getElementById(`card-${id}`);
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+
+      // Pan map & trigger popup
+      if (panToMap && markers[id]) {
+        map.flyTo([branch.lat, branch.lng], 15, {
+          animate: true,
+          duration: 1.2
+        });
+        markers[id].openPopup();
+      }
+
+      // If mobile view is active and user clicked a card action, switch to map
+      if (window.innerWidth < 640 && panToMap) {
+        showMobileMap();
+      }
+    }
+
+    // Direct zoom from button
+    function focusBranchOnMap(id) {
+      selectBranch(id, true);
+    }
+
+    // Filter by City Pill
+    function filterByCity(city) {
+      selectedCity = city;
+      renderCityFilters();
+      renderBranches();
+      adjustMapToFilteredBranches();
+    }
+
+    // Adjust Map bounds to show only filtered branches
+    function adjustMapToFilteredBranches() {
+      const filtered = getFilteredBranches();
+      if (filtered.length > 0) {
+        const bounds = L.latLngBounds(filtered.map(b => [b.lat, b.lng]));
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+      }
+    }
+
+    // Reset filters
+    function resetFilters() {
+      selectedCity = "Semua";
+      searchQuery = "";
+      openOnlyFilter = false;
+      document.getElementById("searchInput").value = "";
+      document.getElementById("filterOpenOnly").checked = false;
+      document.getElementById("clearSearchBtn").classList.add("hidden");
+      renderCityFilters();
+      renderBranches();
+      resetMapView();
+    }
+
+    // Reset Map View to all branches
+    function resetMapView() {
+      const bounds = L.latLngBounds(branchData.map(b => [b.lat, b.lng]));
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
+
+    // Get User Geolocation and calculate closest branch
+    function centerOnUserLocation() {
+      if (!navigator.geolocation) {
+        showToast("Geolocation tidak didukung pada browser Anda.");
+        return;
+      }
+
+      showToast("Mencari lokasi Anda...");
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLat = position.coords.latitude;
+          const userLng = position.coords.longitude;
+
+          // Find closest branch
+          let closestBranch = null;
+          let minDistance = Infinity;
+
+          branchData.forEach(branch => {
+            const dist = getDistanceInKm(userLat, userLng, branch.lat, branch.lng);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestBranch = branch;
+            }
+          });
+
+          // Zoom into user
+          map.flyTo([userLat, userLng], 12);
+
+          // Add temporary user pulse marker
+          const userCircle = L.circleMarker([userLat, userLng], {
+            radius: 8,
+            fillColor: "#2563eb",
+            color: "#ffffff",
+            weight: 3,
+            opacity: 1,
+            fillOpacity: 0.9
+          }).addTo(map);
+
+          userCircle.bindPopup(`<b>Lokasi Anda</b><br>Cabang terdekat: <b>${closestBranch.name}</b> (${minDistance.toFixed(1)} km)`).openPopup();
+
+          showToast(`Cabang terdekat: ${closestBranch.name} (~${minDistance.toFixed(1)} km)`);
+
+          setTimeout(() => {
+            selectBranch(closestBranch.id, true);
+          }, 1500);
+        },
+        (error) => {
+          showToast("Izin lokasi tidak diberikan atau gagal didapatkan.");
+        }
+      );
+    }
+
+    // Calculate distance in KM using Haversine Formula
+    function getDistanceInKm(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Radius bumi dalam KM
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    // Show temporary toast message
+    function showToast(message) {
+      const toast = document.getElementById("toastNotification");
+      const msg = document.getElementById("toastMessage");
+      msg.textContent = message;
+      toast.classList.remove("hidden");
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 3500);
+    }
+
+    // Setup input and mobile toggle event listeners
+    function setupEventListeners() {
+      const searchInput = document.getElementById("searchInput");
+      const clearSearchBtn = document.getElementById("clearSearchBtn");
+      const filterOpenOnly = document.getElementById("filterOpenOnly");
+
+      // Search input handler
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        if (searchQuery.length > 0) {
+          clearSearchBtn.classList.remove("hidden");
+        } else {
+          clearSearchBtn.classList.add("hidden");
+        }
+        renderBranches();
+        adjustMapToFilteredBranches();
+      });
+
+      // Clear search
+      clearSearchBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        searchQuery = "";
+        clearSearchBtn.classList.add("hidden");
+        renderBranches();
+        adjustMapToFilteredBranches();
+      });
+
+      // Open now checkbox toggle
+      filterOpenOnly.addEventListener("change", (e) => {
+        openOnlyFilter = e.target.checked;
+        renderBranches();
+        adjustMapToFilteredBranches();
+      });
+
+      // Mobile toggles
+      const mobileListBtn = document.getElementById("mobileViewListBtn");
+      const mobileMapBtn = document.getElementById("mobileViewMapBtn");
+
+      if (mobileListBtn && mobileMapBtn) {
+        mobileListBtn.addEventListener("click", () => showMobileList());
+        mobileMapBtn.addEventListener("click", () => showMobileMap());
+      }
+    }
+
+    // Mobile View Toggle Helpers
+    function showMobileList() {
+      const sidebar = document.getElementById("sidebarPanel");
+      const mapPanel = document.getElementById("mapPanel");
+      const listBtn = document.getElementById("mobileViewListBtn");
+      const mapBtn = document.getElementById("mobileViewMapBtn");
+
+      sidebar.classList.remove("hidden");
+      mapPanel.classList.add("hidden");
+
+      listBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-800 shadow-sm transition";
+      mapBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+    }
+
+    function showMobileMap() {
+      const sidebar = document.getElementById("sidebarPanel");
+      const mapPanel = document.getElementById("mapPanel");
+      const listBtn = document.getElementById("mobileViewListBtn");
+      const mapBtn = document.getElementById("mobileViewMapBtn");
+
+      sidebar.classList.add("hidden");
+      mapPanel.classList.remove("hidden");
+
+      mapBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-800 shadow-sm transition";
+      listBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+
+      // Trigger Leaflet resize calculation when container unhides
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 100);
+    }
+  </script>
+</body>
+</html>

@@ -21,11 +21,12 @@ class CareerController extends FrontEndController
     public function index(Request $request){
         $data['page'] = json_decode(Pages::where('types',Constant::PAGES_TYPES_CAREER)->first()->content);
         $data['locations'] = Location::get();
+        $data['careers'] = Career::with('location')->active()->orderBy('created_at','desc')->limit(6)->get();
         return view('frontend.pages.career',$data);
     }
 
     public function loadMore(Request $request){
-        $datas = Career::active()->orderBy('created_at','desc');
+        $datas = Career::with('location')->active()->orderBy('created_at','desc');
 
         if(!empty($request->category)) $datas->where('category',$request->category);
         if(!empty($request->types)) $datas->where('types',$request->types);
@@ -36,19 +37,33 @@ class CareerController extends FrontEndController
             });
         }
 
+        $total = $datas->count();
+        $items = $datas
+            ->offset(max(0, ((int)$request->offset - 1)))
+            ->limit(6)
+            ->get()
+            ->map(function ($career) {
+                $career->category_label = Constant::CAREER_CATEGORY_LIST[$career->category] ?? $career->category;
+                $career->types_label = Constant::CAREER_TYPES_LIST[$career->types] ?? $career->types;
+                $locNames = [];
+                foreach ($career->location as $loc) {
+                    $locNames[] = $loc->name;
+                }
+                $career->location_label = implode(', ', $locNames);
+                return $career;
+            });
+
         return response()->json([
-            'total'=> $datas->count(),
-            'data'=>$datas
-                ->offset(($request->offset-1))
-                ->limit(6)
-                ->get(),
+            'total' => $total,
+            'data' => $items,
         ]);
     }
 
-    public function detail($slug){
-        $data['career'] = Career::where('slug',$slug)->first();
+    public function detail($slug = null){
+        if (empty($slug)) return redirect()->route('career');
+        $data['career'] = Career::with('location')->where('slug',$slug)->first();
 
-        if(empty($data)) return redirect('article');
+        if(empty($data['career'])) return redirect()->route('career');
 
         $data['location'] = [];
         foreach ($data['career']->location as $location){
@@ -102,6 +117,3 @@ class CareerController extends FrontEndController
     }
 
 }
-
-
-
