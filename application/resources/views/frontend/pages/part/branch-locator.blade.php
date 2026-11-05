@@ -24,7 +24,7 @@
                 'days' => 'Senin - Sabtu',
                 'lat' => $lat,
                 'lng' => $lng,
-                'tags' => ['Cabang Resmi OJK', 'Gadai Emas & Elektronik'],
+                'tags' => ['Cabang Resmi OJK', 'Gadai Elektronik'],
             ];
         }
     } else {
@@ -41,7 +41,7 @@
                 'days' => 'Senin - Sabtu',
                 'lat' => -6.1675,
                 'lng' => 106.9003,
-                'tags' => ['Kantor Pusat', 'Gadai Emas & Elektronik'],
+                'tags' => ['Kantor Pusat', 'Gadai Elektronik'],
             ],
             [
                 'id' => 2,
@@ -55,7 +55,7 @@
                 'days' => 'Senin - Sabtu',
                 'lat' => -6.8856,
                 'lng' => 107.6136,
-                'tags' => ['Cabang Resmi OJK', 'Gadai Emas & Elektronik'],
+                'tags' => ['Cabang Resmi OJK', 'Gadai Elektronik'],
             ],
             [
                 'id' => 3,
@@ -69,7 +69,7 @@
                 'days' => 'Senin - Sabtu',
                 'lat' => 1.1290,
                 'lng' => 104.0530,
-                'tags' => ['Cabang Resmi OJK', 'Gadai Emas & Elektronik'],
+                'tags' => ['Cabang Resmi OJK', 'Gadai Elektronik'],
             ],
         ];
     }
@@ -113,13 +113,13 @@
         width: 42px;
         height: 42px;
         border-radius: 12px;
-        background: linear-gradient(135deg, var(--primary) 0%, #d97706 100%);
-        color: #111827;
+        background: linear-gradient(135deg, #FF6E2B 0%, #F49A67 100%);
+        color: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 18px;
-        box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+        box-shadow: 0 4px 14px rgba(255, 110, 43, 0.3);
     }
 
     .locator-brand-title {
@@ -578,7 +578,7 @@
         justify-content: center;
     }
     .custom-branch-pin .pin-body {
-        background: #d97706;
+        background: #004EBF;
         color: white;
         width: 36px;
         height: 36px;
@@ -587,7 +587,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 14px rgba(217, 119, 6, 0.5);
+        box-shadow: 0 4px 14px rgba(0, 78, 191, 0.5);
         border: 2px solid #ffffff;
         transition: all 0.2s ease;
     }
@@ -596,10 +596,10 @@
         font-size: 15px;
     }
     .custom-branch-pin.active .pin-body {
-        background: #dc2626;
+        background: #FF6E2B;
         width: 44px;
         height: 44px;
-        box-shadow: 0 6px 18px rgba(220, 38, 38, 0.55);
+        box-shadow: 0 6px 18px rgba(255, 110, 43, 0.55);
     }
     .custom-branch-pin.active .pin-body i {
         font-size: 18px;

@@ -1,5 +1,5 @@
 // Global state
-let currentTab = 'emas';
+let currentTab = 'elektronik';
 let currentSlide = 0;
 
 // Elements
@@ -35,7 +35,8 @@ const ELECTRONIC_FACTORS = {
     'smartphone': 0.55,
     'laptop': 0.50,
     'camera': 0.60,
-    'tv': 0.45
+    'tv': 0.45,
+    'gadget': 0.50
 };
 
 function getWaPhone() {
@@ -170,5 +171,5 @@ if (testiContainer && testiContainer.children.length > 1) {
 
 // Initialize calculations
 window.addEventListener('DOMContentLoaded', () => {
-    calculateGold();
+    calculateElectronics();
 });

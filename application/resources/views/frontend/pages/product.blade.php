@@ -5,7 +5,7 @@
 @section('content')
 @php
     $waNumber = preg_replace('/[^0-9]/', '', @$CONF->whatsapp ?: '6281181126771');
-    $prodImg = !empty($product->image) ? url('storage/'.$product->image) : url('serbamulia/assets/emas.jpg');
+    $prodImg = !empty($product->image) ? url('storage/'.$product->image) : url('serbamulia/assets/elektronik.jpg');
     $advantages = !empty($product->advantages) ? json_decode($product->advantages) : [];
 @endphp
 
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="service-image-box">
-                    <img src="{{ $prodImg }}" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/emas.jpg') }}';" alt="{{ $product->title }}" class="service-image">
+                    <img src="{{ $prodImg }}" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/elektronik.jpg') }}';" alt="{{ $product->title }}" class="service-image">
                 </div>
             </div>
         </div>

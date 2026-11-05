@@ -21,7 +21,12 @@ class FrontEndController extends Controller
     {
         $CONF = Config::find(1);
         View::share('CONF',$CONF);
-        $products = Product::active()->orderBy('position','asc')->get();
+        $products = Product::active()
+            ->where('title', 'not like', '%emas%')
+            ->where('title', 'not like', '%logam%')
+            ->where('slug', 'not like', '%emas%')
+            ->orderBy('position','asc')
+            ->get();
         View::share('products',$products);
         $product_config = json_decode(Pages::where('types',Constant::PAGES_TYPES_PRODUCT)->first()->content);
         View::share('product_config',$product_config);

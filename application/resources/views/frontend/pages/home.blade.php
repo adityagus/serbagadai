@@ -6,13 +6,13 @@
 @php
     $waNumber = preg_replace('/[^0-9]/', '', @$CONF->whatsapp ?: '6281181126771');
     $heroBg = !empty($page->hero_background) ? url('storage/'.$page->hero_background) : url('serbamulia/assets/hero_bg.jpg');
-    $heroTitle = (!empty($page->hero_header) && trim($page->hero_header) !== '.')
+    $heroTitle = (!empty($page->hero_header) && trim($page->hero_header) !== '.' && stripos($page->hero_header, 'emas') === false)
         ? $page->hero_header
-        : 'Solusi Keuangan Cepat, <br><span class="gradient-text">Aman & Transparan</span>';
-    $heroSub = (!empty($page->hero_sub_header) && trim($page->hero_sub_header) !== '.')
+        : 'Solusi Dana Cepat <br><span class="gradient-text">Gadai Elektronik</span>';
+    $heroSub = (!empty($page->hero_sub_header) && trim($page->hero_sub_header) !== '.' && stripos($page->hero_sub_header, 'emas') === false)
         ? $page->hero_sub_header
-        : 'Gadaikan Emas, Logam Mulia, atau Barang Elektronik Anda dengan nilai pencairan tinggi hingga 100%, sewa modal rendah, dan tanpa proses berbelit-belit.';
-    $aboutImg = !empty($page->about_image) ? url('storage/'.$page->about_image) : url('serbamulia/assets/emas.jpg');
+        : 'Gadaikan Smartphone, Laptop, Kamera, TV, dan Gadget Elektronik Anda dengan nilai taksiran tinggi, sewa modal ringan, serta jaminan penyimpanan 100% aman berizin OJK.';
+    $aboutImg = !empty($page->about_image) ? url('storage/'.$page->about_image) : url('serbamulia/assets/elektronik.jpg');
 @endphp
 
 <!-- Hero Section -->
@@ -23,10 +23,10 @@
         <div class="hero-text-side">
             <div class="badge-ojk">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L3 7V12C3 16.5 6.8 20.7 12 22C17.2 20.7 21 16.5 21 12V7L12 2Z" fill="#F59E0B" />
+                    <path d="M12 2L3 7V12C3 16.5 6.8 20.7 12 22C17.2 20.7 21 16.5 21 12V7L12 2Z" fill="#02C3A8" />
                     <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span>Berizin & Diawasi oleh OJK</span>
+                <span>Gadai Elektronik Berizin & Diawasi OJK</span>
             </div>
             <h1 class="hero-title">{!! $heroTitle !!}</h1>
             <p class="hero-subtitle">{!! $heroSub !!}</p>
@@ -37,15 +37,15 @@
                 </div>
                 <div class="hero-feature-item">
                     <span class="feature-icon">✓</span>
-                    <span>Asuransi Jiwa & Barang</span>
+                    <span>Unit Disegel & Diasuransikan</span>
                 </div>
                 <div class="hero-feature-item">
                     <span class="feature-icon">✓</span>
-                    <span>Sewa Modal Mulai 1.15%</span>
+                    <span>Cair Instan ± 8 Menit</span>
                 </div>
             </div>
             <div class="hero-buttons">
-                <a href="{{ route('simulasi') }}" class="btn btn-primary">Simulasi Gadai</a>
+                <a href="{{ route('simulasi') }}" class="btn btn-primary">Simulasi Gadai Elektronik</a>
                 @if(!empty($page->hero_action) && $page->hero_action !== '#')
                     <a href="{{ $page->hero_action }}" target="_blank" class="btn btn-secondary">Ajukan Sekarang</a>
                 @else
@@ -57,39 +57,40 @@
         <!-- Hero Right Visual Showcase (CMS Hero Sliders / Visual Highlight Card) -->
         <div class="why-image-side">
             <div class="neon-card-glow"></div>
-            <div class="info-showcase-card" style="padding: 28px;">
-                @if(!empty($page->hero_sliders) && count($page->hero_sliders) > 0)
+            <div class="" style="padding: 28px;">
+                <img src="{{ url('serbamulia/assets/serigigi.png') }}" alt="Gadai Elektronik" style="width: 120%;; object-fit: cover;">
+                {{-- @if(!empty($page->hero_sliders) && count($page->hero_sliders) > 0)
                     @php
                         $firstSlide = $page->hero_sliders[0];
-                        $slideImg = !empty($firstSlide->image) ? url('storage/'.$firstSlide->image) : url('serbamulia/assets/emas.jpg');
+                        $slideImg = !empty($firstSlide->image) ? url('storage/'.$firstSlide->image) : url('serbamulia/assets/elektronik.jpg');
                     @endphp
                     <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; height: 240px; position: relative;">
-                        <img src="{{ $slideImg }}" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/emas.jpg') }}';" alt="{{ $firstSlide->title ?? 'Gadai Mulia' }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="{{ $slideImg }}" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/elektronik.jpg') }}';" alt="{{ $firstSlide->title ?? 'Serba Gadai Elektronik' }}" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 @else
                     <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; height: 220px; position: relative;">
-                        <img src="{{ url('serbamulia/assets/emas.jpg') }}" alt="Gadai Emas & Elektronik" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="{{ url('serbamulia/assets/elektronik.jpg') }}" alt="Gadai Barang Elektronik" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 @endif
 
                 <div class="showcase-body" style="margin-bottom: 20px;">
                     <div class="showcase-row">
-                        <span>Pencairan Pinjaman</span>
-                        <span class="highlight-gold">Hingga 100% Taksiran</span>
+                        <span>Kategori Barang</span>
+                        <span class="highlight-gold">HP, Laptop, Kamera & TV</span>
                     </div>
                     <div class="showcase-row">
                         <span>Waktu Pencairan</span>
                         <span class="highlight-green">± 8 Menit Cair</span>
                     </div>
                     <div class="showcase-row">
-                        <span>Keamanan Jaminan</span>
-                        <span class="highlight-blue">100% Diasuransikan</span>
+                        <span>Keamanan Perangkat</span>
+                        <span class="highlight-blue">100% Bersegel & Asuransi</span>
                     </div>
                 </div>
 
                 <a href="{{ route('simulasi') }}" class="btn btn-primary btn-block">
-                    Hitung Simulasi Taksiran →
-                </a>
+                    Hitung Simulasi Elektronik →
+                </a> --}}
             </div>
         </div>
     </div>
@@ -111,13 +112,13 @@
 <section class="about-section" id="tentang">
     <div class="container about-grid">
         <div class="about-image-side">
-            <img src="{{ $aboutImg }}" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/emas.jpg') }}';" alt="Tentang {{ @$CONF->title ?? 'Gadai Mulia' }}" class="about-img">
+            <img src="{{ $aboutImg }}" onerror="this.onerror=null;this.src='{{ url('serbamulia/assets/elektronik.jpg') }}';" alt="Tentang {{ @$CONF->title ?? 'Serba Gadai' }}" class="about-img">
             <div class="glowing-border-decoration"></div>
         </div>
         <div class="about-text-side">
             <span class="section-badge">SIAPA KAMI</span>
-            <h2 class="section-title-dark">{{ !empty($page->about_title) ? $page->about_title : 'Mitra Terpercaya Solusi Finansial Anda' }}</h2>
-            <p class="section-desc text-justify">{{ !empty($page->about_content) ? $page->about_content : 'Gadai Mulia berdiri sejak Agustus 2018 sebagai Perusahaan Pergadaian Swasta resmi berizin OJK. Kami melayani wilayah DKI Jakarta, Jawa Barat, dan Kepulauan Riau.' }}</p>
+            <h2 class="section-title-dark">{{ !empty($page->about_title) ? $page->about_title : 'Spesialis Gadai Elektronik Cepat & Terpercaya' }}</h2>
+            <p class="section-desc text-justify">{{ (!empty($page->about_content) && stripos($page->about_content, 'emas') === false) ? $page->about_content : 'Serba Gadai hadir sebagai solusi gadai barang elektronik modern dan digital yang resmi berizin serta diawasi oleh OJK. Kami menerima jaminan Smartphone, Laptop, Kamera, TV, dan Gadget dengan proses pencairan super cepat, transparan, dan penyimpanan bersegel 100% aman.' }}</p>
             
             <div class="stats-grid" style="margin-bottom: 28px;">
                 <div class="stat-card">
@@ -130,7 +131,7 @@
                 </div>
                 <div class="stat-card">
                     <h4 class="stat-number">100%</h4>
-                    <p class="stat-label">Barang Diasuransikan</p>
+                    <p class="stat-label">Unit Diasuransikan</p>
                 </div>
             </div>
 
@@ -143,16 +144,16 @@
 <section class="products-section" id="layanan">
     <div class="container">
         <div class="section-header-center">
-            <span class="section-badge center">LAYANAN KAMI</span>
-            <h2 class="section-title-dark text-center">{{ !empty($page->product_title) ? $page->product_title : 'Pilihan Produk Gadai yang Sesuai Kebutuhan Anda' }}</h2>
-            <p class="section-desc-center text-center">{{ !empty($page->product_sub_title) ? $page->product_sub_title : 'Kami menawarkan berbagai pilihan produk gadai fleksibel dengan penaksiran yang adil dan transparan.' }}</p>
+            <span class="section-badge center">LAYANAN GADAI ELEKTRONIK</span>
+            <h2 class="section-title-dark text-center">Layanan Gadai Barang Elektronik Kami</h2>
+            <p class="section-desc-center text-center">Penaksiran perangkat elektronik secara objektif sesuai harga pasar terkini dengan pencairan dana instan.</p>
         </div>
 
         <div class="products-grid">
             @if(!empty($products) && count($products) > 0)
                 @foreach($products as $idx => $product)
                     @php
-                        $fallbackAsset = ($idx % 2 == 0) ? url('serbamulia/assets/emas.jpg') : url('serbamulia/assets/elektronik.jpg');
+                        $fallbackAsset = url('serbamulia/assets/elektronik.jpg');
                         $prodImg = !empty($product->image) ? url('storage/'.$product->image) : (!empty($product->icon) ? url('storage/'.$product->icon) : $fallbackAsset);
                         $advantages = !empty($product->advantages) ? json_decode($product->advantages) : [];
                     @endphp
@@ -174,26 +175,56 @@
                             @endif
                             <div style="display: flex; gap: 10px; margin-top: auto;">
                                 <a href="{{ route('product.detail', ['slug' => $product->slug]) }}" class="btn btn-outline btn-sm" style="flex: 1;">Lihat Detail</a>
-                                <a href="{{ !empty($product->call_action) ? $product->call_action : 'https://api.whatsapp.com/send?phone='.$waNumber.'&text=Halo%20Gadai%20Mulia%20saya%20tertarik%20dengan%20'.urlencode($product->title) }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1;">Ajukan</a>
+                                <a href="{{ !empty($product->call_action) ? $product->call_action : 'https://api.whatsapp.com/send?phone='.$waNumber.'&text=Halo%20Serba%20Gadai%20saya%20tertarik%20dengan%20'.urlencode($product->title) }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1;">Ajukan</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
             @else
-                <!-- Default fallback cards if CMS products empty -->
+                <!-- Default Elektronik cards if CMS products empty -->
                 <div class="product-card">
                     <div class="product-img-wrapper">
-                        <img src="{{ url('serbamulia/assets/emas.jpg') }}" alt="Gadai Emas" class="product-img">
+                        <img src="{{ url('serbamulia/assets/elektronik.jpg') }}" alt="Gadai Smartphone & Tablet" class="product-img">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">Gadai Emas / Logam Mulia</h3>
-                        <p class="product-desc">Pinjaman dana cepat dengan jaminan emas perhiasan atau logam mulia. Penaksiran nilai emas tinggi sesuai harga pasar harian resmi.</p>
+                        <h3 class="product-title">Gadai Smartphone & Tablet</h3>
+                        <p class="product-desc">Pinjaman dana tunai cepat dengan jaminan iPhone, Samsung Galaxy, iPad, dan berbagai merek smartphone Android pilihan.</p>
                         <ul class="product-features">
-                            <li>LTV hingga 100% nilai emas</li>
-                            <li>Bunga flat & kompetitif</li>
-                            <li>Penyimpanan aman di deposit box</li>
+                            <li>Taksiran tinggi sesuai harga pasar</li>
+                            <li>Data privasi aman & unit disegel</li>
+                            <li>Cair instan dalam ± 8 menit</li>
                         </ul>
-                        <a href="https://api.whatsapp.com/send?phone={{ $waNumber }}&text=Halo%20Gadai%20Mulia%20saya%20tertarik%20dengan%20Gadai%20Emas" target="_blank" class="btn btn-outline btn-sm">Hubungi Kami</a>
+                        <a href="{{ route('simulasi') }}" class="btn btn-primary btn-sm">Simulasi Sekarang</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="{{ url('serbamulia/assets/elektronik.jpg') }}" alt="Gadai Laptop & MacBook" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gadai Laptop & MacBook</h3>
+                        <p class="product-desc">Solusi dana mendesak dengan jaminan MacBook, Laptop Gaming, maupun Ultrabook kerja dengan penyimpanan ruang khusus.</p>
+                        <ul class="product-features">
+                            <li>Menerima berbagai merek & spesifikasi</li>
+                            <li>Penyimpanan bebas lembap & bersegel</li>
+                            <li>100% dilindungi asuransi barang</li>
+                        </ul>
+                        <a href="{{ route('simulasi') }}" class="btn btn-primary btn-sm">Simulasi Sekarang</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="{{ url('serbamulia/assets/elektronik.jpg') }}" alt="Gadai Kamera, TV & Konsol" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gadai Kamera, TV & Gadget</h3>
+                        <p class="product-desc">Terima gadai Kamera Mirrorless/DSLR, Smart TV LED, PlayStation 5, Nintendo Switch, dan perangkat elektronik lainnya.</p>
+                        <ul class="product-features">
+                            <li>Proses penaksiran transparan & cepat</li>
+                            <li>Syarat mudah cukup bawa KTP</li>
+                            <li>Sewa modal ringan & kompetitif</li>
+                        </ul>
+                        <a href="{{ route('simulasi') }}" class="btn btn-primary btn-sm">Simulasi Sekarang</a>
                     </div>
                 </div>
             @endif

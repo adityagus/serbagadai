@@ -3,14 +3,9 @@
     <div class="container footer-grid">
         <div class="footer-brand">
             <div class="footer-logo-brand">
-                <div class="logo-shield-crop">
-                    <img src="{{ url('serbamulia/assets/logo.png') }}" alt="{{ @$CONF->title ?? 'Gadai Mulia' }}" class="logo-img-source">
-                </div>
-                <div class="logo-text-crop">
-                    <img src="{{ url('serbamulia/assets/logo.png') }}" alt="{{ @$CONF->title ?? 'Gadai Mulia' }}" class="logo-img-source">
-                </div>
+                <img src="{{ url('serbamulia/assets/logo-white.png') }}" alt="{{ @$CONF->title ?? 'Serba Gadai' }}" class="brand-logo-img">
             </div>
-            <p class="brand-desc">{{ !empty($CONF->about) ? $CONF->about : 'Gadai Mulia memberikan solusi finansial cepat, aman, dan terpercaya dengan jaminan emas, logam mulia, dan barang elektronik resmi di bawah pengawasan OJK.' }}</p>
+            <p class="brand-desc">Serba Gadai memberikan solusi finansial cepat, aman, dan terpercaya khusus layanan gadai barang elektronik (Smartphone, Laptop, Kamera, TV, & Gadget) resmi di bawah pengawasan OJK.</p>
             <div class="ojk-logo-footer">
                 <div class="ojk-seal">TERDAFTAR & DIAWASI OJK</div>
             </div>

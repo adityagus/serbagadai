@@ -18,12 +18,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ @$CONF->title ?? 'Gadai Mulia' }} — @yield('pageTitle', 'Solusi Keuangan Premium & Terpercaya')</title>
-    <meta name="description" content="{{ @$CONF->about ?? 'Gadai Mulia memberikan solusi finansial cepat, aman, dan terpercaya dengan jaminan emas, logam mulia, dan barang elektronik resmi di bawah pengawasan OJK.' }}">
+    <title>{{ @$CONF->title ?? 'Serba Gadai' }} — @yield('pageTitle', 'Solusi Gadai Elektronik Cepat, Aman & Terpercaya')</title>
+    <meta name="description" content="Serba Gadai memberikan solusi finansial cepat, aman, dan terpercaya dengan jaminan barang elektronik (Smartphone, Laptop, Kamera, TV, & Gadget) resmi di bawah pengawasan OJK.">
 
     <!-- Favicons -->
-    <link href="{{ !empty($CONF->icon) ? url('storage/'.$CONF->icon) : url('serbamulia/assets/logo_shield.png') }}" rel="icon">
-    <link href="{{ !empty($CONF->icon) ? url('storage/'.$CONF->icon) : url('serbamulia/assets/logo_shield.png') }}" rel="apple-touch-icon">
+    <link href="{{ !empty($CONF->icon) ? url('storage/'.$CONF->icon) : url('serbamulia/assets/logo.png') }}" rel="icon">
+    <link href="{{ !empty($CONF->icon) ? url('storage/'.$CONF->icon) : url('serbamulia/assets/logo.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

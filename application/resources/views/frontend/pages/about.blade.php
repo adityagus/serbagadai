@@ -18,12 +18,12 @@
         <div class="about-detail-grid">
             <div>
                 <h2 class="section-title-dark">Sejarah & Profil Singkat</h2>
-                @if(!empty($page->general_content))
+                @if(!empty($page->general_content) && stripos($page->general_content, 'emas') === false)
                     <div class="cms-rich-content text-justify">
                         {!! $page->general_content !!}
                     </div>
                 @else
-                    <p class="section-text text-justify">Gadai Mulia didirikan pada bulan Agustus 2018 dengan komitmen menjadi solusi dana cepat bagi masyarakat dengan jaminan emas perhiasan, logam mulia, dan barang elektronik. Dalam perjalanannya, Gadai Mulia senantiasa mematuhi regulasi keuangan yang ketat demi menjaga kenyamanan dan kepercayaan para nasabah.</p>
+                    <p class="section-text text-justify">Serba Gadai didirikan pada bulan Agustus 2018 dengan komitmen menjadi solusi dana cepat bagi masyarakat khusus layanan gadai barang elektronik (Smartphone, Laptop, Kamera, TV, & Gadget). Dalam perjalanannya, Serba Gadai senantiasa mematuhi regulasi keuangan yang ketat di bawah pengawasan OJK demi menjaga kenyamanan dan kepercayaan para nasabah.</p>
                 @endif
 
                 <div class="license-list">
@@ -143,7 +143,7 @@
                 @foreach($page->activities as $activity)
                     <div class="art-card activity-item" data-category="{{ $activity->category }}" style="{{ $activity->category == 'MARKETING' ? '' : 'display: none;' }}">
                         <div class="art-img-wrapper" style="height: 240px;">
-                            <img src="{{ url('storage/'.$activity->image) }}" alt="{{ $activity->title ?? 'Kegiatan' }}" class="art-img" onerror="this.src='{{ url('serbamulia/assets/emas.jpg') }}'">
+                            <img src="{{ url('storage/'.$activity->image) }}" alt="{{ $activity->title ?? 'Kegiatan' }}" class="art-img" onerror="this.src='{{ url('serbamulia/assets/elektronik.jpg') }}'">
                         </div>
                         @if(!empty($activity->title))
                         <div class="art-content" style="padding: 16px 20px;">

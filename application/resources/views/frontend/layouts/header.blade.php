@@ -2,15 +2,14 @@
 <header class="navbar-container">
     <div class="container navbar">
         <a href="{{ route('home') }}" class="logo-area">
-            <div class="logo-shield-crop">
-                <img src="{{ url('serbamulia/assets/logo.png') }}" alt="{{ @$CONF->title ?? 'Gadai Mulia' }}" class="logo-img-source">
-            </div>
-            <div class="logo-text-crop">
-                <img src="{{ url('serbamulia/assets/logo.png') }}" alt="{{ @$CONF->title ?? 'Gadai Mulia' }}" class="logo-img-source">
-            </div>
+            {{-- jika light mode --}}
+            <img src="{{ url('serbamulia/assets/logo.png') }}" alt="{{ @$CONF->title ?? 'Serba Gadai' }}" class="brand-logo-img brand-logo-light">
+            {{-- jika dark mode --}}
+            <img src="{{ url('serbamulia/assets/logo-white.png') }}" alt="{{ @$CONF->title ?? 'Serba Gadai' }}" class="brand-logo-img brand-logo-dark" style="height: 50px;">
         </a>
 
         <nav class="nav-links">
+            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
             <a href="{{ route('simulasi') }}" class="nav-link {{ request()->routeIs('simulasi*') ? 'active' : '' }}">Simulasi</a>
             <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Tentang</a>
 
