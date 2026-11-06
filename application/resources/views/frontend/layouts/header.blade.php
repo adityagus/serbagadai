@@ -9,8 +9,6 @@
         </a>
 
         <nav class="nav-links">
-            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
-            <a href="{{ route('simulasi') }}" class="nav-link {{ request()->routeIs('simulasi*') ? 'active' : '' }}">Simulasi</a>
             <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Tentang</a>
 
             <div class="nav-dropdown">

@@ -101,7 +101,7 @@
     <div class="container trust-container">
         <span class="trust-label">DISETUJUI & DIAWASI OLEH</span>
         <div class="trust-logos">
-            <span class="ojk-logo-text">OJK</span>
+            <span class="trus-label">OJK</span>
             <span class="logo-divider">|</span>
             <span class="insurance-badge">Barang Jaminan 100% Aman & Diasuransikan</span>
         </div>

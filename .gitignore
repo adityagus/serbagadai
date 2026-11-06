@@ -38,6 +38,9 @@ bootstrap/cache/*.php
 # Storage, Uploads & Media
 # ==========================================
 /storage/*
+/storage/app/*
+/storage/framework/*
+/storage/logs/*
 !/storage/.gitignore
 
 /application/storage/about/
