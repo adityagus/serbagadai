@@ -39,6 +39,8 @@
                         <br/>
                         <a href="{{url('storage/'.@$content->hero_background)}}" target="_blank" title="preview"><img style="background-color: #e1e1e1" src="{{url('storage/'.@$content->hero_background)}}" width="100" height="100"></a>
                     @endif
+                    <br/>
+                    <button type="button" class="btn btn-danger" onclick="deleteHero()">Hapus</button>
                 </div>
             </div>
         </div>
@@ -122,6 +124,61 @@
                         });
                     }else{
                         swal('Data tidak jadi disimpan');
+                    }
+                });
+        }
+        function deleteHero(){
+            swal({
+                title: "Yakin Hapus Data?",
+                text : "Data akan dihapus",
+                icon: "warning",
+                buttons: {
+                    cancel:true,
+                    confirm: {
+                        text:'Hapus!',
+                        closeModal: false,
+                    },
+                },
+            })
+                .then((process) => {
+                    if(process){
+                        $.ajax({
+                            url: "{{ route('admin.pages.home.hero.delete') }}",
+                            type: "POST",
+                            data: new FormData($("#form-hero")[0]),
+                            processData: false,
+                            contentType: false,
+                            async:false,
+                            success: function(response) {
+                                if(response.status){
+                                    swal({
+                                        title: 'Berhasil Hapus Data',
+                                        text: response.message,
+                                        icon: 'success',
+                                        timer: '1500'
+                                    }).then(()=>{
+                                        location.reload();
+                                    });
+                                }else{
+                                    swal({
+                                        title: 'Gagal Hapus Data',
+                                        text: response.message,
+                                        icon: 'error',
+                                        timer: '1500'
+                                    });
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                                swal({
+                                    title: 'System Error',
+                                    text: errorThrown,
+                                    icon: 'error',
+                                    timer: '1500'
+                                });
+                            }
+                        });
+                    }else{
+                        swal('Data tidak jadi dihapus');
                     }
                 });
         }

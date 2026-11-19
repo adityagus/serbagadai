@@ -7,12 +7,16 @@
                     <input type="text" class="form-control" name="title0" maxlength="30" placeholder="Judul Slider">
                     <div id="title0_error" class="help-block help-block-error"> </div>
                 </div>
-                <div class="col-sm-4" id="image0">
+                <div class="col-sm-3" id="image0">
                     <input type="file" class="form-control" name="image0" placeholder="Gambar Slider">
-                    <div class="help-block"><small>Gambar Format JPG/PNG, Max Image (500kb), Ukuran 360 x 500 px</small></div>
+                    <div class="help-block"><small>Gambar Format JPG/PNG, Max Image (500kb), Ukuran 1521 × 520 px</small></div>
                     <div id="image0_error" class="help-block help-block-error"> </div>
                 </div>
-                <div class="col-sm-3" id="priority0">
+                <div class="col-sm-2" id="link0">
+                    <input type="text" class="form-control" name="link0" placeholder="https://google.com">
+                    <div id="link0_error" class="help-block help-block-error"> </div>
+                </div>
+                <div class="col-sm-2" id="priority0">
                     <input type="number" class="form-control" name="priority0" min="1" placeholder="Priority">
                     <div id="priority0_error" class="help-block help-block-error"> </div>
                 </div>
@@ -27,6 +31,7 @@
                 <th style="text-align: center">No</th>
                 <th style="text-align: center">Judul</th>
                 <th style="text-align: center">Gambar</th>
+                <th style="text-align: center">link</th>
                 <th style="text-align: center">Priority</th>
                 <th style="text-align: center;width: 100px;" >Aksi</th>
             </tr>
@@ -41,10 +46,14 @@
                     </td>
                     <td id="image{{$key+1}}">
                         <input type="file" name="image{{$key+1}}" onchange="setImage({{$key+1}})" class="form-control">
-                        <div class="help-block"><small>Gambar Format JPG/PNG, Max Image (500kb), Ukuran 360 x 500 px</small></div>
+                        <div class="help-block"><small>Gambar Format JPG/PNG, Max Image (500kb), Ukuran 1521 × 520 px</small></div>
                         <div id="image{{$key+1}}_error" class="help-block help-block-error"> </div>
                         <br>
                         <a href="{{url('storage/'.@$slider->image)}}" target="_blank" title="preview"><img style="background-color: #e1e1e1" src="{{url('storage/'.@$slider->image)}}" width="100" height="100"></a>
+                    </td>
+                    <td id="link{{$key+1}}">
+                        <input type="text" name="link{{$key+1}}" class="form-control" value="{{@$slider->link}}" placeholder="https://google.com">
+                        <div id="link{{$key+1}}_error" class="help-block help-block-error"> </div>
                     </td>
                     <td id="priority{{$key+1}}">
                         <input type="number" name="priority{{$key+1}}" class="form-control" value="{{@$slider->priority}}" placeholder="Prioritas Slider ke-{{$key+1}}">
@@ -85,6 +94,7 @@
                     formData.append('_token','{{csrf_token()}}');
                     formData.append('title'+id,$('.hero_slider [name=title'+id+']').val());
                     formData.append('priority'+id,$('.hero_slider [name=priority'+id+']').val());
+                    formData.append('link'+id,$('.hero_slider [name=link'+id+']').val());
                     if($('.hero_slider [name=image'+id+']').val() != ''){
                         formData.append('image'+id,$('.hero_slider [name=image'+id+']')[0].files[0]);
                     }

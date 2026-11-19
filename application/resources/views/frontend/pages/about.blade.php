@@ -130,7 +130,7 @@
             <div class="section-header-center">
                 <span class="section-badge center">DOKUMENTASI</span>
                 <h2 class="section-title-dark text-center">{{ !empty($page->activity_header) ? $page->activity_header : 'Kegiatan Kami' }}</h2>
-                <p class="section-desc-center text-center">{{ !empty($page->activity_sub_header) }}</p>
+                {{-- <p class="section-desc-center text-center">{{ !empty($page->activity_sub_header) }}</p> --}}
             </div>
 
             <div class="outlet-filters">

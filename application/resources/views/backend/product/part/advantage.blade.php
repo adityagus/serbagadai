@@ -94,6 +94,9 @@
             fields.map(field=>{
                 data[field] = $('.advantage_item [name='+field+id+']').val();
             });
+            
+            console.log('fields', fields);
+            return;
 
             if(id == 0){
                 advantages.push(data);

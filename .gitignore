@@ -37,6 +37,7 @@ bootstrap/cache/*.php
 # ==========================================
 # Storage, Uploads & Media
 # ==========================================
+# /serbamulia/*
 /storage/*
 /storage/app/*
 /storage/framework/*

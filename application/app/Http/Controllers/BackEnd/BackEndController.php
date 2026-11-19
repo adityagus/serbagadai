@@ -28,10 +28,15 @@ class BackEndController extends Controller
 
     public function __construct()
     {
-        $CONF = Config::find(1);
-        View::share('CONF',$CONF);
-        $notification = \App\Helpers\SelectHelper::getNotification();
-        View::share('notification',$notification);
+        try {
+            $CONF = Config::find(1);
+            View::share('CONF',$CONF);
+            $notification = \App\Helpers\SelectHelper::getNotification();
+            View::share('notification',$notification);
+        } catch (\Throwable $e) {
+            View::share('CONF', null);
+            View::share('notification', collect([]));
+        }
     }
 
     public function login(){

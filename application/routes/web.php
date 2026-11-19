@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BackEnd\BackEndController;
 use App\Http\Controllers\BackEnd\UserController;
 use App\Http\Controllers\BackEnd\ProductController;
+use App\Http\Controllers\BackEnd\ProductV2Controller;
 use App\Http\Controllers\BackEnd\NotificationController;
 use App\Http\Controllers\BackEnd\SettingController;
 use App\Http\Controllers\BackEnd\OrderController;
@@ -22,10 +24,31 @@ use App\Http\Controllers\BackEnd\LocationController;
 use App\Http\Controllers\FrontEnd\PageController;
 
 Auth::routes();
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'save']);
+Route::post('/register-save', [RegisterController::class, 'save'])->name('register.save');
 
 // PAGES //
+Route::get('/storage/{path}', function ($path) {
+    $candidates = [
+        base_path('../storage/' . $path),
+        base_path('../storage/storage/' . $path),
+        base_path('../storage/app/public/' . $path),
+        storage_path($path),
+        storage_path('app/public/' . $path),
+    ];
+    foreach ($candidates as $file) {
+        if (is_file($file)) {
+            return response()->file($file);
+        }
+    }
+    abort(404);
+})->where('path', '.*');
+
 Route::get('/', [PageController::class,'home'])->name('home');
 Route::get('/simulasi', [PageController::class,'simulasi'])->name('simulasi');
+Route::get('/simulasi/search', [PageController::class,'searchTaksiran'])->middleware('throttle:60,1')->name('simulasi.search');
+Route::get('/simulasi/custom', [PageController::class,'calculateCustomTaksiran'])->middleware('throttle:60,1')->name('simulasi.custom');
 Route::get('/about', [PageController::class,'about'])->name('about');
 Route::get('/services', [\App\Http\Controllers\FrontEnd\ProductController::class,'services'])->name('services');
 Route::get('/product/{slug?}', [\App\Http\Controllers\FrontEnd\ProductController::class,'index'])->name('product.detail');
@@ -85,11 +108,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']], function (
     Route::get('/setting-home', [HomeController::class,'index'])->name('admin.pages.home');
 
     Route::post('/setting-home-hero-save', [HomeController::class,'heroSave'])->name('admin.pages.home.hero.save');
+    Route::post('/setting-home-hero-delete', [HomeController::class,'heroDelete'])->name('admin.pages.home.hero.delete');
     Route::post('/setting-home-hero-slider-save', [HomeController::class,'heroSliderSave'])->name('admin.pages.home.hero.slider.save');
     Route::post('/setting-home-hero-slider-delete', [HomeController::class,'heroSliderDelete'])->name('admin.pages.home.hero.slider.delete');
 
     Route::post('/setting-home-about-save', [HomeController::class,'aboutSave'])->name('admin.pages.home.about.save');
     Route::post('/setting-home-product-save', [HomeController::class,'productSave'])->name('admin.pages.home.product.save');
+    Route::post('/setting-home-product-slider-save', [HomeController::class,'productSliderSave'])->name('admin.pages.home.product.slider.save');
+    Route::post('/setting-home-product-slider-delete', [HomeController::class,'productSliderDelete'])->name('admin.pages.home.product.slider.delete');
 
     Route::post('/setting-home-why-us-save', [HomeController::class,'whyUsSave'])->name('admin.pages.home.why-us.save');
     Route::post('/setting-home-why-us-delete', [HomeController::class,'whyUsDelete'])->name('admin.pages.home.why-us.delete');
@@ -159,6 +185,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']], function (
     Route::post('/article-save', [ArticleController::class,'save'])->name('admin.article.save');
     Route::post('/article-delete/{id?}', [ArticleController::class,'delete'])->name('admin.article.delete');
     Route::get('/article-export', [ArticleController::class,'export'])->name('admin.article.export');
+
+    // PRODUCT V2
+    Route::get('/product-v2', [ProductV2Controller::class,'index'])->name('admin.product_v2');
+    Route::post('/product-v2-header-save', [ProductV2Controller::class,'saveHeader'])->name('admin.product_v2.header.save');
+    Route::post('/product-v2-slider-save', [ProductV2Controller::class,'saveSlider'])->name('admin.product_v2.slider.save');
+    Route::post('/product-v2-slider-delete', [ProductV2Controller::class,'deleteSlider'])->name('admin.product_v2.slider.delete');
 
     // PRODUCT
     Route::get('/products', [ProductController::class,'index'])->name('admin.product');

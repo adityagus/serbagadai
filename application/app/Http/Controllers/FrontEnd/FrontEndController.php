@@ -19,16 +19,23 @@ class FrontEndController extends Controller
 
     public function __construct()
     {
-        $CONF = Config::find(1);
-        View::share('CONF',$CONF);
-        $products = Product::active()
-            ->where('title', 'not like', '%emas%')
-            ->where('title', 'not like', '%logam%')
-            ->where('slug', 'not like', '%emas%')
-            ->orderBy('position','asc')
-            ->get();
-        View::share('products',$products);
-        $product_config = json_decode(Pages::where('types',Constant::PAGES_TYPES_PRODUCT)->first()->content);
-        View::share('product_config',$product_config);
+        try {
+            $CONF = Config::find(1);
+            View::share('CONF',$CONF);
+            $products = Product::active()
+                ->where('title', 'not like', '%emas%')
+                ->where('title', 'not like', '%logam%')
+                ->where('slug', 'not like', '%emas%')
+                ->orderBy('position','asc')
+                ->get();
+            View::share('products',$products);
+            $pages = Pages::where('types',Constant::PAGES_TYPES_PRODUCT)->first();
+            $product_config = $pages ? json_decode($pages->content) : null;
+            View::share('product_config',$product_config);
+        } catch (\Throwable $e) {
+            View::share('CONF', null);
+            View::share('products', collect([]));
+            View::share('product_config', null);
+        }
     }
 }

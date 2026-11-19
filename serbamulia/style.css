@@ -528,6 +528,10 @@ body {
     margin-bottom: 24px;
 }
 
+.text-primary {
+    color: #FF6E2B;
+}
+
 .calc-tab {
     flex: 1;
     display: flex;
@@ -2340,4 +2344,962 @@ body {
 :root.light-mode .input-select option {
     background-color: #ffffff;
     color: #083854;
+}
+
+
+/* ==========================================================================
+   CNAF Style Hero Banner Carousel & Benefit Section
+   ========================================================================== */
+
+.cnaf-hero-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 96px;
+    background: var(--bg-main);
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .cnaf-hero-wrapper {
+        padding-top: 80px;
+    }
+}
+
+.cnaf-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.cnaf-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cnaf-slide-item {
+    position: relative;
+    min-width: 100%;
+    width: 100%;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    background: var(--bg-secondary);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+@media (min-width: 1200px) {
+    .cnaf-slide-item {
+        min-height: 520px;
+        height: calc(100vh - 180px);
+        max-height: 620px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cnaf-slide-item {
+        min-height: 380px;
+        height: auto;
+        padding: 40px 0 60px;
+    }
+}
+
+.cnaf-slide-item.cnaf-slide-banner-item,
+.cnaf-slide-item:has(.cnaf-slide-banner-img) {
+    min-height: unset;
+    height: auto;
+    padding: 0;
+    background: transparent;
+    display: block;
+}
+
+.cnaf-slide-banner-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 0;
+    text-decoration: none;
+}
+
+.cnaf-slide-banner-img {
+    width: 100%;
+    height: clamp(380px, 34vw, 540px);
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+@media (max-width: 991px) {
+    .cnaf-slide-banner-img {
+        height: clamp(260px, 36vw, 380px);
+    }
+}
+
+@media (max-width: 768px) {
+    .cnaf-slide-item.cnaf-slide-banner-item,
+    .cnaf-slide-item:has(.cnaf-slide-banner-img) {
+        min-height: unset;
+        height: auto;
+        padding: 0;
+    }
+
+    .cnaf-slide-banner-img {
+        height: clamp(180px, 50vw, 280px);
+        object-fit: cover;
+        object-position: left center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cnaf-slide-banner-img {
+        height: clamp(160px, 52vw, 220px);
+        object-position: left center;
+    }
+}
+
+.cnaf-slide-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.cnaf-slide-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(8, 56, 84, 0.95) 0%, rgba(8, 56, 84, 0.82) 45%, rgba(0, 78, 191, 0.45) 80%, rgba(255, 110, 43, 0.25) 100%);
+    z-index: 2;
+}
+
+:root.light-mode .cnaf-slide-overlay {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.88) 45%, rgba(230, 246, 245, 0.65) 80%, rgba(255, 241, 214, 0.4) 100%);
+}
+
+.cnaf-slide-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: 48px 0;
+}
+
+.cnaf-slide-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+    align-items: center;
+}
+
+@media (max-width: 991px) {
+    .cnaf-slide-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        text-align: center;
+    }
+}
+
+.cnaf-slide-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    background: rgba(2, 195, 168, 0.15);
+    border: 1px solid rgba(2, 195, 168, 0.35);
+    color: #02C3A8;
+    margin-bottom: 18px;
+}
+
+:root.light-mode .cnaf-slide-badge {
+    background: rgba(5, 162, 163, 0.12);
+    border-color: rgba(5, 162, 163, 0.3);
+    color: #05A2A3;
+}
+
+.cnaf-slide-title {
+    font-family: var(--font-heading);
+    font-size: 42px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+@media (max-width: 768px) {
+    .cnaf-slide-title {
+        font-size: 28px;
+        line-height: 1.25;
+    }
+}
+
+.cnaf-slide-desc {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    max-width: 580px;
+}
+
+@media (max-width: 991px) {
+    .cnaf-slide-desc {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.cnaf-slide-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+@media (max-width: 991px) {
+    .cnaf-slide-features {
+        justify-content: center;
+    }
+}
+
+.cnaf-slide-feat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+}
+
+:root.light-mode .cnaf-slide-feat-item {
+    background: rgba(8, 56, 84, 0.04);
+}
+
+.cnaf-slide-feat-item .feat-chk {
+    color: #02C3A8;
+    font-weight: 800;
+}
+
+.cnaf-slide-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+@media (max-width: 991px) {
+    .cnaf-slide-actions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cnaf-slide-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .cnaf-slide-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.cnaf-slide-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cnaf-visual-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    border-radius: var(--radius-lg, 20px);
+    background: rgba(8, 56, 84, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+:root.light-mode .cnaf-visual-card {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(8, 56, 84, 0.1);
+    box-shadow: 0 20px 50px rgba(8, 56, 84, 0.1);
+}
+
+.cnaf-visual-img {
+    max-width: 100%;
+    height: auto;
+    max-height: 290px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.cnaf-dots-container {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+.cnaf-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+}
+
+:root.light-mode .cnaf-dot {
+    background: rgba(8, 56, 84, 0.25);
+}
+
+.cnaf-dot.active {
+    width: 32px;
+    border-radius: 20px;
+    background: var(--primary);
+}
+
+.cnaf-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(8, 56, 84, 0.55);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.25s ease;
+    opacity: 0.85;
+}
+
+.cnaf-nav-btn:hover {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.08);
+}
+
+.cnaf-nav-prev {
+    left: 24px;
+}
+
+.cnaf-nav-next {
+    right: 24px;
+}
+
+@media (max-width: 768px) {
+    .cnaf-nav-btn {
+        display: none;
+    }
+    .cnaf-dots-container {
+        bottom: 12px;
+    }
+}
+
+/* Section Benefit (CNAF Style) */
+.section-benefit {
+    position: relative;
+    padding: 70px 0 60px;
+    background: var(--bg-main);
+    overflow: hidden;
+}
+
+.benefit-content {
+    max-width: 820px;
+    margin: 0 auto 48px;
+    text-align: center;
+}
+
+.benefit-heading {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 1.3;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+    .benefit-heading {
+        font-size: 26px;
+    }
+}
+
+.benefit-subheading {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 auto;
+}
+
+.row-icon-benefit {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+@media (max-width: 991px) {
+    .row-icon-benefit {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+.benefit-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 36px 28px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.benefit-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px rgba(255, 110, 43, 0.12);
+}
+
+:root.light-mode .benefit-card {
+    background: #ffffff;
+    box-shadow: 0 12px 32px rgba(8, 56, 84, 0.06);
+}
+
+.benefit-icon-wrapper {
+    width: 74px;
+    height: 74px;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    transition: transform 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon-wrapper {
+    transform: scale(1.1) rotate(2deg);
+}
+
+.icon-wrap-orange {
+    background: rgba(255, 110, 43, 0.12);
+    color: #FF6E2B;
+}
+
+.icon-wrap-blue {
+    background: rgba(0, 78, 191, 0.12);
+    color: #004EBF;
+}
+
+.icon-wrap-teal {
+    background: rgba(2, 195, 168, 0.12);
+    color: #02C3A8;
+}
+
+.benefit-card h5 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.benefit-card p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+
+/* ==========================================================================
+   Apa Kata Mereka (Testimonials Slider - CNAF Style)
+   ========================================================================== */
+
+.cnaf-testi-section {
+    position: relative;
+    padding: 80px 0;
+    background: var(--bg-main);
+    overflow: hidden;
+}
+
+.cnaf-testi-header {
+    margin-bottom: 36px;
+}
+
+.cnaf-testi-title {
+    font-family: var(--font-heading);
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.cnaf-testi-subtitle {
+    font-size: 15.5px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.cnaf-testi-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.cnaf-testi-viewport {
+    overflow: hidden;
+    width: 100%;
+    padding: 15px 4px 25px;
+}
+
+.cnaf-testi-track {
+    display: flex;
+    gap: 28px;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+}
+
+.cnaf-testi-card {
+    flex: 0 0 calc((100% - 56px) / 3);
+    min-width: calc((100% - 56px) / 3);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 34px 28px 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.cnaf-testi-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 110, 43, 0.4);
+}
+
+:root.light-mode .cnaf-testi-card {
+    background: #ffffff;
+    box-shadow: 0 10px 32px rgba(8, 56, 84, 0.05);
+}
+
+@media (max-width: 991px) {
+    .cnaf-testi-card {
+        flex: 0 0 calc((100% - 24px) / 2);
+        min-width: calc((100% - 24px) / 2);
+    }
+}
+
+@media (max-width: 640px) {
+    .cnaf-testi-card {
+        flex: 0 0 100%;
+        min-width: 100%;
+    }
+}
+
+.cnaf-testi-quote-mark {
+    position: absolute;
+    top: 14px;
+    left: 20px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 88px;
+    line-height: 1;
+    color: rgba(255, 110, 43, 0.14);
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+}
+
+:root.light-mode .cnaf-testi-quote-mark {
+    color: rgba(255, 110, 43, 0.16);
+}
+
+.cnaf-testi-text {
+    position: relative;
+    z-index: 2;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 24px 0;
+    min-height: 95px;
+    display: flex;
+    align-items: flex-start;
+}
+
+:root.light-mode .cnaf-testi-text {
+    color: #475569;
+}
+
+.cnaf-testi-author-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-color);
+    position: relative;
+    z-index: 2;
+}
+
+.cnaf-testi-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 110, 43, 0.25);
+    background: rgba(255, 110, 43, 0.08);
+}
+
+.cnaf-testi-avatar-placeholder {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background: rgba(255, 110, 43, 0.1);
+    color: var(--primary);
+    border: 2px solid rgba(255, 110, 43, 0.25);
+    flex-shrink: 0;
+}
+
+.cnaf-testi-author-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.cnaf-testi-author-name {
+    font-family: var(--font-heading);
+    font-size: 16.5px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cnaf-testi-author-role {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cnaf-testi-btn {
+    position: absolute;
+    top: 55%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(8, 56, 84, 0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    color: #FF6E2B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+:root:not(.light-mode) .cnaf-testi-btn {
+    background: #0d2238;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4);
+}
+
+.cnaf-testi-btn:hover {
+    background: #FF6E2B;
+    color: #ffffff;
+    border-color: #FF6E2B;
+    transform: translateY(-50%) scale(1.08);
+}
+
+.cnaf-testi-btn-prev {
+    left: -22px;
+}
+
+.cnaf-testi-btn-next {
+    right: -22px;
+}
+
+@media (max-width: 1200px) {
+    .cnaf-testi-btn-prev {
+        left: 4px;
+    }
+    .cnaf-testi-btn-next {
+        right: 4px;
+    }
+}
+
+
+/* ==========================================================================
+   CNAF Style Product & Simulasi Section (Cards Slider)
+   ========================================================================== */
+
+.cnaf-product-section {
+    position: relative;
+    padding: 70px 0 80px;
+    background: var(--bg-main);
+    overflow: hidden;
+}
+
+.cnaf-product-header {
+    max-width: 780px;
+    margin: 0 auto 46px;
+    text-align: center;
+}
+
+.cnaf-product-title {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 1.25;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0 0 12px 0;
+    letter-spacing: -0.5px;
+}
+
+.cnaf-product-desc {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+:root.light-mode .cnaf-product-desc {
+    color: #64748b;
+}
+
+.cnaf-product-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 54px;
+}
+
+.cnaf-product-viewport {
+    overflow: hidden;
+    width: 100%;
+    padding: 16px 4px 24px;
+}
+
+.cnaf-product-track {
+    display: flex;
+    gap: 24px;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+}
+
+.cnaf-product-card {
+    flex: 0 0 calc((100% - 48px) / 3);
+    min-width: calc((100% - 48px) / 3);
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+    padding: 38px 24px 34px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+}
+
+:root:not(.light-mode) .cnaf-product-card {
+    background: var(--bg-secondary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.cnaf-product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(229, 35, 35, 0.12);
+    border-color: rgba(229, 35, 35, 0.3);
+}
+
+:root:not(.light-mode) .cnaf-product-card:hover {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    border-color: rgba(255, 110, 43, 0.4);
+}
+
+.cnaf-product-card-link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+}
+
+.cnaf-product-icon-box {
+    width: 76px;
+    height: 76px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #FF6E2B 0%, #F49A67 100%);
+    box-shadow: 0 8px 20px rgba(255, 110, 43, 0.2) ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    margin: 0 auto 22px;
+    transition: transform 0.3s ease;
+}
+
+.cnaf-product-card:hover .cnaf-product-icon-box {
+    transform: scale(1.08);
+}
+
+.cnaf-product-icon-img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.cnaf-product-card-title {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text-main);
+    margin: 0;
+    max-width: 200px;
+    text-align: center;
+}
+
+.cnaf-product-btn {
+    position: absolute;
+    top: 54%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    color: #334155;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 5;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+:root:not(.light-mode) .cnaf-product-btn {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #f1f5f9;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+}
+
+.cnaf-product-btn:hover {
+    background: #f8fafc;
+    color: #0f172a;
+    border-color: rgba(15, 23, 42, 0.22);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+    transform: translateY(-50%) scale(1.08);
+}
+
+:root:not(.light-mode) .cnaf-product-btn:hover {
+    background: #334155;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.cnaf-product-btn-prev {
+    left: 0;
+}
+
+.cnaf-product-btn-next {
+    right: 0;
+}
+
+@media (max-width: 991px) {
+    .cnaf-product-card {
+        flex: 0 0 calc((100% - 24px) / 2);
+        min-width: calc((100% - 24px) / 2);
+    }
+}
+
+@media (max-width: 768px) {
+    .cnaf-product-section {
+        padding: 50px 0 60px;
+    }
+    .cnaf-product-header {
+        margin-bottom: 32px;
+    }
+    .cnaf-product-title {
+        font-size: 26px;
+    }
+    .cnaf-product-desc {
+        font-size: 14px;
+    }
+    .cnaf-product-wrapper {
+        padding: 0 10px;
+    }
+    .cnaf-product-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .cnaf-product-card {
+        flex: 0 0 100%;
+        min-width: 100%;
+        padding: 34px 20px 30px;
+    }
 }

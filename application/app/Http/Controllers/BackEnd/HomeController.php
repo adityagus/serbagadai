@@ -41,6 +41,7 @@ class HomeController extends BackEndController
         $data['content'] = $content;
         if(empty($content->hero_sliders)) $content->hero_sliders = [];
         if(empty($content->why_us)) $content->why_us = [];
+        if(empty($content->product_sliders)) $content->product_sliders = [];
         if(empty($content->testimony_sliders)) $content->testimony_sliders = [];
         return view('backend.pages.home.index',$data);
     }
@@ -91,6 +92,7 @@ class HomeController extends BackEndController
         $validate_rule = array();
         $validate_rule['title'.$request->id] = 'required';
         $validate_rule['priority'.$request->id] = 'required';
+        $validate_rule['link'.$request->id] = 'required';
         if(empty($request->id)){
             $validate_rule['image'.$request->id] = 'required|image';
         }
@@ -115,10 +117,11 @@ class HomeController extends BackEndController
             $sliderImage = $image->store('home/hero/slider','public');
         }
 
-        if($request->id ==0){
+        if($request->id == 0){
             $sliders[] = (object)[
                 'title' => $request->post('title'.$request->id),
                 'priority' => $request->post('priority'.$request->id),
+                'link' => $request->post('link'.$request->id),
                 'image' => $sliderImage,
             ];
         }else{
@@ -135,6 +138,7 @@ class HomeController extends BackEndController
             $sliders[$id] = (object)[
                 'title' => $request->post('title'.$request->id),
                 'priority' => $request->post('priority'.$request->id),
+                'link' => $request->post('link'.$request->id),
                 'image' => $sliderImage,
             ];
         }
@@ -248,6 +252,95 @@ class HomeController extends BackEndController
         }
     }
 
+    public function productSliderSave(Request $request)
+    {
+        $validate_rule = array();
+        $validate_rule['title'.$request->id] = 'required';
+        $validate_rule['priority'.$request->id] = 'required';
+        if ($request->hasFile('image'.$request->id)) {
+            $validate_rule['image'.$request->id] = 'image|max:2048';
+        }
+
+        $validation = Validator::make($request->all(),$validate_rule);
+
+        if($validation->fails()){
+            $data['status'] = false;
+            $data['message'] = 'Periksa Data Kembali!';
+            $data['error'] = $validation->errors();
+            return response()->json($data);
+        }
+
+        $home = Pages::where('types',Constant::PAGES_TYPES_HOME)->first();
+        if(!empty($home)) $content = json_decode($home->content);
+        $sliders = !empty($content->product_sliders) ? $content->product_sliders : [];
+
+        $imagePath = '';
+        if ($request->id > 0) {
+            $existingId = $request->id - 1;
+            if (!empty($sliders[$existingId]->image)) {
+                $imagePath = $sliders[$existingId]->image;
+            }
+        }
+
+        if ($request->hasFile('image'.$request->id)) {
+            $imageFile = $request->file('image'.$request->id);
+            if (!empty($imagePath) && Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
+            $imagePath = $imageFile->store('home/product', 'public');
+        }
+
+        $item = (object)[
+            'title' => $request->post('title'.$request->id),
+            'link' => $request->post('link'.$request->id) ?: route('simulasi'),
+            'priority' => (int) $request->post('priority'.$request->id),
+            'image' => $imagePath,
+        ];
+
+        if($request->id == 0){
+            $sliders[] = $item;
+        }else{
+            $id = $request->id - 1;
+            $sliders[$id] = $item;
+        }
+
+        usort($sliders, function($a, $b) {
+            if ($a->priority == $b->priority) {
+                return 0;
+            }
+            return ($a->priority < $b->priority) ? -1 : 1;
+        });
+
+        $content->product_sliders = $sliders;
+        $home->content = json_encode($content);
+
+        if($home->save()){
+            return Response::json(array('status'=>true,'message'=>'Data slider produk berhasil disimpan'));
+        }else{
+            return Response::json(array('status'=>false,'message'=>'Data slider produk Gagal simpan, coba lagi'));
+        }
+    }
+
+    public function productSliderDelete(Request $request){
+        $home = Pages::where('types',Constant::PAGES_TYPES_HOME)->first();
+
+        if(!empty($home)) $content = json_decode($home->content);
+        $request->id = $request->id - 1;
+        $sliders = !empty($content->product_sliders) ? $content->product_sliders : [];
+        if (!empty($sliders[$request->id]->image) && Storage::disk('public')->exists($sliders[$request->id]->image)) {
+            Storage::disk('public')->delete($sliders[$request->id]->image);
+        }
+        array_splice($sliders, $request->id,1);
+        $content->product_sliders = $sliders;
+        $home->content = json_encode($content);
+
+        if($home->save()){
+            return Response::json(array('status'=>true,'message'=>'Data slider produk berhasil dihapus'));
+        }else{
+            return Response::json(array('status'=>false,'message'=>'Data slider produk Gagal hapus, coba lagi'));
+        }
+    }
+
     public function whyUsSave (Request $request)
     {
         $validate_rule = array();
@@ -278,7 +371,7 @@ class HomeController extends BackEndController
             $sliderImage = $image->store('home/why_us','public');
         }
 
-        if($request->id ==0){
+        if($request->id == 0){
             $sliders[] = (object)[
                 'title' => $request->post('title'.$request->id),
                 'priority' => $request->post('priority'.$request->id),
@@ -380,6 +473,9 @@ class HomeController extends BackEndController
         $validate_rule['star'.$request->id] = 'required';
         $validate_rule['content'.$request->id] = 'required';
         $validate_rule['priority'.$request->id] = 'required';
+        if ($request->hasFile('image'.$request->id)) {
+            $validate_rule['image'.$request->id] = 'image|max:2048';
+        }
 
         $validation = Validator::make($request->all(),$validate_rule);
 
@@ -394,15 +490,32 @@ class HomeController extends BackEndController
         if(!empty($home)) $content = json_decode($home->content);
         $sliders = !empty($content->testimony_sliders) ? $content->testimony_sliders : [];
 
+        $imagePath = '';
+        if ($request->id > 0) {
+            $existingId = $request->id - 1;
+            if (!empty($sliders[$existingId]->image)) {
+                $imagePath = $sliders[$existingId]->image;
+            }
+        }
+
+        if ($request->hasFile('image'.$request->id)) {
+            $imageFile = $request->file('image'.$request->id);
+            if (!empty($imagePath) && Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
+            $imagePath = $imageFile->store('home/testimony', 'public');
+        }
+
         $item = (object)[
             'title' => $request->post('title'.$request->id),
             'role' => $request->post('role'.$request->id),
             'star' => $request->post('star'.$request->id),
             'content' => $request->post('content'.$request->id),
             'priority' => $request->post('priority'.$request->id),
+            'image' => $imagePath,
         ];
 
-        if($request->id ==0){
+        if($request->id == 0){
             $sliders[] = $item;
         }else{
             $id = $request->id - 1;
@@ -420,9 +533,9 @@ class HomeController extends BackEndController
         $home->content = json_encode($content);
 
         if($home->save()){
-            return Response::json(array('status'=>true,'message'=>'Data berhasil disimpan'));
+            return Response::json(array('status'=>true,'message'=>'Data testimoni berhasil disimpan'));
         }else{
-            return Response::json(array('status'=>false,'message'=>'Data Gagal simpan, coba lagi'));
+            return Response::json(array('status'=>false,'message'=>'Data testimoni Gagal simpan, coba lagi'));
         }
     }
 
@@ -432,14 +545,17 @@ class HomeController extends BackEndController
         if(!empty($home)) $content = json_decode($home->content);
         $request->id = $request->id - 1;
         $sliders = $content->testimony_sliders;
+        if (!empty($sliders[$request->id]->image) && Storage::disk('public')->exists($sliders[$request->id]->image)) {
+            Storage::disk('public')->delete($sliders[$request->id]->image);
+        }
         array_splice($sliders, $request->id,1);
         $content->testimony_sliders = $sliders;
         $home->content = json_encode($content);
 
         if($home->save()){
-            return Response::json(array('status'=>true,'message'=>'Data berhasil dihapus'));
+            return Response::json(array('status'=>true,'message'=>'Data testimoni berhasil dihapus'));
         }else{
-            return Response::json(array('status'=>false,'message'=>'Data Gagal hapus, coba lagi'));
+            return Response::json(array('status'=>false,'message'=>'Data testimoni Gagal hapus, coba lagi'));
         }
     }
 }

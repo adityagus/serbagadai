@@ -43,6 +43,8 @@
                 <button type="button" class="btn btn-primary" onclick="saveProduct()">Simpan</button>
             </div>
         </div>
+        <hr/>
+        @include('backend.pages.home.part.product-item')
     </form>
 </div>
 
@@ -66,6 +68,7 @@
 
                         $('.form-group').removeClass('has-error');
                         $('.help-block-error').html('');
+                        console.log('new FormData($("#form-product")[0])', new FormData($("#form-product")[0]));
 
                         $.ajax({
                             url: "{{ route('admin.pages.home.product.save') }}",

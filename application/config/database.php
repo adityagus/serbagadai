@@ -94,6 +94,21 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'db2' => [
+            'driver' => env('DB2_CONNECTION', 'pgsql'),
+            'url' => env('DB2_URL'),
+            'host' => env('DB2_HOST', '127.0.0.1'),
+            'port' => env('DB2_PORT', '5434'),
+            'database' => env('DB2_DATABASE', 'db_gadaimulia'),
+            'username' => env('DB2_USERNAME', 'it_gms'),
+            'password' => env('DB2_PASSWORD', ''),
+            'charset' => env('DB2_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
