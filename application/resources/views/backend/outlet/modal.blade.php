@@ -46,6 +46,38 @@
                 <div id="lat_lng_error" class="help-block help-block-error"> </div>
               </div>
             </div>
+            <div class="form-group" id="days">
+              <label class="control-label col-sm-2" for="days">Hari Buka</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="days" placeholder="Contoh: Senin - Sabtu">
+                <div id="days_error" class="help-block help-block-error"> </div>
+              </div>
+            </div>
+            <div class="form-group" id="hours_group">
+              <label class="control-label col-sm-2">Jam Buka/Tutup</label>
+              <div class="col-sm-5" id="open_hour">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-clock-o"></i> Buka</span>
+                  <input type="text" class="form-control" name="open_hour" placeholder="08:30">
+                </div>
+                <div id="open_hour_error" class="help-block help-block-error"> </div>
+              </div>
+              <div class="col-sm-5" id="close_hour">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-clock-o"></i> Tutup</span>
+                  <input type="text" class="form-control" name="close_hour" placeholder="17:00">
+                </div>
+                <div id="close_hour_error" class="help-block help-block-error"> </div>
+              </div>
+            </div>
+            <div class="form-group" id="operational_hours">
+              <label class="control-label col-sm-2" for="operational_hours">Keterangan Jam Buka</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="operational_hours" placeholder="Contoh: Senin - Jumat (08:30 - 17:00) | Sabtu (08:30 - 14:00)">
+                <span class="help-block" style="font-size: 11px;">Teks ini ditampilkan pada daftar direktori cabang dan popup peta.</span>
+                <div id="operational_hours_error" class="help-block help-block-error"> </div>
+              </div>
+            </div>
             <div class="form-group" id="status">
               <label class="control-label col-sm-2" for="status">Status</label>
               <div class="col-sm-10">

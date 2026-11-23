@@ -109,7 +109,7 @@
 
 
     <!-- OJK and Trust Banner -->
-    <section class="trust-banner">
+    <section class="trust-banner" data-aos="fade-up" data-aos-duration="600">
         <div class="container trust-container">
             <span class="trust-label">DISETUJUI & DIAWASI OLEH OJK</span>
             <div class="trust-logos">
@@ -122,7 +122,7 @@
     <section class="section-benefit" id="keuntungan">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 benefit-content">
+                <div class="col-md-12 benefit-content" data-aos="fade-up">
                     <h2 class="benefit-heading">Keuntungan Gadai di Serba Gadai</h2>
                     <p class="benefit-subheading">
                         Serba Gadai senantiasa memberikan kemudahan layanan gadai barang elektronik yang aman, transparan,
@@ -131,7 +131,7 @@
                 </div>
             </div>
             <div class="row-icon-benefit">
-                <div class="benefit-card">
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="benefit-icon-wrapper icon-wrap-orange">
                         <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -146,7 +146,7 @@
                     <p>Cukup bawa KTP dan barang elektronik Anda (HP, Laptop, Kamera, TV). Proses tanpa BI checking dan
                         tanpa persyaratan yang rumit.</p>
                 </div>
-                <div class="benefit-card">
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="220">
                     <div class="benefit-icon-wrapper icon-wrap-teal">
                         <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -158,7 +158,7 @@
                     <p>Penaksiran unit dilakukan secara objektif sesuai harga pasar terkini dan pencairan dana langsung cair
                         tunai atau transfer ke rekening Anda.</p>
                 </div>
-                <div class="benefit-card">
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="340">
                     <div class="benefit-icon-wrapper icon-wrap-blue">
                         <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -174,18 +174,25 @@
         </div>
     </section>
 
-
-    {{-- <!-- CNAF Style Products & Services Slider Section -->
-    <section class="cnaf-product-section" id="layanan">
+    <!-- CNAF Style Products & Services Slider Section -->
+    {{-- <section class="cnaf-product-section" id="layanan">
         <div class="container">
-            <div class="cnaf-product-header text-center">
+            <div class="cnaf-product-header text-center" data-aos="fade-up">
                 <h2 class="cnaf-product-title">{{ !empty($page->product_title) ? $page->product_title : 'Produk & Simulasi CIMB Niaga Finance' }}</h2>
                 <p class="cnaf-product-desc">{{ !empty($page->product_sub_title) ? $page->product_sub_title : 'Cari tahu angsuran dan pilihan tenor sesuai dengan kemampuan kamu disini. Simulasikan pilihan pembiayaan kamu sekarang' }}</p>
             </div>
 
-            <div class="cnaf-product-wrapper">
-                <button class="cnaf-product-btn cnaf-product-btn-prev" onclick="prevProductCard()" aria-label="Previous">‹</button>
-                <button class="cnaf-product-btn cnaf-product-btn-next" onclick="nextProductCard()" aria-label="Next">›</button>
+            <div class="cnaf-product-wrapper" data-aos="fade-up" data-aos-delay="150">
+                <button type="button" class="cnaf-product-btn cnaf-product-btn-prev" onclick="prevProductCard()" aria-label="Previous Product">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button type="button" class="cnaf-product-btn cnaf-product-btn-next" onclick="nextProductCard()" aria-label="Next Product">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
 
                 <div class="cnaf-product-viewport" id="cnafProductViewport">
                     <div class="cnaf-product-track" id="cnafProductTrack">
@@ -272,8 +279,8 @@
         </div>
     </section> --}}
 
-           <!-- Products & Services -->
-    <section class="products-section" id="layanan">
+    <!-- Legacy Products & Services Section (Replaced by CNAF Product V2 Slider above) -->
+    <section class="products-section" id="layanan-legacy">
         <div class="container">
             <div class="section-header-center">
                 <span class="section-badge center">PRODUK GADAI ELEKTRONIK</span>
@@ -377,14 +384,12 @@
             </div>
         </div>
     </section>
-    
-    
 
     <!-- Why Us Section -->
-    <section class="why-section" id="mengapa">
+    {{-- <section class="why-section" id="mengapa">
         <div class="container">
             <div class="why-grid">
-                <div class="why-text-side">
+                <div class="why-text-side" data-aos="fade-right" data-aos-duration="800">
                     <span class="section-badge">KEUNGGULAN KAMI</span>
                     <h2 class="section-title-light">Mengapa Ribuan Nasabah Memilih {{ @$CONF->title ?? 'Gadai Mulia' }}?
                     </h2>
@@ -394,7 +399,7 @@
 
 
                 <!-- Feature visual showcase -->
-                <div class="why-image-side">
+                <div class="why-image-side" data-aos="fade-left" data-aos-duration="800">
                     <div class="neon-card-glow"></div>
                     <div class="info-showcase-card">
                         <div class="showcase-header">
@@ -429,7 +434,7 @@
             <div class="why-grid" style="gap: 20px">
                 @if (!empty($page->why_us) && count($page->why_us) > 0)
                     @foreach ($page->why_us as $item)
-                        <div class="feature-card">
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 80 + 100 }}">
                             <div class="feature-icon-wrapper">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -446,7 +451,7 @@
                         </div>
                     @endforeach
                 @else
-                    <div class="feature-card">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                         <div class="feature-icon-wrapper">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -461,7 +466,7 @@
                                 untuk mendapatkan pinjaman maksimal.</p>
                         </div>
                     </div>
-                    <div class="feature-card">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="180">
                         <div class="feature-icon-wrapper">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -476,7 +481,7 @@
                                 keamanan tinggi dan sepenuhnya diasuransikan.</p>
                         </div>
                     </div>
-                    <div class="feature-card">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="260">
                         <div class="feature-icon-wrapper">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -495,7 +500,7 @@
 
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
     <!-- Promo Highlight Section -->

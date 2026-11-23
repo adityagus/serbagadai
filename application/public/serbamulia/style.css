@@ -528,6 +528,10 @@ body {
     margin-bottom: 24px;
 }
 
+.text-primary {
+    color: #FF6E2B;
+}
+
 .calc-tab {
     flex: 1;
     display: flex;
@@ -701,7 +705,6 @@ body {
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
     padding: 24px 0;
-    
 }
 
 .trust-container {
@@ -855,7 +858,7 @@ body {
 }
 
 .section-header-center {
-    max-width: 820px;
+    max-width: 680px;
     margin: 0 auto 60px auto;
 }
 
@@ -2345,7 +2348,7 @@ body {
 
 
 /* ==========================================================================
-   cnaf Style Hero Banner Carousel & Benefit Section
+   CNAF Style Hero Banner Carousel & Benefit Section
    ========================================================================== */
 
 .cnaf-hero-wrapper {
@@ -2721,7 +2724,7 @@ body {
     }
 }
 
-/* Section Benefit (cnaf Style) */
+/* Section Benefit (CNAF Style) */
 .section-benefit {
     position: relative;
     padding: 70px 0 60px;
@@ -2841,7 +2844,7 @@ body {
 
 
 /* ==========================================================================
-   Apa Kata Mereka (Testimonials Slider - cnaf Style)
+   Apa Kata Mereka (Testimonials Slider - CNAF Style)
    ========================================================================== */
 
 .cnaf-testi-section {
@@ -2936,7 +2939,7 @@ body {
     font-family: Georgia, 'Times New Roman', serif;
     font-size: 88px;
     line-height: 1;
-    color: rgba(246, 244, 243, 0.14);
+    color: rgba(255, 110, 43, 0.14);
     pointer-events: none;
     user-select: none;
     z-index: 1;
@@ -3181,8 +3184,8 @@ body {
     width: 76px;
     height: 76px;
     border-radius: 18px;
-    background: linear-gradient(135deg, #e52323 0%, #b91c1c 100%);
-    box-shadow: 0 8px 20px rgba(229, 35, 35, 0.32);
+    background: linear-gradient(135deg, #FF6E2B 0%, #F49A67 100%);
+    box-shadow: 0 8px 20px rgba(255, 110, 43, 0.2) ;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3220,13 +3223,13 @@ body {
     height: 48px;
     border-radius: 50%;
     background: #ffffff;
-    border: 1px solid rgba(8, 56, 84, 0.08);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    color: #e52323;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    color: #334155;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 22px;
     line-height: 1;
     font-weight: 700;
     cursor: pointer;
@@ -3236,22 +3239,25 @@ body {
 }
 
 :root:not(.light-mode) .cnaf-product-btn {
-    background: #0d2238;
+    background: #1e293b;
     border-color: rgba(255, 255, 255, 0.12);
-    color: #ff6e2b;
-    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4);
+    color: #f1f5f9;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
 }
 
 .cnaf-product-btn:hover {
-    background: #e52323;
-    color: #ffffff;
-    border-color: #e52323;
+    background: #f8fafc;
+    color: #0f172a;
+    border-color: rgba(15, 23, 42, 0.22);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
     transform: translateY(-50%) scale(1.08);
 }
 
 :root:not(.light-mode) .cnaf-product-btn:hover {
-    background: #ff6e2b;
-    border-color: #ff6e2b;
+    background: #334155;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 .cnaf-product-btn-prev {
@@ -3295,5 +3301,96 @@ body {
         flex: 0 0 100%;
         min-width: 100%;
         padding: 34px 20px 30px;
+    }
+}
+
+/* ==========================================================================
+   Modern Scroll Reveal Animations
+   ========================================================================== */
+
+/* Base Reveal State */
+[data-aos],
+.scroll-reveal {
+    opacity: 0;
+    transition-property: opacity, transform;
+    transition-duration: 0.8s;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+/* Animation Types */
+[data-aos="fade-up"],
+.scroll-reveal.reveal-up {
+    transform: translateY(38px);
+}
+
+[data-aos="fade-down"],
+.scroll-reveal.reveal-down {
+    transform: translateY(-38px);
+}
+
+[data-aos="fade-left"],
+.scroll-reveal.reveal-left {
+    transform: translateX(45px);
+}
+
+[data-aos="fade-right"],
+.scroll-reveal.reveal-right {
+    transform: translateX(-45px);
+}
+
+[data-aos="zoom-in"],
+.scroll-reveal.reveal-zoom {
+    transform: scale(0.92);
+}
+
+[data-aos="zoom-out"],
+.scroll-reveal.reveal-zoom-out {
+    transform: scale(1.08);
+}
+
+/* Active Animated State */
+[data-aos].aos-animate,
+.scroll-reveal.is-revealed {
+    opacity: 1 !important;
+    transform: translate(0, 0) scale(1) !important;
+}
+
+/* Delays */
+[data-aos-delay="50"]  { transition-delay: 50ms; }
+[data-aos-delay="100"] { transition-delay: 100ms; }
+[data-aos-delay="150"] { transition-delay: 150ms; }
+[data-aos-delay="200"] { transition-delay: 200ms; }
+[data-aos-delay="250"] { transition-delay: 250ms; }
+[data-aos-delay="300"] { transition-delay: 300ms; }
+[data-aos-delay="350"] { transition-delay: 350ms; }
+[data-aos-delay="400"] { transition-delay: 400ms; }
+[data-aos-delay="500"] { transition-delay: 500ms; }
+[data-aos-delay="600"] { transition-delay: 600ms; }
+[data-aos-delay="700"] { transition-delay: 700ms; }
+[data-aos-delay="800"] { transition-delay: 800ms; }
+
+/* Durations */
+[data-aos-duration="400"]  { transition-duration: 400ms; }
+[data-aos-duration="600"]  { transition-duration: 600ms; }
+[data-aos-duration="800"]  { transition-duration: 800ms; }
+[data-aos-duration="1000"] { transition-duration: 1000ms; }
+[data-aos-duration="1200"] { transition-duration: 1200ms; }
+
+/* Stagger Helpers */
+.stagger-container.is-revealed > *:nth-child(1) { transition-delay: 80ms; }
+.stagger-container.is-revealed > *:nth-child(2) { transition-delay: 160ms; }
+.stagger-container.is-revealed > *:nth-child(3) { transition-delay: 240ms; }
+.stagger-container.is-revealed > *:nth-child(4) { transition-delay: 320ms; }
+.stagger-container.is-revealed > *:nth-child(5) { transition-delay: 400ms; }
+.stagger-container.is-revealed > *:nth-child(6) { transition-delay: 480ms; }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    [data-aos],
+    .scroll-reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 }

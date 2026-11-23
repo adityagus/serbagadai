@@ -59,6 +59,13 @@ class OutletController extends BackEndController
 
         $data->fill((array)$request->all());
 
+        if (empty($data->open_hour)) $data->open_hour = '08:30';
+        if (empty($data->close_hour)) $data->close_hour = '17:00';
+        if (empty($data->days)) $data->days = 'Senin - Sabtu';
+        if (empty($data->operational_hours)) {
+            $data->operational_hours = $data->days . ' (' . $data->open_hour . ' - ' . $data->close_hour . ')';
+        }
+
         if($data->save()){
 
             $this->count_outlet($request->province_id);
@@ -99,6 +106,10 @@ class OutletController extends BackEndController
         return DataTables::of($datas->get())
             ->editColumn('status',function($data) {
                 return '<label class="label label-'.Constant::COMMON_STATUS_LABEL_LIST[$data->status].'">'.Constant::COMMON_STATUS_LIST[$data->status].'</label>';
+            })
+            ->editColumn('address',function($data) {
+                $hours = $data->operational_hours ?: ($data->days . ' (' . $data->open_hour . ' - ' . $data->close_hour . ')');
+                return e($data->address) . '<br><span style="color:#0284c7; font-size:12px;"><i class="fa fa-clock-o"></i> ' . e($hours) . '</span>';
             })
             ->editColumn('province_id',function($data){
                 return @$data->province->name;

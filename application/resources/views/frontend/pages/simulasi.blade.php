@@ -439,6 +439,248 @@
                 transform: translateY(0);
             }
         }
+
+        /* Layout & Responsive Simulasi */
+        .simulasi-grid {
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: start;
+            gap: 40px;
+        }
+
+        .simulasi-grid > * {
+            min-width: 0;
+        }
+
+        .simulasi-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .simulasi-icon-box {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            background: rgba(2, 195, 168, 0.12);
+            border-color: rgba(2, 195, 168, 0.3);
+            color: #02C3A8;
+        }
+
+        .selected-item-price {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .simulasi-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .simulasi-security-card {
+            padding: 24px;
+        }
+
+        .simulasi-security-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 1024px) {
+            .simulasi-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .simulasi-container.page-content-section {
+                padding: 48px 0 64px 0;
+            }
+
+            .simulasi-container .calculator-card,
+            .simulasi-container .premium-about-card {
+                padding: 24px 20px;
+            }
+
+            .simulasi-security-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .simulasi-grid {
+                gap: 20px;
+            }
+
+            .simulasi-container.page-content-section {
+                padding: 36px 0 56px 0;
+            }
+
+            .simulasi-container .calculator-card {
+                padding: 20px 16px;
+                border-radius: var(--radius-md);
+            }
+
+            .simulasi-card-header {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .simulasi-icon-box {
+                width: 38px;
+                height: 38px;
+            }
+
+            .simulasi-container .calc-title {
+                font-size: 19px;
+            }
+
+            .simulasi-container .calc-desc {
+                font-size: 12.5px;
+                line-height: 1.45;
+            }
+
+            .input-search-custom {
+                padding: 12px 38px 12px 38px;
+                font-size: 16px;
+            }
+
+            .search-icon-badge {
+                left: 12px;
+            }
+
+            .clear-search-btn {
+                right: 8px;
+            }
+
+            .autocomplete-dropdown {
+                max-height: 260px;
+            }
+
+            .autocomplete-item {
+                padding: 10px 14px;
+                gap: 10px;
+            }
+
+            .autocomplete-item-title {
+                font-size: 13.5px;
+            }
+
+            .quick-chips-wrapper {
+                gap: 6px;
+                margin-top: 12px;
+            }
+
+            .quick-chip-label {
+                width: 100%;
+                margin-bottom: 2px;
+            }
+
+            .quick-chip {
+                padding: 6px 11px;
+                font-size: 12px;
+            }
+
+            .btn-simulasi-submit {
+                padding: 14px 18px;
+                font-size: 14px;
+            }
+
+            .selected-item-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 14px 16px;
+            }
+
+            .selected-item-info h4 {
+                font-size: 15px;
+            }
+
+            .selected-item-price {
+                text-align: left;
+                width: 100%;
+                padding-top: 10px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+            }
+
+            :root.light-mode .selected-item-price {
+                border-top-color: rgba(8, 56, 84, 0.1);
+            }
+
+            .range-highlight-card {
+                padding: 18px 16px;
+                margin-bottom: 16px;
+            }
+
+            .range-main-val {
+                font-size: 20px;
+                word-break: break-word;
+            }
+
+            .simulasi-note-text {
+                font-size: 12px !important;
+                padding: 10px 12px !important;
+                margin: 14px 0 !important;
+            }
+
+            #wa-submit-btn {
+                padding: 14px 16px !important;
+                font-size: 14px;
+                gap: 8px;
+            }
+
+            #wa-submit-btn svg {
+                width: 22px;
+                height: 22px;
+                flex-shrink: 0;
+            }
+
+            .simulasi-sidebar {
+                gap: 18px;
+            }
+
+            .simulasi-container .premium-about-card {
+                padding: 20px 16px;
+            }
+
+            .simulasi-container .feature-card {
+                padding: 14px;
+                gap: 12px;
+            }
+
+            .simulasi-security-card {
+                padding: 18px 16px;
+            }
+
+            .simulasi-security-actions {
+                flex-direction: column;
+            }
+
+            .simulasi-security-actions .btn {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .range-main-val {
+                font-size: 18px;
+            }
+
+            .quick-chip {
+                font-size: 11.5px;
+                padding: 5px 10px;
+            }
+        }
     </style>
 @endpush
 
@@ -460,13 +702,12 @@
     <!-- Main Simulation Section -->
     <section class="page-content-section simulasi-container">
         <div class="container">
-            <div class="about-detail-grid" style="grid-template-columns: 1.15fr 0.85fr; align-items: start; gap: 40px;">
+            <div class="about-detail-grid simulasi-grid">
                 <!-- Left Column: The 2-Input Form & Results -->
                 <div class="calculator-card-wrapper" id="kalkulator">
                     <div class="calculator-card">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-                            <div class="feature-icon-wrapper"
-                                style="width: 44px; height: 44px; background: rgba(2, 195, 168, 0.12); border-color: rgba(2, 195, 168, 0.3); color: #02C3A8;">
+                        <div class="simulasi-card-header">
+                            <div class="feature-icon-wrapper simulasi-icon-box">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <rect x="5" y="2" width="14" height="20" rx="3" stroke="currentColor"
@@ -587,7 +828,7 @@
                                     <h4 id="banner-item-name">-</h4>
                                     <p id="banner-item-meta">-</p>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="selected-item-price">
                                     <span
                                         style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); display: block;">Estimasi
                                         Pasar</span>
@@ -643,7 +884,7 @@
                 </div>
 
                 <!-- Right Column: Info & Guidelines -->
-                <div style="display: flex; flex-direction: column; gap: 24px;">
+                <div class="simulasi-sidebar">
                     <!-- 3 Steps Guide -->
                     <div class="premium-about-card">
                         <span class="section-badge">PANDUAN CEPAT</span>
@@ -684,7 +925,7 @@
                     </div>
 
                     <!-- Keamanan & Regulasi Card -->
-                    <div class="o-card" style="padding: 24px;">
+                    <div class="o-card simulasi-security-card">
                         <h4
                             style="font-family: var(--font-heading); font-size: 17px; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">
                             🛡️ Jaminan Keamanan Serba Gadai
@@ -695,7 +936,7 @@
                             <li>✓ Barang disimpan di ruang khusus bersegel dan terlindungi asuransi 100%.</li>
                             <li>✓ Tidak ada biaya tersembunyi, perhitungan sewa modal dan admin transparan.</li>
                         </ul>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div class="simulasi-security-actions">
                             <a href="{{ route('outlet') }}" class="btn btn-outline btn-sm">Temukan Outlet Terdekat →</a>
                             <a href="{{ route('services') }}" class="btn btn-secondary btn-sm">Info Syarat & Ketentuan</a>
                         </div>

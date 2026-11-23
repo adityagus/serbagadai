@@ -42,8 +42,8 @@
                 </div>
             </div>
 
-            <a href="{{ route('simulasi') }}" class="nav-link {{ request()->routeIs('simulation*') ? 'active' : 'text-primary' }}">Simulasi</a>
-            <a href="{{ route('promo') }}" class="nav-link {{ request()->routeIs('promo*') ? 'active' : '' }}">Promo</a>
+            <a href="{{ route('simulasi') }}" class="nav-link {{ request()->routeIs('simulasi*') ? 'active' : 'text-primary' }}">Simulasi</a>
+            <a href="{{ route('outlet') }}" class="nav-link {{ request()->routeIs('outlet*') ? 'active' : '' }}">Cabang</a>
             <a href="{{ route('career') }}" class="nav-link {{ request()->routeIs('career*') ? 'active' : '' }}">Karir</a>
             <a href="{{ route('article') }}" class="nav-link {{ request()->routeIs('article*') ? 'active' : '' }}">Artikel</a>
         </nav>

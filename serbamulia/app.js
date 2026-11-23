@@ -173,3 +173,73 @@ if (testiContainer && testiContainer.children.length > 1) {
 window.addEventListener('DOMContentLoaded', () => {
     calculateElectronics();
 });
+
+// ==========================================================================
+// Modern Scroll Reveal Animations (IntersectionObserver)
+// ==========================================================================
+function initScrollAnimations() {
+    // Check if user prefers reduced motion
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('[data-aos], .scroll-reveal').forEach(el => {
+            el.classList.add('aos-animate', 'is-revealed');
+        });
+        return;
+    }
+
+    // Auto-discover and mark key elements across pages if not explicitly tagged
+    const autoTargets = [
+        { selector: '.trust-banner', animation: 'fade-up', delay: 100 },
+        { selector: '.benefit-content', animation: 'fade-up', delay: 100 },
+        { selector: '.benefit-card', animation: 'fade-up', stagger: 120 },
+        { selector: '.cnaf-product-header', animation: 'fade-up', delay: 100 },
+        { selector: '.cnaf-product-card', animation: 'fade-up', stagger: 120 },
+        { selector: '.section-header-center', animation: 'fade-up', delay: 100 },
+        { selector: '.product-card', animation: 'fade-up', stagger: 120 },
+        { selector: '.why-text-side', animation: 'fade-right', delay: 100 },
+        { selector: '.why-image-side', animation: 'fade-left', delay: 150 },
+        { selector: '.feature-card', animation: 'fade-up', stagger: 100 },
+        { selector: '.cnaf-testi-header', animation: 'fade-up', delay: 100 },
+        { selector: '.cnaf-testi-wrapper', animation: 'fade-up', delay: 150 },
+        { selector: '.locator-shell', animation: 'fade-up', delay: 100 },
+        { selector: '.subhero-section', animation: 'fade-up', delay: 80 },
+        { selector: '.o-card', animation: 'fade-up', stagger: 80 }
+    ];
+
+    autoTargets.forEach(group => {
+        const elements = document.querySelectorAll(group.selector);
+        elements.forEach((el, index) => {
+            if (!el.hasAttribute('data-aos') && !el.classList.contains('scroll-reveal')) {
+                el.setAttribute('data-aos', group.animation);
+                const delay = group.stagger ? Math.min(index * group.stagger + 100, 600) : (group.delay || 100);
+                el.setAttribute('data-aos-delay', delay);
+            }
+        });
+    });
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                target.classList.add('aos-animate', 'is-revealed');
+                obs.unobserve(target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('[data-aos], .scroll-reveal').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Attach listener
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollAnimations);
+} else {
+    initScrollAnimations();
+}

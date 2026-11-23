@@ -19,9 +19,10 @@
                 'address' => $outlet->address,
                 'phone' => $defaultPhone,
                 'whatsapp' => $waNumber,
-                'openHour' => '08:30',
-                'closeHour' => '20.30',
-                'days' => 'Senin - Sabtu',
+                'openHour' => !empty($outlet->open_hour) ? $outlet->open_hour : '08:30',
+                'closeHour' => !empty($outlet->close_hour) ? $outlet->close_hour : '17:00',
+                'days' => !empty($outlet->days) ? $outlet->days : 'Senin - Sabtu',
+                'operationalHours' => !empty($outlet->operational_hours) ? $outlet->operational_hours : '',
                 'lat' => $lat,
                 'lng' => $lng,
                 'tags' => ['Cabang Resmi OJK', 'Gadai Elektronik'],
@@ -617,9 +618,35 @@
         line-height: 1.4;
     }
 
+    .locator-mobile-nearest {
+        display: none;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        background: rgba(255, 110, 43, 0.12);
+        color: var(--primary);
+        border: 1px solid rgba(255, 110, 43, 0.3);
+        padding: 7px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+    }
+
     @media (max-width: 900px) {
+        .locator-topbar {
+            padding: 14px 16px;
+        }
+        .locator-top-actions {
+            width: 100%;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
         .locator-mobile-toggle {
             display: flex;
+        }
+        .locator-mobile-nearest {
+            display: inline-flex;
         }
         .locator-reset-btn {
             display: none;
@@ -629,7 +656,45 @@
             border-right: none;
         }
         .locator-body {
-            height: 600px;
+            height: 70vh;
+            min-height: 460px;
+            max-height: 600px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .locator-brand-title {
+            font-size: 15px;
+        }
+        .locator-filters-box {
+            padding: 14px 16px;
+        }
+        .locator-search-input {
+            font-size: 16px;
+        }
+        .locator-list {
+            padding: 12px;
+        }
+        .locator-card {
+            padding: 14px;
+        }
+        .locator-card-actions {
+            flex-wrap: nowrap;
+            gap: 6px;
+        }
+        .locator-btn-map,
+        .locator-btn-dir {
+            flex: 1;
+            min-width: 0;
+            padding: 8px 6px;
+            font-size: 11.5px;
+            white-space: nowrap;
+            justify-content: center;
+        }
+        .locator-btn-wa {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
         }
     }
 </style>
@@ -657,6 +722,10 @@
                     <i class="fa-solid fa-map"></i> Peta
                 </button>
             </div>
+
+            <button type="button" onclick="centerOnUserLocation()" class="locator-mobile-nearest">
+                <i class="fa-solid fa-location-crosshairs"></i> Terdekat
+            </button>
 
             <button type="button" onclick="centerOnUserLocation()" class="locator-reset-btn">
                 <i class="fa-solid fa-location-crosshairs" style="color: var(--primary);"></i> Cari Terdekat dari Saya
@@ -743,11 +812,11 @@
         const now = new Date();
         const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-        const [openH, openM] = openHourStr.split(":").map(Number);
-        const [closeH, closeM] = closeHourStr.split(":").map(Number);
+        const [openH, openM] = String(openHourStr || '08:30').replace('.', ':').split(":").map(Number);
+        const [closeH, closeM] = String(closeHourStr || '17:00').replace('.', ':').split(":").map(Number);
 
-        const openMinutes = openH * 60 + openM;
-        const closeMinutes = closeH * 60 + closeM;
+        const openMinutes = (openH || 0) * 60 + (openM || 0);
+        const closeMinutes = (closeH || 0) * 60 + (closeM || 0);
 
         const isOpen = currentMinutes >= openMinutes && currentMinutes < closeMinutes;
         return {
@@ -757,11 +826,34 @@
         };
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    function ensureLocatorMap() {
+        if (locatorMap) return;
         initLocatorMap();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
         renderCityFilters();
         renderBranches();
         setupLocatorListeners();
+
+        if (window.innerWidth <= 900) {
+            showMobileList();
+        } else {
+            ensureLocatorMap();
+        }
+
+        window.addEventListener("resize", () => {
+            const sidebar = document.getElementById("sidebarPanel");
+            const mapPanel = document.getElementById("mapPanel");
+            if (window.innerWidth > 900) {
+                if (sidebar) sidebar.classList.remove("hidden");
+                if (mapPanel) mapPanel.classList.remove("hidden");
+                ensureLocatorMap();
+                setTimeout(() => {
+                    if (locatorMap) locatorMap.invalidateSize();
+                }, 120);
+            }
+        });
     });
 
     function initLocatorMap() {
@@ -984,16 +1076,18 @@
             targetCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
 
-        if (panToMap && locatorMarkers[id] && locatorMap) {
-            locatorMap.flyTo([branch.lat, branch.lng], 15, {
-                animate: true,
-                duration: 1.2
-            });
-            locatorMarkers[id].openPopup();
-        }
-
         if (window.innerWidth <= 900 && panToMap) {
             showMobileMap();
+        }
+
+        if (panToMap && locatorMarkers[id] && locatorMap) {
+            setTimeout(() => {
+                locatorMap.flyTo([branch.lat, branch.lng], 15, {
+                    animate: true,
+                    duration: 1.0
+                });
+                locatorMarkers[id].openPopup();
+            }, window.innerWidth <= 900 ? 150 : 0);
         }
     }
 
@@ -1181,6 +1275,7 @@
         if (mapBtn) mapBtn.classList.add("active");
         if (listBtn) listBtn.classList.remove("active");
 
+        ensureLocatorMap();
         setTimeout(() => {
             if (locatorMap) locatorMap.invalidateSize();
         }, 120);

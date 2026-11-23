@@ -37,7 +37,7 @@ bootstrap/cache/*.php
 # ==========================================
 # Storage, Uploads & Media
 # ==========================================
-# /serbamulia/*
+/serbamulia/*
 /storage/*
 /storage/app/*
 /storage/framework/*
@@ -100,3 +100,4 @@ application/.phpunit.result.cache
 [Tt]humbs.db
 ehthumbs.db
 [Dd]esktop.ini
+*scratch*

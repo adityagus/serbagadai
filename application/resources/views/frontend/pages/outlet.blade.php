@@ -2,6 +2,61 @@
 
 @section('pageTitle', 'Cabang & Outlet')
 
+@push('customCss')
+<style>
+    .outlet-locator-wrap {
+        margin-bottom: 56px;
+    }
+
+    .outlet-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 36px;
+    }
+
+    .outlet-search-box {
+        min-width: 260px;
+        flex: 0 1 340px;
+    }
+
+    @media (max-width: 768px) {
+        .outlet-locator-wrap {
+            margin-bottom: 36px;
+        }
+
+        .outlet-toolbar {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .outlet-search-box {
+            min-width: 0;
+            flex: 1 1 auto;
+            width: 100%;
+        }
+
+        .outlet-filters {
+            gap: 8px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        #outlet-search {
+            font-size: 16px;
+        }
+
+        .o-card {
+            padding: 20px 16px;
+        }
+    }
+</style>
+@endpush
+
 @section('content')
 @php
     $waNumber = preg_replace('/[^0-9]/', '', @$CONF->whatsapp ?: '6281181126771');
@@ -21,7 +76,7 @@
 <section class="page-content-section">
     <div class="container">
         <!-- Interactive Branch Locator (Sidebar + Leaflet Map + Nearest Geolocation) -->
-        <div style="margin-bottom: 56px;">
+        <div class="outlet-locator-wrap">
             @include('frontend.pages.part.branch-locator')
         </div>
 
@@ -31,7 +86,7 @@
         </div>
 
         <!-- Filters & Search -->
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 36px;">
+        <div class="outlet-toolbar">
             <div class="outlet-filters" style="margin-bottom: 0; flex-wrap: wrap; justify-content: flex-start;">
                 <button class="o-filter-btn active" onclick="filterOutlets('all', this)">Semua Wilayah</button>
                 @foreach($provinces as $province)
@@ -39,7 +94,7 @@
                 @endforeach
             </div>
 
-            <div style="min-width: 280px; flex: 0 1 340px;">
+            <div class="outlet-search-box">
                 <input type="text" id="outlet-search" class="input-select" placeholder="🔍 Cari nama cabang atau alamat..." oninput="applyOutletFilters()">
             </div>
         </div>
@@ -59,7 +114,7 @@
                     </div>
                     <div class="o-body">
                         <p class="o-address">📍 {{ $outlet->address }}</p>
-                        <p class="o-hours">⏰ Senin - Jumat (08:30 - 17:00) | Sabtu (08:30 - 14:00)</p>
+                        <p class="o-hours">⏰ {{ !empty($outlet->operational_hours) ? $outlet->operational_hours : ((!empty($outlet->days) ? $outlet->days : 'Senin - Sabtu') . ' (' . (!empty($outlet->open_hour) ? $outlet->open_hour : '08:30') . ' - ' . (!empty($outlet->close_hour) ? $outlet->close_hour : '17:00') . ')') }}</p>
                         <p class="o-phone">📞 {{ @$CONF->phone ?? '0811-8112-6771' }}</p>
                         
                         <div class="o-actions">

@@ -50,6 +50,12 @@
                                     </td>
                                     <td class="all" >
                                     </td>
+                                    <td class="all" >
+                                    </td>
+                                    <td class="all" >
+                                    </td>
+                                    <td class="all" >
+                                    </td>
                                     <td>
                                         <select class="form-control" name="s_status" onchange="filter()">
                                             <option value="">Pilih Status</option>
@@ -58,6 +64,8 @@
                                             @endforeach
                                         </select>
                                     </td>
+                                    <td class="all" >
+                                    </td>
                                     <td></td>
                                     <td></td>
                                 </tr>
@@ -65,6 +73,9 @@
                                     <th>Nama</th>
                                     <th>Provinsi</th>
                                     <th>Alamat</th>
+                                    <th>Hari Kerja</th>
+                                    <th>Jam Buka</th>
+                                    <th>Jam Tutup</th>
                                     <th>Lat/Lng</th>
                                     <th>Status</th>
                                     <th>Created</th>
@@ -117,6 +128,9 @@
             {data:'name', name: 'name'},
             {data:'province_id', name: 'province_id'},
             {data:'address', name: 'address'},
+            {data:'days', name: 'days'},
+            {data:'open_hour', name: 'open_hour'},
+            {data:'close_hour', name: 'close_hour'},
             {data:'lat_lng', name: 'lat_lng'},
             {data:'status', name: 'status'},
             {data:'created_at', name: 'created_at',searchable: false},
@@ -137,6 +151,10 @@
         $('#myModal form')[0].reset();
         $('[name=id]').val(0);
         $('[name=method]').val('ADD');
+        $('[name=days]').val('Senin - Sabtu');
+        $('[name=open_hour]').val('08:30');
+        $('[name=close_hour]').val('17:00');
+        $('[name=operational_hours]').val('Senin - Jumat (08:30 - 17:00) | Sabtu (08:30 - 14:00)');
         $('.modal-title').text('Tambah Data');
     }
 
